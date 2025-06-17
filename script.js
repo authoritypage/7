@@ -1,18 +1,29 @@
+// Dynamic script.js for the Ministry of Digital Sovereignty Portal
+
+console.log("script.js loaded and attempting to execute.");
+
+// Ensure the window is fully loaded before initializing Three.js and other scripts
 window.onload = function() {
+    console.log("window.onload event fired.");
+
     // --- Footer Year Update ---
     const yearSpan = document.getElementById('year');
     if (yearSpan) {
         yearSpan.textContent = new Date().getFullYear();
+        console.log("Footer year updated.");
+    } else {
+        console.warn("Footer year span with ID 'year' not found.");
     }
 
     // --- Three.js WebGL Background Setup ---
     const canvas = document.getElementById('canvas-bg');
     if (!canvas) {
-        console.error('Canvas element with ID "canvas-bg" not found.');
+        console.error('Canvas element with ID "canvas-bg" not found. Three.js background cannot be initialized.');
         // If canvas is critical and missing, you might want to stop further execution or provide a prominent error.
         // For now, we'll log and return.
         return; 
     }
+    console.log("Canvas element found for Three.js background.");
 
     let scene, camera, renderer;
     let grid, particles;
@@ -24,6 +35,7 @@ window.onload = function() {
 
     // Initialize the Three.js scene
     function init() {
+        console.log("Initializing Three.js scene...");
         scene = new THREE.Scene();
 
         // Camera setup: PerspectiveCamera(fov, aspect, near, far)
@@ -44,6 +56,7 @@ window.onload = function() {
         grid.rotation.x = Math.PI / 2.5; // Tilt the grid for perspective
         grid.position.y = -50; // Lower the grid
         scene.add(grid);
+        console.log("Three.js grid added to scene.");
 
         // Particle System
         const geometry = new THREE.BufferGeometry();
@@ -83,13 +96,17 @@ window.onload = function() {
         // Create the particle system
         particles = new THREE.Points(geometry, material);
         scene.add(particles);
+        console.log("Three.js particles added to scene.");
+
 
         // Add event listeners for responsiveness and interactivity
         window.addEventListener('resize', onWindowResize, false);
         document.addEventListener('mousemove', onDocumentMouseMove, false);
+        console.log("Three.js event listeners attached.");
 
         // Start animation loop
         animate();
+        console.log("Three.js animation loop started.");
     }
 
     // Animation loop
@@ -133,6 +150,7 @@ window.onload = function() {
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix(); // Update camera's projection matrix
         renderer.setSize(window.innerWidth, window.innerHeight); // Resize renderer
+        console.log("Window resized, Three.js renderer updated.");
     }
 
     // Handle mouse movement for interactive background: update targetMouseX/Y for smooth transition
@@ -162,6 +180,7 @@ window.onload = function() {
         `;
         fallbackMessage.textContent = 'Interactive background could not load. Your browser may not support WebGL.';
         document.body.prepend(fallbackMessage);
+        console.log("Three.js fallback message displayed.");
     }
 
     // --- AI Search Functionality (Existing) ---
@@ -177,14 +196,21 @@ window.onload = function() {
                 performAISearch();
             }
         });
+        console.log("AI Search elements found and event listeners attached.");
     } else {
         console.error('One or more AI search elements not found. AI search feature may not function.');
+        if (!aiQueryInput) console.error("Missing #ai-query-input");
+        if (!aiQueryButton) console.error("Missing #ai-query-button");
+        if (!aiResponseArea) console.error("Missing #ai-response-area");
+        if (!aiLoadingIndicator) console.error("Missing #ai-loading-indicator");
     }
 
     async function performAISearch() {
+        console.log("Performing AI Search...");
         const prompt = aiQueryInput.value.trim();
         if (!prompt) {
             aiResponseArea.innerHTML = '<p style="color: #ffc107; font-style: italic; text-align: center;">Please enter a query to analyze.</p>';
+            console.log("AI Search: Empty prompt.");
             return;
         }
 
@@ -193,6 +219,7 @@ window.onload = function() {
         aiResponseArea.innerHTML = ''; // Clear previous content
         aiResponseArea.classList.add('ai-response-area'); // Ensure class is present
         aiQueryButton.disabled = true; // Disable button during search
+        console.log("AI Search: Loading indicator shown, button disabled.");
 
         let chatHistory = [];
         // The prompt for the LLM. It's crucial to define the AI's persona and task clearly.
@@ -200,6 +227,7 @@ window.onload = function() {
             role: "user", 
             parts: [{ text: `Act as a highly specialized AI for the Ministry of Digital Sovereignty. Provide concise, official, and direct answers regarding legal concepts related to digital and economic sovereignty, especially concerning coercive legal strategies. Focus on the spirit of the "Blackmail Effect" as a core principle. Here is the query: "${prompt}"` }] 
         });
+        console.log("AI Search: Prompt prepared for LLM.");
 
         const payload = {
             contents: chatHistory
@@ -214,6 +242,7 @@ window.onload = function() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
             });
+            console.log("AI Search: API fetch initiated.");
 
             if (!response.ok) {
                 const errorData = await response.json();
@@ -221,6 +250,7 @@ window.onload = function() {
             }
 
             const result = await response.json();
+            console.log("AI Search: API response received.", result);
 
             // Check for valid response structure
             if (result.candidates && result.candidates.length > 0 &&
@@ -228,8 +258,10 @@ window.onload = function() {
                 result.candidates[0].content.parts.length > 0) {
                 const text = result.candidates[0].content.parts[0].text;
                 aiResponseArea.innerHTML = `<p>${text.replace(/\n/g, '<br>')}</p>`; // Display response, convert newlines to <br>
+                console.log("AI Search: Response displayed.");
             } else {
                 aiResponseArea.innerHTML = '<p style="color: #ffc107; font-style: italic; text-align: center;">No valid response received from the AI. Please try a different query.</p>';
+                console.warn("AI Search: Invalid or empty response from AI.");
             }
 
         } catch (error) {
@@ -238,6 +270,7 @@ window.onload = function() {
         } finally {
             aiLoadingIndicator.classList.add('hidden'); // Hide loading indicator
             aiQueryButton.disabled = false; // Re-enable button
+            console.log("AI Search: Loading finished, button re-enabled.");
         }
     }
 
@@ -261,24 +294,34 @@ window.onload = function() {
                 closeCaseSummaryModal();
             }
         });
+        console.log("AI Case Summary elements found and event listeners attached.");
     } else {
         console.error('One or more AI case summary elements not found. Case summary feature may not function.');
+        if (!summarizeButtons.length) console.error("No .summarize-case-button elements found.");
+        if (!aiSummaryModal) console.error("Missing #ai-summary-modal");
+        if (!modalCloseButton) console.error("Missing .close-button inside modal");
+        if (!modalCaseTitle) console.error("Missing #modal-case-title");
+        if (!modalSummaryContent) console.error("Missing #modal-summary-content");
+        if (!modalLoadingIndicator) console.error("Missing #modal-loading-indicator inside modal");
     }
 
     async function openCaseSummaryModal(event) {
+        console.log("Opening AI Case Summary Modal...");
         const dataCard = event.target.closest('.data-card');
         if (!dataCard) {
-            console.error('Could not find parent data-card for summary button.');
+            console.error('Could not find parent data-card for summary button. Cannot open modal.');
             return;
         }
 
         const caseTitle = dataCard.getAttribute('data-case-title');
         const caseDescription = dataCard.getAttribute('data-case-description');
+        console.log(`Summarizing case: ${caseTitle}, Description: ${caseDescription}`);
 
         modalCaseTitle.textContent = caseTitle;
         modalSummaryContent.innerHTML = ''; // Clear previous content
         modalLoadingIndicator.classList.remove('hidden');
         aiSummaryModal.classList.add('visible'); // Show the modal
+        console.log("Modal visible, loading indicator shown.");
 
         // Construct a more detailed prompt for the LLM. The specificity helps the AI generate relevant content.
         const prompt = `Provide a detailed legal and strategic analysis of the case "${caseTitle}" which is described as "${caseDescription}". Elaborate on its relevance to concepts of digital and economic sovereignty, and how it might exemplify or counteract "coercive legal strategies" or the "Blackmail Effect." Provide a summary suitable for an official government portal.`;
@@ -299,6 +342,7 @@ window.onload = function() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
             });
+            console.log("Modal AI Summary: API fetch initiated.");
 
             if (!response.ok) {
                 const errorData = await response.json();
@@ -306,14 +350,17 @@ window.onload = function() {
             }
 
             const result = await response.json();
+            console.log("Modal AI Summary: API response received.", result);
 
             if (result.candidates && result.candidates.length > 0 &&
                 result.candidates[0].content && result.candidates[0].content.parts &&
                 result.candidates[0].content.parts.length > 0) {
                 const text = result.candidates[0].content.parts[0].text;
                 modalSummaryContent.innerHTML = `<p>${text.replace(/\n/g, '<br>')}</p>`; // Display response, converting newlines
+                console.log("Modal AI Summary: Response displayed.");
             } else {
                 modalSummaryContent.innerHTML = '<p style="color: #ffc107; font-style: italic; text-align: center;">Failed to generate summary. No valid response from AI.</p>';
+                console.warn("Modal AI Summary: Invalid or empty response from AI.");
             }
 
         } catch (error) {
@@ -321,10 +368,12 @@ window.onload = function() {
             modalSummaryContent.innerHTML = `<p style="color: var(--red-accent); text-align: center;">Error: ${error.message}. Could not retrieve summary.</p>`;
         } finally {
             modalLoadingIndicator.classList.add('hidden'); // Hide loading indicator regardless of success or failure
+            console.log("Modal AI Summary: Loading finished.");
         }
     }
 
     function closeCaseSummaryModal() {
         aiSummaryModal.classList.remove('visible'); // Hide the modal
+        console.log("AI Summary Modal closed.");
     }
 };
