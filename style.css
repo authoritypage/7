@@ -1,12 +1,14 @@
 /*
     Ministry of Digital Sovereignty Portal | style.css
-    **IMPROVED DARK BING.COM INTERFACE**
+    **IMPROVED DARK BING.COM INTERFACE with prominent AI Search Section**
     This stylesheet targets the provided HTML to achieve a sleek,
-    professional, dark theme similar to Bing.com's visual identity.
+    professional, dark theme similar to Bing.com's visual identity,
+    with an emphasized, visually distinct AI search section.
 
     Key characteristics:
     - Deep, rich dark backgrounds.
-    - Subtle differentiation in surface colors for UI elements.
+    - Prominent, lighter surface for the AI search area.
+    - Subtle differentiation in surface colors for other UI elements.
     - Prominent Microsoft Blue accents for links, buttons, and active states.
     - Clean sans-serif typography (Inter).
     - Soft, diffused shadows for depth without heaviness.
@@ -16,8 +18,8 @@
 :root {
     /* Backgrounds & Surfaces */
     --background-color: #111116;           /* Main page background (deep dark blue-grey) */
-    --surface-color: #1A1A1F;             /* Primary UI surfaces (cards, containers) */
-    --surface-light-color: #202026;       /* Secondary UI surfaces / Hover states (lighter interaction background) */
+    --surface-color: #1A1A1F;             /* Secondary UI surfaces (other cards, sections) */
+    --prominent-surface-color: #1A1E24;   /* NEW: Lighter, more distinct background for AI Search Section */
     --input-field-color: #111116;         /* Input field background (matches main background for seamless look) */
 
     /* Text Colors */
@@ -28,7 +30,7 @@
 
     /* Accent Colors (Microsoft Identity) */
     --accent-blue: #0078D4;               /* Signature Microsoft Blue for links, primary buttons, active states */
-    --accent-blue-hover: #0099FF;         /* Brighter blue for link/button hover states */
+    --accent-blue-hover: #0099FF;         /* Brighter blue for link/button hover */
     --accent-green: #10A38D;              /* Green for success/resolved status */
     --accent-red: #E81123;                /* Red for active/warning status (used for logo polygon as well) */
     --accent-red-lighter: #FF4433;        /* A slightly softer red for internal highlights */
@@ -38,17 +40,19 @@
     --border-color-subtle: #2A2A30;       /* Very dark, subtle borders for separation */
     --border-color-focus: var(--accent-blue); /* Accent blue border for input focus */
 
-    /* Shadows (Soft and diffused, common in dark UIs for subtle depth) */
-    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0,0,0,0.1); /* Very light shadow, almost just a darker border */
-    --shadow-md: 0 4px 10px rgba(0, 0, 0, 0.3);                         /* Deeper shadow for elevated elements */
-    --shadow-lg: 0 8px 25px rgba(0, 0, 0, 0.4);                         /* Most pronounced for modal/strong lift */
+    /* Shadows (Soft and diffused, more noticeable for prominent areas) */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0,0,0,0.1);
+    --shadow-md: 0 4px 10px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 8px 25px rgba(0, 0, 0, 0.5); /* Stronger shadow for the prominent AI Search section */
+    --shadow-modal: 0 8px 30px rgba(0, 0, 0, 0.6); /* Even stronger for modal */
+
 
     /* Typography Settings */
     --font-heading: 'Inter', sans-serif;    /* Clean sans-serif for all headings (similar to Segoe UI/Bing) */
     --font-body: 'Inter', sans-serif;       /* Clean sans-serif for general text, also for Bing look */
     --font-monospace: 'Roboto Mono', monospace; /* For code or technical details */
 
-    /* Spacing (Consistent vertical and horizontal rhythm) */
+    /* Spacing and Border Radii */
     --spacing-xs: 4px;
     --spacing-sm: 8px;
     --spacing-md: 12px;
@@ -56,7 +60,6 @@
     --spacing-xl: 30px;
     --spacing-xxl: 40px; /* Generous padding for sections/main components */
 
-    /* Border Radii */
     --radius-sm: 4px;
     --radius-md: 8px;
     --radius-lg: 12px; /* Slightly more rounded for elements like search bars, buttons, cards */
@@ -82,7 +85,7 @@ html {
 
 body {
     font-family: var(--font-body);
-    font-size: 0.9375rem; /* ~15px for body text, fine for dark background readability */
+    font-size: 0.9375rem; /* ~15px base text for readability, similar to Bing */
     line-height: 1.6; /* Optimal line height for comfort */
     background-color: var(--background-color); /* Deep dark background */
     color: var(--text-color-primary); /* Soft white text */
@@ -116,8 +119,8 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 600; /* Medium-bold */
     line-height: 1.2;
     margin-top: 1.5rem; /* Top spacing */
-    margin-bottom: 0.75rem; /* Bottom spacing */
-    letter-spacing: -0.01em; /* Subtle tight tracking */
+    margin-bottom: 0.75rem; /* Moderate bottom spacing */
+    letter-spacing: -0.01em; /* Subtle tight tracking for modern look */
 }
 
 /* Paragraphs */
@@ -137,13 +140,13 @@ p {
 
 /* --- WebGL Background Canvas --- */
 #canvas-bg {
-    position: fixed; /* Fixed position relative to the viewport */
+    position: fixed; /* Fixed to the viewport */
     top: 0;
     left: 0;
-    width: 100vw;    /* Full viewport width */
-    height: 100vh;   /* Full viewport height */
-    z-index: -1;     /* Renders behind all other content */
-    display: block;  /* Remove any default browser margin/padding */
+    width: 100vw;
+    height: 100vh;
+    z-index: -1; /* Ensures it's behind all other content */
+    display: block; /* Remove any default canvas spacing */
 }
 
 /* --- Site Header --- */
@@ -151,7 +154,7 @@ p {
     width: 100%;
     display: flex;
     justify-content: space-between; /* Pushes logo to left, nav to right */
-    align-items: center; /* Vertically aligns logo and nav */
+    align-items: center; /* Vertically align logo and nav */
     padding: var(--spacing-lg) 0; /* Vertical padding */
     border-bottom: 1px solid var(--border-color-subtle); /* Subtle bottom border */
     margin-bottom: var(--spacing-xl); /* Space below header before main content */
@@ -262,17 +265,23 @@ main .section:last-child {
     border-radius: var(--radius-sm);
 }
 
-/* --- AI Search Section --- */
+/* --- AI Search Section (More Prominent!) --- */
 .ai-search-section {
-    max-width: 900px; /* Allows the search section to be wider than default content */
-    margin: 0 auto; /* Center the section */
-    text-align: center; /* Center align text elements */
-    padding-top: var(--spacing-xl); /* Less top padding for sections below the header */
-    padding-bottom: var(--spacing-xl);
+    background-color: var(--prominent-surface-color); /* NEW: Visibly lighter background */
+    border-radius: var(--radius-lg); /* More rounded corners to distinguish it */
+    padding: var(--spacing-xxl); /* Very generous padding inside the section */
+    margin: var(--spacing-xl) auto; /* Push away from header/other content, center it */
+    max-width: 900px; /* Can be wider than other text blocks to emphasize */
+    text-align: center;
+    box-shadow: var(--shadow-md); /* Stronger initial shadow to make it pop */
+    border: 1px solid var(--border-color-subtle); /* Keep a subtle border */
 }
+/* No explicit animation from old search-container was here, but you could add fadeIn again */
+
+
 .ai-search-section p {
     color: var(--text-color-secondary); /* Muted description text */
-    margin-bottom: var(--spacing-xl);
+    margin-bottom: var(--spacing-xxl); /* More space below description */
 }
 
 .ai-input-group {
@@ -330,7 +339,7 @@ main .section:last-child {
 }
 
 .ai-response-area {
-    background-color: var(--surface-color); /* Matches card surfaces */
+    background-color: var(--input-field-color); /* Use the deepest dark for the response area */
     border: 1px solid var(--border-color-subtle);
     border-radius: var(--radius-md);
     padding: var(--spacing-lg);
@@ -377,9 +386,9 @@ main .section:last-child {
     100% { transform: rotate(360deg); }
 }
 
-/* --- Foundational Doctrine Quote Section --- */
+/* --- Doctrine Quote Section --- */
 .doctrine-quote {
-    background-color: var(--surface-color);
+    background-color: var(--surface-color); /* Other sections use standard surface color */
     border: 1px solid var(--border-color-subtle);
     border-left: 5px solid var(--accent-blue); /* Strong left border in Bing blue */
     border-radius: var(--radius-md);
@@ -553,13 +562,13 @@ main .section:last-child {
 }
 
 .modal-content {
-    background-color: var(--surface-color); /* Matches card surface color */
+    background-color: var(--prominent-surface-color); /* Modals also use the prominent surface color */
     border: 1px solid var(--border-color-subtle);
     border-radius: var(--radius-md);
     padding: var(--spacing-xl);
     max-width: 600px; /* Max width for readability within the modal */
     width: 90%;      /* Responsive width */
-    box-shadow: var(--shadow-lg); /* Stronger shadow for prominent modal */
+    box-shadow: var(--shadow-modal); /* Stronger shadow for prominent modal */
     position: relative; /* For positioning close button */
     color: var(--text-color-primary);
 }
@@ -623,6 +632,17 @@ main .section:last-child {
     .doctrine-quote blockquote {
         font-size: 1.05rem; /* Slightly smaller quote text */
     }
+    /* AI Search Section adjustments for tablets */
+    .ai-search-section {
+        padding: var(--spacing-xl); /* Reduce overall padding for more compact look */
+        margin: var(--spacing-lg) auto; /* Reduce vertical margins */
+    }
+    .ai-search-section p {
+        margin-bottom: var(--spacing-xl); /* Adjusted spacing */
+    }
+    .ai-response-area {
+        margin-top: var(--spacing-xl);
+    }
 }
 
 /* For Mobile Devices (Phones) */
@@ -645,7 +665,7 @@ main .section:last-child {
     .main-nav {
         flex-wrap: wrap; /* Allow navigation links to wrap */
         justify-content: center;
-        gap: var(--spacing-md);
+        gap: var(--spacing-sm); /* Even smaller gap for nav items */
     }
     .main-nav a {
         font-size: 0.875rem; /* Smaller nav links */
@@ -656,20 +676,32 @@ main .section:last-child {
         font-size: 1.6rem;
         margin-bottom: var(--spacing-lg);
     }
-    .ai-search-section, .doctrine-quote, .data-grid {
-        padding: 0; /* Remove section padding within container */
+    main .section {
+        padding: var(--spacing-xl) 0; /* Sections slightly smaller top/bottom padding */
+    }
+    .ai-search-section {
+        padding: var(--spacing-lg); /* AI search section becomes more compact */
+        margin: var(--spacing-md) auto; /* Reduce overall margins */
+    }
+    .ai-search-section p {
+        margin-bottom: var(--spacing-lg);
     }
     .ai-input-group {
         flex-direction: column; /* Stack input and button */
         gap: var(--spacing-sm);
     }
     .ai-query-button {
-        width: 100%; /* Make button full width */
+        width: 100%; /* Full width button */
         text-align: center;
     }
     .ai-response-area {
         margin-top: var(--spacing-lg);
         min-height: 100px;
+    }
+    .doctrine-quote {
+        padding: var(--spacing-md);
+        font-size: 0.95rem;
+        margin: var(--spacing-lg) auto;
     }
     .data-grid {
         grid-template-columns: 1fr; /* Single column for all data cards */
@@ -703,6 +735,10 @@ main .section:last-child {
         font-size: 1.4rem;
         margin-bottom: var(--spacing-md);
     }
+    .ai-search-section {
+        padding: var(--spacing-md); /* Even smaller padding for tightest mobile view */
+        margin: var(--spacing-md) auto;
+    }
     .ai-query-input, .ai-query-button {
         font-size: 0.9375rem; /* ~15px */
         padding: var(--spacing-sm);
@@ -723,5 +759,11 @@ main .section:last-child {
     }
     .doctrine-quote blockquote {
         font-size: 0.95rem; /* Smaller quote for very small screens */
+    }
+    .modal-content h3 {
+        font-size: 1.2rem;
+    }
+    #modal-summary-content {
+        font-size: 0.875rem;
     }
 }
