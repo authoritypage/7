@@ -1,678 +1,266 @@
-/* Refined style.css for the Ministry of Digital Sovereignty Portal */
+/* Dark & Sophisticated Bing-like Style */
 
+/* Inheriting and adapting variables from the Ministry of Digital Sovereignty portal */
 :root {
-    --background-color: #0E0E0E; /* Slightly softer dark background */
-    --text-color: #E8E8E8; /* Slightly softer light text */
-    --red-accent: #A52A2A; /* A richer, deeper, more sophisticated red */
-    --blue-accent: #00568F; /* A darker, more subdued tech blue */
-    --border-color: #2F2F2F; /* Softer, subtle border */
-    --card-bg: #151515; /* Darker card background for depth */
-    --header-font: 'Merriweather', serif; /* More elegant serif for titles */
-    --body-font: 'Inter', sans-serif; /* Clean sans-serif for readability */
+    --background-color: #0E0E0E; /* Dark background */
+    --surface-color: #1A1A1A; /* Slightly lighter surfaces like search bars/cards */
+    --text-color: #E8E8E8; /* Main text color */
+    --placeholder-color: #888888; /* Soft placeholder text */
+    --link-color: #0077B6; /* Blue for links, like current blue-accent */
+    --link-hover-color: #0099D0; /* Lighter blue on hover */
+    --accent-red: #A52A2A; /* For highlights or active states, like current red-accent */
+    --border-color: #2F2F2F; /* Subtle borders */
+    --shadow-color: rgba(0, 0, 0, 0.4); /* For subtle shadows */
 
-    /* New variables for subtle shadows and glows */
-    --subtle-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    --hover-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-    --red-glow: 0 0 12px rgba(165, 42, 42, 0.6);
-    --blue-glow: 0 0 10px rgba(0, 86, 143, 0.5);
+    --heading-font: 'Merriweather', serif; /* Elegant serif for important headings */
+    --body-font: 'Inter', sans-serif; /* Clean sans-serif for general text */
+    --monospace-font: 'Roboto Mono', monospace; /* For code or technical details */
 }
 
-/* Global Styles & Resets */
-*, *::before, *::after {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-html, body {
+/* Base styles for the page */
+body {
+    font-family: var(--body-font);
     background-color: var(--background-color);
     color: var(--text-color);
-    font-family: var(--body-font);
-    font-size: 16px;
-    line-height: 1.7; /* Increased line height for elegance */
+    margin: 0;
+    padding: 20px; /* Some padding around the entire content */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+a {
+    color: var(--link-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--link-hover-color);
+    text-decoration: underline;
+}
+
+/* --- Main Search Container --- */
+.search-container {
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: 0 5px 20px var(--shadow-color);
+    padding: 30px;
     width: 100%;
-    min-height: 100%;
-    overflow-x: hidden;
-    -webkit-font-smoothing: antialiased; /* Smoother fonts */
-    -moz-osx-font-smoothing: grayscale; /* Smoother fonts */
+    max-width: 700px; /* Constrain search area width */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 40px;
+    animation: fadeIn 0.8s ease-out;
 }
 
-/* Canvas Background */
-#canvas-bg {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    opacity: 0.18; /* Adjusted for subtlety */
-}
-
-/* Main container for all content */
-.container {
-    position: relative;
-    z-index: 10;
-    max-width: 1050px; /* Slightly narrower for a more focused feel */
-    margin: 0 auto;
-    padding: 2.5rem; /* Refined padding */
-    background: rgba(14, 14, 14, 0.88); /* Denser semi-transparent background */
-    backdrop-filter: blur(8px); /* Stronger blur for depth */
-    border-left: 1px solid var(--border-color);
-    border-right: 1px solid var(--border-color);
-    box-shadow: var(--subtle-shadow); /* More refined shadow */
-    animation: fadeIn 1s ease-out;
-}
-
-/* --- Keyframe Animations --- */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-
-/* --- Header --- */
-.site-header {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid var(--red-accent); /* Thinner border, still accent */
-    padding-bottom: 1.8rem;
-    margin-bottom: 3.5rem; /* More space */
-    animation: fadeIn 1.2s ease-out;
-}
-.logo {
-    display: flex;
-    align-items: center;
-    margin-bottom: 0.8rem; /* Adjusted space for wrap */
-}
-.logo svg {
-    width: 55px; /* Adjusted logo size */
-    height: 55px;
-    margin-right: 1.2rem;
-    fill: var(--text-color);
-    filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.2)); /* Subtler glow */
-}
-.logo-text h1 {
-    font-family: var(--header-font);
-    font-size: 1.7rem; /* Refined size */
-    margin: 0;
-    line-height: 1.2;
-    text-transform: uppercase;
+.search-logo {
+    font-family: var(--heading-font);
+    font-size: 2.5em;
     color: var(--text-color);
-    letter-spacing: 0.5px; /* Tighter spacing for elegance */
-    text-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
+    margin-bottom: 25px;
+    letter-spacing: 1px;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
 }
-.logo-text span {
-    font-size: 0.85rem; /* Refined size */
-    color: #999; /* Softer grey */
-    letter-spacing: 1.5px; /* Wider spacing for distinction */
-    text-transform: uppercase;
-}
-.main-nav {
+
+.search-input-group {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-bottom: 0.8rem; /* Adjusted space for wrap */
-}
-.main-nav a {
-    color: var(--text-color);
-    text-decoration: none;
-    margin: 0 0.9rem; /* Refined spacing */
-    font-weight: 400; /* Lighter weight for nav */
-    font-size: 0.92rem;
-    text-transform: uppercase;
-    position: relative;
-    padding-bottom: 6px; /* Reduced padding */
-    transition: color 0.3s ease;
-}
-.main-nav a::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%; /* Center the line */
-    width: 0%; /* Start at 0 width */
-    height: 1px; /* Very thin line */
-    background-color: var(--red-accent);
-    transform: translateX(-50%) scaleX(0); /* Center and scale */
-    transform-origin: center;
-    transition: width 0.3s ease, transform 0.3s ease; /* Animate width and scale */
-}
-.main-nav a:hover {
-    color: var(--red-accent);
-}
-.main-nav a:hover::after {
-    width: 100%; /* Expand width on hover */
-    transform: translateX(-50%) scaleX(1);
-}
-
-/* --- Content Sections --- */
-.section {
-    margin-bottom: 5rem; /* More space between sections */
-    border-top: 1px solid var(--border-color);
-    padding-top: 3rem; /* More padding */
-    animation: fadeIn 1.5s ease-out;
-}
-.section-title {
-    font-family: var(--header-font);
-    font-size: 2.1rem; /* Refined size for balance */
-    color: var(--red-accent);
-    margin-bottom: 2rem;
-    text-transform: uppercase;
-    letter-spacing: 1.5px; /* Tighter spacing */
-    text-shadow: var(--red-glow); /* More controlled glow */
-    text-align: center;
-    padding-bottom: 0.5rem; /* For slight separation from text */
-    border-bottom: 1px solid rgba(165, 42, 42, 0.3); /* Subtle line below title */
-}
-.section p {
-    margin-bottom: 1.2rem;
-    color: #D3D3D3; /* Slightly lighter body text for readability against dark bg */
-}
-
-/* Foundational Doctrine Blockquote */
-.doctrine-quote {
-    background: #111111; /* Deeper background for quote */
-    border-left: 3px solid var(--red-accent); /* Thinner border */
-    padding: 2.2rem;
-    margin: 3.5rem 0;
-    font-size: 1.1rem;
-    font-style: italic;
-    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.4); /* Inner shadow for depth */
-    border-radius: 4px; /* Slightly less rounded */
-    position: relative;
-    overflow: hidden;
-    color: #C0C0C0; /* Softer text color for quotes */
-}
-.doctrine-quote::before {
-    content: '“';
-    font-family: 'Georgia', serif; /* Classic serif for quote mark */
-    font-size: 7em; /* Adjusted size */
-    color: rgba(255, 255, 255, 0.03); /* Very subtle, almost invisible */
-    position: absolute;
-    top: -20px; /* Adjusted position */
-    left: 5px;
-    z-index: 0;
-    pointer-events: none;
-}
-.doctrine-quote blockquote {
-    margin: 0;
-    position: relative;
-    z-index: 1;
-}
-.doctrine-quote footer {
-    margin-top: 1.5rem;
-    font-style: normal;
-    font-weight: 500;
-    text-align: right;
-    color: #A0A0A0; /* Muted footer text */
-    font-size: 0.95em;
-}
-.doctrine-quote a {
-    color: var(--blue-accent);
-    text-decoration: none;
-    border-bottom: 1px solid rgba(0, 86, 143, 0.5); /* Solid but subtle line */
-    transition: color 0.3s ease, border-color 0.3s ease;
-}
-.doctrine-quote a:hover {
-    color: var(--text-color);
-    border-bottom-color: var(--text-color);
-}
-
-/* Data grids for cases and resources */
-.data-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); /* Slightly larger min column width */
-    gap: 1.8rem; /* Slightly reduced gap */
-}
-.data-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    padding: 1.8rem; /* Refined padding */
-    transition: border-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-    box-shadow: var(--subtle-shadow);
-    border-radius: 6px; /* Less rounded corners */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-.data-card:hover {
-    border-color: var(--red-accent);
-    transform: translateY(-5px); /* Subtler lift effect */
-    box-shadow: var(--hover-shadow);
-}
-.data-card h3 {
-    font-family: var(--header-font);
-    font-size: 1.35rem; /* Refined size */
-    margin-top: 0;
-    margin-bottom: 0.6rem;
-    color: var(--text-color);
-    transition: color 0.3s ease;
-}
-.data-card a {
-    color: var(--text-color);
-    text-decoration: none;
-}
-.data-card a:hover h3 {
-    color: var(--red-accent);
-}
-.card-meta {
-    font-size: 0.8rem; /* Slightly smaller */
-    color: #888; /* Darker meta text */
-    text-transform: uppercase;
-    margin-bottom: 1rem; /* Slightly reduced */
-    letter-spacing: 0.8px;
-}
-.card-meta .status {
-    font-weight: bold;
-    color: var(--red-accent); /* Keep red for ACTIVE */
-    background-color: rgba(165, 42, 42, 0.15); /* More subtle background for status */
-    padding: 0.2em 0.4em;
-    border-radius: 3px;
-    font-size: 0.7em;
-    display: inline-block;
-    margin-left: 0.4rem; /* Slightly reduced */
-}
-/* Specific status colors (refined) */
-.status.RESOLVED {
-    color: #2e8b57; /* Darker green */
-    background-color: rgba(46, 139, 87, 0.15);
-}
-.status.UNDER.REVIEW {
-    color: #d19a3b; /* Muted yellow-orange */
-    background-color: rgba(209, 154, 59, 0.15);
-}
-.status.ACTIVE {
-    color: var(--red-accent);
-    background-color: rgba(165, 42, 42, 0.15);
-}
-
-.data-card p {
-    flex-grow: 1;
-    margin-bottom: 0;
-    color: #CFCFCF; /* Slightly lighter text within cards */
-}
-
-/* Footer */
-.site-footer {
-    text-align: center;
-    padding: 2.5rem 0;
-    border-top: 1px solid var(--red-accent); /* Thinner accent line */
-    margin-top: 3.5rem;
-    font-size: 0.85rem; /* Slightly smaller footer text */
-    color: #888; /* Darker footer text */
-    animation: fadeIn 1.8s ease-out;
-}
-.site-footer p {
-    margin: 0.4rem 0;
-}
-
-/* --- AI Search Section Styles --- */
-.ai-search-section {
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    padding: 2.8rem; /* Refined padding */
-    margin-bottom: 5rem;
-    border-radius: 8px;
-    box-shadow: var(--subtle-shadow);
-}
-
-.ai-input-group {
-    display: flex;
-    gap: 0.8rem; /* Tighter gap */
-    margin-top: 1.8rem;
-    margin-bottom: 2.2rem;
-    flex-wrap: wrap;
-}
-
-#ai-query-input {
-    flex-grow: 1;
-    padding: 0.9rem 1.1rem; /* Refined padding */
-    background: #0A0A0A;
-    border: 1px solid #282828; /* Slightly darker border */
-    border-radius: 4px;
-    color: var(--text-color);
-    font-size: 1rem; /* Slightly smaller font */
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-#ai-query-input::placeholder {
-    color: #666; /* Softer placeholder */
-    font-style: normal; /* No italic for formality */
-}
-
-#ai-query-input:focus {
-    outline: none;
-    border-color: var(--blue-accent); /* Blue glow on focus for technical feel */
-    box-shadow: var(--blue-glow); /* Blue glow */
-}
-
-#ai-query-button {
-    padding: 0.9rem 1.8rem; /* Refined padding */
-    background: var(--red-accent);
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 1rem;
-    font-weight: 600; /* Bolder for impact */
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
-}
-
-#ai-query-button:hover {
-    background-color: #8C2323; /* Darker red on hover */
-    transform: translateY(-1px); /* Subtler lift */
-    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.4);
-}
-
-#ai-query-button:active {
-    transform: translateY(0);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-}
-
-.ai-response-area {
-    background: #111111; /* Matches doctrine quote background */
-    border: 1px solid var(--border-color); /* Solid border for formal response */
-    padding: 1.6rem;
-    min-height: 160px; /* Slightly more minimum height */
-    border-radius: 4px;
-    font-size: 1rem; /* Adjusted font size */
-    color: #D3D3D3; /* Softer response text */
-    line-height: 1.7;
-    overflow-y: auto;
-    max-height: 450px; /* Increased max height */
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2); /* Inner shadow for depth */
-}
-
-.ai-response-area p {
-    margin-bottom: 1rem;
-}
-
-.ai-placeholder {
-    color: #777;
-    font-style: normal; /* Not italic for formality */
-    text-align: center;
-    padding-top: 50px;
-}
-
-/* Loading Indicator (Shared) */
-.ai-loading-indicator {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem;
-    color: var(--red-accent);
-    font-weight: 500; /* Lighter weight */
-    font-size: 1rem;
+    width: 100%;
     gap: 10px;
 }
 
-.ai-loading-indicator.hidden {
-    display: none;
+.search-input {
+    flex-grow: 1;
+    padding: 12px 18px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background-color: var(--background-color); /* Darker input field */
+    color: var(--text-color);
+    font-size: 1.1em;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.spinner {
-    border: 3px solid rgba(255, 255, 255, 0.2); /* Thinner, subtler border */
-    border-top: 3px solid var(--red-accent);
-    border-radius: 50%;
-    width: 30px; /* Smaller spinner */
-    height: 30px;
-    animation: spin 1s linear infinite;
+.search-input::placeholder {
+    color: var(--placeholder-color);
 }
 
-/* --- Styles for AI Summary Modal --- */
-.ai-summary-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.8); /* Denser, darker overlay */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
+.search-input:focus {
+    border-color: var(--link-color);
+    box-shadow: 0 0 0 2px rgba(0, 119, 182, 0.3); /* Subtle blue focus glow */
 }
 
-.ai-summary-modal.visible {
-    opacity: 1;
-    visibility: visible;
-}
-
-.modal-content {
-    background: var(--background-color);
-    border: 1px solid var(--red-accent); /* Thinner accent border */
-    border-radius: 8px;
-    padding: 2.8rem;
-    width: 90%;
-    max-width: 750px; /* Slightly narrower modal for focused content */
-    position: relative;
-    box-shadow: var(--red-glow); /* Subtler glow */
-    transform: scale(0.95); /* Subtler zoom in */
-    transition: transform 0.3s ease;
-}
-
-.ai-summary-modal.visible .modal-content {
-    transform: scale(1);
-}
-
-.modal-content h3 {
-    font-family: var(--header-font);
-    font-size: 1.6rem; /* Refined title size */
-    color: var(--red-accent);
-    margin-bottom: 1.2rem;
-    text-align: center;
-    border-bottom: 1px solid rgba(165, 42, 42, 0.3); /* Subtle separator */
-    padding-bottom: 0.8rem;
-}
-
-.modal-content #modal-summary-content {
-    background: #111111; /* Matches quote/response area background */
-    border: 1px solid #282828;
-    border-radius: 4px;
-    padding: 1.5rem;
-    min-height: 150px;
-    max-height: 350px; /* Slightly reduced max height for tighter feel */
-    overflow-y: auto;
-    line-height: 1.7;
-    color: #D3D3D3;
-    font-size: 1rem;
-    white-space: pre-wrap;
-    box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.15); /* Inner shadow */
-}
-
-.close-button {
-    position: absolute;
-    top: 0.8rem; /* Adjusted position */
-    right: 1rem; /* Adjusted position */
-    color: #AAA; /* Softer color */
-    font-size: 1.8rem; /* Slightly smaller close button */
-    font-weight: normal;
-    cursor: pointer;
-    transition: color 0.3s ease, transform 0.2s ease;
-    z-index: 10;
-}
-
-.close-button:hover {
-    color: var(--red-accent);
-    transform: rotate(90deg);
-}
-
-/* Styles for the new "Summarize Case" buttons */
-.summarize-case-button {
-    background-color: var(--blue-accent);
+.search-button {
+    padding: 12px 25px;
+    background-color: var(--link-color);
     color: white;
     border: none;
-    padding: 0.7rem 1.2rem; /* Refined padding */
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.85rem; /* Slightly smaller font */
+    border-radius: 6px;
+    font-size: 1.1em;
     font-weight: 500;
-    margin-top: 1.2rem; /* More space from description */
+    cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-    align-self: flex-start;
-    letter-spacing: 0.4px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    flex-shrink: 0; /* Prevent button from shrinking */
 }
 
-.summarize-case-button:hover {
-    background-color: #004573; /* Darker blue on hover */
+.search-button:hover {
+    background-color: var(--link-hover-color);
     transform: translateY(-1px);
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 3px 8px var(--shadow-color);
 }
 
-.summarize-case-button:active {
+.search-button:active {
     transform: translateY(0);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    box-shadow: none;
 }
 
+/* --- Search Results Section --- */
+.results-section {
+    width: 100%;
+    max-width: 700px; /* Match search container width */
+}
+
+.result-card {
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.result-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.result-card h3 {
+    font-family: var(--heading-font);
+    font-size: 1.3em;
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: var(--link-color);
+}
+
+.result-card .url {
+    font-family: var(--monospace-font);
+    font-size: 0.85em;
+    color: #999;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.result-card p {
+    font-size: 0.95em;
+    line-height: 1.6;
+    color: #D0D0D0;
+}
+
+/* --- Pagination --- */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+    gap: 10px;
+}
+
+.pagination-button {
+    padding: 10px 18px;
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    color: var(--text-color);
+    font-size: 0.95em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.pagination-button:hover {
+    background-color: var(--link-color);
+    color: white;
+    border-color: var(--link-color);
+}
+
+.pagination-button.active {
+    background-color: var(--accent-red);
+    color: white;
+    border-color: var(--accent-red);
+    font-weight: bold;
+    cursor: default;
+}
+
+.pagination-button.active:hover {
+    background-color: var(--accent-red); /* Keep active color on hover */
+    color: white;
+    border-color: var(--accent-red);
+}
 
 /* --- Responsive Adjustments --- */
 @media (max-width: 768px) {
-    .site-header {
+    body {
+        padding: 15px;
+    }
+    .search-container {
+        padding: 20px;
+    }
+    .search-logo {
+        font-size: 2em;
+    }
+    .search-input-group {
         flex-direction: column;
-        align-items: center;
+        gap: 15px;
+    }
+    .search-button {
+        width: 100%;
         text-align: center;
     }
-    .logo, .main-nav {
-        margin-bottom: 1.2rem;
+    .result-card {
+        padding: 15px;
     }
-    .logo-text h1 {
-        font-size: 1.5rem;
+    .result-card h3 {
+        font-size: 1.2em;
     }
-    .logo-text span {
-        font-size: 0.8rem;
+    .result-card p {
+        font-size: 0.9em;
     }
-    .main-nav {
-        flex-direction: column;
-        width: 100%;
-    }
-    .main-nav a {
-        margin: 0.4rem 0;
-        padding: 0.4rem 0;
-        text-align: center;
-        width: 100%;
-    }
-    .main-nav a::after {
-        left: 50%;
-        transform: translateX(-50%) scaleX(0);
-        transform-origin: center;
-    }
-    .data-grid {
-        grid-template-columns: 1fr;
-    }
-    .section-title {
-        font-size: 1.9rem;
-    }
-    .doctrine-quote, .data-card, .ai-search-section {
-        padding: 1.8rem;
-    }
-    .modal-content {
-        padding: 2rem;
-        width: 95%;
-    }
-    .modal-content h3 {
-        font-size: 1.5rem;
-    }
-    .modal-content #modal-summary-content {
-        padding: 1rem;
-        font-size: 0.95rem;
-        max-height: 280px;
+    .pagination {
+        flex-wrap: wrap;
     }
 }
 
 @media (max-width: 480px) {
-    .container {
-        padding: 1.2rem;
+    body {
+        padding: 10px;
     }
-    .site-header {
-        padding-bottom: 1rem;
-        margin-bottom: 2.5rem;
+    .search-container {
+        padding: 15px;
     }
-    .logo svg {
-        width: 45px;
-        height: 45px;
+    .search-logo {
+        font-size: 1.8em;
+        margin-bottom: 20px;
     }
-    .logo-text h1 {
-        font-size: 1.3rem;
+    .search-input {
+        font-size: 1em;
+        padding: 10px 15px;
     }
-    .logo-text span {
-        font-size: 0.7rem;
+    .search-button {
+        font-size: 1em;
+        padding: 10px 20px;
     }
-    .section {
-        margin-bottom: 3.5rem;
-        padding-top: 2rem;
+    .result-card {
+        margin-bottom: 15px;
     }
-    .section-title {
-        font-size: 1.6rem;
-    }
-    .doctrine-quote {
-        padding: 1.5rem;
-        font-size: 0.95rem;
-        margin: 2.5rem 0;
-    }
-    .doctrine-quote::before {
-        font-size: 5em;
-        top: -10px;
-    }
-    .data-card {
-        padding: 1.5rem;
-    }
-    .data-card h3 {
-        font-size: 1.2rem;
-    }
-    .card-meta {
-        font-size: 0.75rem;
-    }
-    .ai-search-section {
-        padding: 1.5rem;
-    }
-    #ai-query-input {
-        font-size: 0.95rem;
-        padding: 0.7rem 0.9rem;
-    }
-    #ai-query-button {
-        font-size: 0.95rem;
-        padding: 0.7rem 1.2rem;
-    }
-    .ai-response-area {
-        min-height: 100px;
-        font-size: 0.9rem;
-        padding: 1rem;
-    }
-    .modal-content {
-        padding: 1.5rem;
-    }
-    .modal-content h3 {
-        font-size: 1.3rem;
-        margin-bottom: 0.8rem;
-    }
-    .modal-content #modal-summary-content {
-        padding: 0.8rem;
-        font-size: 0.85rem;
-        max-height: 200px;
-    }
-    .close-button {
-        font-size: 1.5rem;
-        top: 0.6rem;
-        right: 0.8rem;
-    }
-    .summarize-case-button {
-        font-size: 0.8rem;
-        padding: 0.6rem 0.9rem;
+    .result-card h3 {
+        font-size: 1.1em;
     }
 }
