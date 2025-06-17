@@ -1,231 +1,299 @@
-/* Dark & Sophisticated Bing-like Style */
+/*
+    Dark & Sophisticated Bing-like Style
+    - Deep dark backgrounds, subtle lighter surfaces.
+    - Prominent Microsoft Blue for links and highlights.
+    - Soft, diffuse shadows.
+    - Clean typography with Inter font.
+*/
 
-/* Inheriting and adapting variables from the Ministry of Digital Sovereignty portal */
+/* --- CSS Variables: The Bing.com Dark Mode Palette --- */
 :root {
-    --background-color: #0E0E0E; /* Dark background */
-    --surface-color: #1A1A1A; /* Slightly lighter surfaces like search bars/cards */
-    --text-color: #E8E8E8; /* Main text color */
-    --placeholder-color: #888888; /* Soft placeholder text */
-    --link-color: #0077B6; /* Blue for links, like current blue-accent */
-    --link-hover-color: #0099D0; /* Lighter blue on hover */
-    --accent-red: #A52A2A; /* For highlights or active states, like current red-accent */
-    --border-color: #2F2F2F; /* Subtle borders */
-    --shadow-color: rgba(0, 0, 0, 0.4); /* For subtle shadows */
+    /* Colors (Inspired by Bing's dark theme) */
+    --bing-bg: #111116;             /* Deep dark blue-grey for main background */
+    --bing-surface-mid: #1A1A1F;    /* Slightly lighter surface for cards, search bars */
+    --bing-surface-light: #202026;  /* Even lighter for interactive elements (hover states etc.) */
+    
+    --bing-text-primary: #E0E0E0;   /* Soft white for main content text */
+    --bing-text-secondary: #AAAAAA; /* Muted gray for placeholder text, URLs, descriptions */
+    --bing-text-dimmed: #77777D;    /* Even more subtle for less important details */
 
-    --heading-font: 'Merriweather', serif; /* Elegant serif for important headings */
-    --body-font: 'Inter', sans-serif; /* Clean sans-serif for general text */
-    --monospace-font: 'Roboto Mono', monospace; /* For code or technical details */
+    --bing-accent-blue: #0078D4;    /* Microsoft's signature blue for links/active */
+    --bing-accent-blue-hover: #0099FF; /* Brighter blue on hover */
+    --bing-accent-green: #10A38D;   /* Bing's AI/action green (e.g., for search button in some contexts) */
+    --bing-accent-green-hover: #1DC1A4; /* Lighter green on hover */
+    --bing-accent-red: #A52A2A;     /* Used for 'active' pagination from your original (can be repurposed) */
+
+    --bing-border-subtle: #2A2A30;  /* Very dark, almost invisible border for structure */
+    --bing-border-focus: var(--bing-accent-blue); /* Blue border for input focus */
+
+    /* Shadows (Extremely subtle, diffused, common in dark UIs) */
+    --bing-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.2);
+    --bing-shadow-md: 0 4px 10px rgba(0, 0, 0, 0.3);
+    --bing-shadow-lg: 0 8px 25px rgba(0, 0, 0, 0.4); /* Deeper shadows for interactive lift */
+
+    /* Typography */
+    --bing-font-heading: 'Inter', sans-serif;    /* Keep Inter for headings - clean sans-serif is Bing-like */
+    --bing-font-body: 'Inter', sans-serif;       /* Keep Inter for body - consistent, clean, modern */
+    --bing-font-monospace: 'Roboto Mono', monospace; /* For code or technical details */
+
+    /* Spacing & Radii */
+    --bing-spacing-xs: 4px;
+    --bing-spacing-sm: 8px;
+    --bing-spacing-md: 12px;
+    --bing-spacing-lg: 20px;
+    --bing-spacing-xl: 30px;
+    --bing-spacing-xxl: 40px;
+
+    --bing-radius-sm: 4px;
+    --bing-radius-md: 8px;
+    --bing-radius-lg: 24px; /* More rounded elements if desired */
+
+    /* Transitions */
+    --bing-transition-default: 0.3s ease-out; /* Standard smooth transition */
+    --bing-transition-fast: 0.2s ease-in-out; /* Faster transitions for immediate feedback */
 }
 
-/* Base styles for the page */
+/* --- Base Styles and Global Resets --- */
 body {
-    font-family: var(--body-font);
-    background-color: var(--background-color);
-    color: var(--text-color);
+    font-family: var(--bing-font-body);
+    background-color: var(--bing-bg);
+    color: var(--bing-text-primary);
     margin: 0;
-    padding: 20px; /* Some padding around the entire content */
+    padding: var(--bing-spacing-xl); /* Generous padding around the entire content */
     display: flex;
     flex-direction: column;
     align-items: center;
     min-height: 100vh;
     box-sizing: border-box;
+    -webkit-font-smoothing: antialiased; /* Smoother font rendering for macOS */
+    -moz-osx-font-smoothing: grayscale; /* Smoother font rendering for Firefox on macOS */
+    line-height: 1.6; /* Improved readability for body text */
 }
 
+/* Remove default link underline and add transition */
 a {
-    color: var(--link-color);
+    color: var(--bing-accent-blue);
     text-decoration: none;
-    transition: color 0.3s ease;
+    transition: color var(--bing-transition-default);
 }
 
+/* Slightly brighter blue and subtle underline on hover */
 a:hover {
-    color: var(--link-hover-color);
-    text-decoration: underline;
+    color: var(--bing-accent-blue-hover);
+    text-decoration: underline; /* Bing often has a subtle underline on hover */
 }
+
+/* Default Heading styles */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--bing-font-heading);
+    color: var(--bing-text-primary);
+    font-weight: 600; /* Medium-bold for Inter headings */
+    margin-top: 1.5em; /* Spacing above headings */
+    margin-bottom: 0.8em; /* Spacing below headings */
+}
+
+/* Paragraph styles for consistency */
+p {
+    color: var(--bing-text-primary);
+    margin-bottom: var(--bing-spacing-md);
+}
+
 
 /* --- Main Search Container --- */
 .search-container {
-    background-color: var(--surface-color);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    box-shadow: 0 5px 20px var(--shadow-color);
-    padding: 30px;
+    background-color: var(--bing-surface-mid);
+    border: 1px solid var(--bing-border-subtle);
+    border-radius: var(--bing-radius-md);
+    box-shadow: var(--bing-shadow-md); /* Subtle depth */
+    padding: var(--bing-spacing-xxl); /* Generous padding */
     width: 100%;
-    max-width: 700px; /* Constrain search area width */
+    max-width: 700px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 40px;
-    animation: fadeIn 0.8s ease-out;
+    margin-bottom: var(--bing-spacing-xxl);
+    animation: fadeIn 0.8s var(--bing-transition-default); /* Apply fade-in on load */
 }
 
+/* Simple fade-in animation for initial load */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
+/* Search Logo (e.g., for your search engine's name) */
 .search-logo {
-    font-family: var(--heading-font);
-    font-size: 2.5em;
-    color: var(--text-color);
-    margin-bottom: 25px;
-    letter-spacing: 1px;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+    font-family: var(--bing-font-heading); /* Use heading font for logo */
+    font-size: 2.8em; /* Slightly larger, adjusted */
+    color: var(--bing-text-primary);
+    margin-bottom: var(--bing-spacing-xxl); /* More space below logo */
+    letter-spacing: 0.5px; /* Subtle letter spacing */
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.05); /* Very soft white glow */
+    font-weight: 700; /* Ensure it's strong */
 }
 
 .search-input-group {
     display: flex;
     width: 100%;
-    gap: 10px;
+    gap: var(--bing-spacing-md); /* Consistent gap between input and button */
 }
 
 .search-input {
     flex-grow: 1;
-    padding: 12px 18px;
-    border: 1px solid var(--border-color);
-    border-radius: 6px;
-    background-color: var(--background-color); /* Darker input field */
-    color: var(--text-color);
+    padding: var(--bing-spacing-md) var(--bing-spacing-lg); /* Generous input padding */
+    border: 1px solid var(--bing-border-subtle);
+    border-radius: var(--bing-radius-md);
+    background-color: var(--bing-bg); /* Input background slightly darker than container */
+    color: var(--bing-text-primary);
     font-size: 1.1em;
     outline: none;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    transition: border-color var(--bing-transition-fast), box-shadow var(--bing-transition-fast);
 }
 
 .search-input::placeholder {
-    color: var(--placeholder-color);
+    color: var(--bing-text-secondary); /* Use muted text color for placeholders */
 }
 
 .search-input:focus {
-    border-color: var(--link-color);
-    box-shadow: 0 0 0 2px rgba(0, 119, 182, 0.3); /* Subtle blue focus glow */
+    border-color: var(--bing-accent-blue); /* Clear blue border on focus */
+    box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.4); /* A more subtle, Bing-like blue focus glow */
 }
 
+/* Search Button */
 .search-button {
-    padding: 12px 25px;
-    background-color: var(--link-color);
-    color: white;
+    padding: var(--bing-spacing-md) var(--bing-spacing-lg);
+    background-color: var(--bing-accent-blue); /* Bing's blue button */
+    color: white; /* White text on blue button */
     border: none;
-    border-radius: 6px;
+    border-radius: var(--bing-radius-md);
     font-size: 1.1em;
     font-weight: 500;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-    flex-shrink: 0; /* Prevent button from shrinking */
+    transition: background-color var(--bing-transition-fast), transform var(--bing-transition-fast), box-shadow var(--bing-transition-fast);
+    flex-shrink: 0; /* Prevents button from shrinking in flex container */
+    letter-spacing: 0.5px;
 }
 
 .search-button:hover {
-    background-color: var(--link-hover-color);
-    transform: translateY(-1px);
-    box-shadow: 0 3px 8px var(--shadow-color);
+    background-color: var(--bing-accent-blue-hover); /* Brighter blue on hover */
+    transform: translateY(-1px); /* Subtle lift */
+    box-shadow: var(--bing-shadow-sm); /* Subtle shadow on lift */
 }
 
 .search-button:active {
-    transform: translateY(0);
-    box-shadow: none;
+    transform: translateY(0); /* Press effect */
+    background-color: color-mix(in srgb, var(--bing-accent-blue) 90%, black); /* Slightly darker when pressed */
+    box-shadow: none; /* No shadow when pressed */
 }
 
 /* --- Search Results Section --- */
 .results-section {
     width: 100%;
-    max-width: 700px; /* Match search container width */
+    max-width: 700px; /* Match search container width for alignment */
 }
 
 .result-card {
-    background-color: var(--surface-color);
-    border: 1px solid var(--border-color);
-    border-radius: 6px;
-    padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    background-color: var(--bing-surface-mid); /* Match search container surface */
+    border: 1px solid var(--bing-border-subtle);
+    border-radius: var(--bing-radius-md);
+    padding: var(--bing-spacing-lg); /* Generous padding */
+    margin-bottom: var(--bing-spacing-lg); /* Consistent spacing between cards */
+    box-shadow: var(--bing-shadow-sm); /* Very light shadow */
+    transition: transform var(--bing-transition-fast), box-shadow var(--bing-transition-fast);
 }
 
 .result-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    transform: translateY(-3px); /* Subtle lift on hover */
+    box-shadow: var(--bing-shadow-md); /* More pronounced shadow on lift */
 }
 
 .result-card h3 {
-    font-family: var(--heading-font);
+    font-family: var(--bing-font-heading);
     font-size: 1.3em;
     margin-top: 0;
-    margin-bottom: 10px;
-    color: var(--link-color);
+    margin-bottom: var(--bing-spacing-xs); /* Tighter spacing below title */
+    color: var(--bing-accent-blue); /* Result titles are distinct blue links */
 }
 
 .result-card .url {
-    font-family: var(--monospace-font);
+    font-family: var(--bing-font-monospace); /* Monospace for URLs is good */
     font-size: 0.85em;
-    color: #999;
-    margin-bottom: 10px;
-    display: block;
+    color: var(--bing-text-secondary); /* Muted gray for URLs */
+    margin-bottom: var(--bing-spacing-md);
+    display: block; /* Ensures it takes its own line */
+    word-break: break-all; /* Prevents long URLs from overflowing */
 }
 
 .result-card p {
     font-size: 0.95em;
     line-height: 1.6;
-    color: #D0D0D0;
+    color: var(--bing-text-primary); /* Main text color for snippets */
+    margin-bottom: 0; /* Remove bottom margin for last paragraph in card */
 }
 
 /* --- Pagination --- */
 .pagination {
     display: flex;
     justify-content: center;
-    margin-top: 40px;
-    gap: 10px;
+    margin-top: var(--bing-spacing-xxl);
+    gap: var(--bing-spacing-md); /* Consistent gap between buttons */
 }
 
 .pagination-button {
-    padding: 10px 18px;
-    background-color: var(--surface-color);
-    border: 1px solid var(--border-color);
-    border-radius: 5px;
-    color: var(--text-color);
+    padding: var(--bing-spacing-md) var(--bing-spacing-lg);
+    background-color: var(--bing-surface-mid); /* Matches card background */
+    border: 1px solid var(--bing-border-subtle);
+    border-radius: var(--bing-radius-md); /* More pill-like/rounded shape */
+    color: var(--bing-text-primary);
     font-size: 0.95em;
     cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    transition: background-color var(--bing-transition-fast), color var(--bing-transition-fast), border-color var(--bing-transition-fast);
+    font-weight: 500;
 }
 
 .pagination-button:hover {
-    background-color: var(--link-color);
-    color: white;
-    border-color: var(--link-color);
+    background-color: var(--bing-surface-light); /* Lighter dark on hover */
+    color: var(--bing-accent-blue); /* Text turns blue on hover */
+    border-color: var(--bing-accent-blue); /* Border turns blue */
 }
 
 .pagination-button.active {
-    background-color: var(--accent-red);
+    background-color: var(--bing-accent-blue); /* Active uses Bing blue */
     color: white;
-    border-color: var(--accent-red);
+    border-color: var(--bing-accent-blue);
     font-weight: bold;
-    cursor: default;
+    cursor: default; /* No pointer on active button */
 }
 
 .pagination-button.active:hover {
-    background-color: var(--accent-red); /* Keep active color on hover */
+    background-color: var(--bing-accent-blue); /* Active state doesn't change on hover */
     color: white;
-    border-color: var(--accent-red);
+    border-color: var(--bing-accent-blue);
 }
 
 /* --- Responsive Adjustments --- */
 @media (max-width: 768px) {
     body {
-        padding: 15px;
+        padding: var(--bing-spacing-lg); /* Reduced padding on smaller screens */
     }
     .search-container {
-        padding: 20px;
+        padding: var(--bing-spacing-xl);
     }
     .search-logo {
-        font-size: 2em;
+        font-size: 2.2em;
+        margin-bottom: var(--bing-spacing-xl);
     }
     .search-input-group {
-        flex-direction: column;
-        gap: 15px;
+        flex-direction: column; /* Stack input and button vertically */
+        gap: var(--bing-spacing-lg);
     }
     .search-button {
-        width: 100%;
+        width: 100%; /* Make button full width when stacked */
         text-align: center;
     }
     .result-card {
-        padding: 15px;
+        padding: var(--bing-spacing-md);
+        margin-bottom: var(--bing-spacing-md);
     }
     .result-card h3 {
         font-size: 1.2em;
@@ -234,31 +302,33 @@ a:hover {
         font-size: 0.9em;
     }
     .pagination {
-        flex-wrap: wrap;
+        flex-wrap: wrap; /* Allow pagination buttons to wrap */
+        gap: var(--bing-spacing-sm);
+        margin-top: var(--bing-spacing-xl);
     }
 }
 
 @media (max-width: 480px) {
     body {
-        padding: 10px;
+        padding: var(--bing-spacing-md);
     }
     .search-container {
-        padding: 15px;
+        padding: var(--bing-spacing-lg);
     }
     .search-logo {
-        font-size: 1.8em;
-        margin-bottom: 20px;
+        font-size: 2em;
+        margin-bottom: var(--bing-spacing-lg);
     }
     .search-input {
         font-size: 1em;
-        padding: 10px 15px;
+        padding: var(--bing-spacing-sm) var(--bing-spacing-md);
     }
     .search-button {
         font-size: 1em;
-        padding: 10px 20px;
+        padding: var(--bing-spacing-sm) var(--bing-spacing-md);
     }
     .result-card {
-        margin-bottom: 15px;
+        margin-bottom: var(--bing-spacing-md);
     }
     .result-card h3 {
         font-size: 1.1em;
