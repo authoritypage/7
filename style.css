@@ -1,6 +1,6 @@
 /*
 ================================================================================
-OFFICIAL PORTAL STYLESHEET - MINISTRY OF DIGITAL SOVEREIGNTY (LIGHT THEME V2)
+OFFICIAL PORTAL STYLESHEET - MINISTRY OF DIGITAL SOVEREIGNTY (V4 - POLISHED)
 ================================================================================
 */
 
@@ -9,32 +9,33 @@ OFFICIAL PORTAL STYLESHEET - MINISTRY OF DIGITAL SOVEREIGNTY (LIGHT THEME V2)
 */
 :root {
     /* Color Palette */
-    --background-color: #f8f9fa; /* Off-white, clean background */
+    --background-color: #f8f9fa;
     --card-background: #ffffff;
-    --text-color: #212529; /* Dark, readable text */
+    --text-color: #212529;
     --heading-color: #343a40;
-    --primary-blue: #0d47a1; /* Strong, official blue */
+    --primary-blue: #0d47a1;
     --primary-blue-hover: #0b3c8a;
-    --border-color: #dee2e6; /* Subtle border for cards and sections */
-    --red-accent: #b31b1b; /* Official red for accents */
-    --gray-text: #6c757d; /* For metadata and secondary text */
+    --border-color: #dee2e6;
+    --red-accent: #b31b1b;
+    --gray-text: #6c757d;
 
-    /* Typography */
-    --font-heading: 'Roboto Slab', serif;
+    /* Typography - NEW FONT for headings */
+    --font-heading: 'Merriweather', serif;
     --font-body: 'Inter', sans-serif;
 }
 
 body {
     font-family: var(--font-body);
     color: var(--text-color);
-    /* Adding the background image */
     background-image: url('https://media.istockphoto.com/id/178581840/photo/santa-barbara-promenade-with-the-lighthouse-over-mountains.jpg?s=612x612&w=0&k=20&c=yO0f0GcEdH0hOEX0dHha-MkmakonkRX54Na4KiW4wSs=');
-    background-size: cover; /* Cover the entire page */
-    background-position: center center; /* Center the image */
-    background-attachment: fixed; /* Creates a nice parallax effect */
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
     line-height: 1.7;
     margin: 0;
     padding: 0;
+    /* Add a subtle shadow to text to improve readability against the background */
+    text-shadow: 0 0 4px rgba(255, 255, 255, 0.5);
 }
 
 /* 2. Container and Layout
@@ -44,12 +45,11 @@ body {
     max-width: 1100px;
     margin: 0 auto;
     padding: 0 2rem;
-    /* Add a semi-transparent background to ensure text readability over the image */
-    background-color: rgba(248, 249, 250, 0.97); 
-    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    /* REDUCED OPACITY to make background more visible */
+    background-color: rgba(248, 249, 250, 0.92); 
+    box-shadow: 0 0 25px rgba(0,0,0,0.15);
 }
 
-/* Remove canvas background */
 #canvas-bg {
     display: none;
 }
@@ -76,7 +76,6 @@ body {
     height: 60px;
     margin-right: 15px;
 }
-/* Update SVG colors to match the theme */
 .logo svg path {
     stroke: var(--heading-color);
 }
@@ -89,6 +88,7 @@ body {
     font-size: 1.75rem;
     color: var(--heading-color);
     margin: 0;
+    text-shadow: none; /* Remove body text-shadow from main heading */
 }
 
 .logo-text span {
@@ -130,6 +130,7 @@ body {
     border-bottom: 1px solid var(--border-color);
     padding-bottom: 0.75rem;
     margin-bottom: 1.5rem;
+    text-shadow: none; /* Remove body text-shadow from section titles */
 }
 
 a {
@@ -151,15 +152,14 @@ a:hover {
 }
 
 .data-card {
-    background-color: #f8f9fa; /* Slightly different from section bg */
+    background-color: var(--background-color);
     border: 1px solid var(--border-color);
     border-radius: 4px;
-    /* Remove padding from the card itself to let the image touch the edges */
-    padding: 0; 
+    padding: 1.5rem;
     display: flex;
     flex-direction: column;
     transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
-    overflow: hidden; /* Important for the image's border-radius */
+    overflow: hidden;
 }
 
 .data-card:hover {
@@ -167,18 +167,12 @@ a:hover {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-/* NEW: Styles for the card image */
 .card-image {
-    width: 100%;
-    height: 180px; /* Gives a consistent height to all card images */
-    object-fit: cover; /* Ensures the image covers the area without distortion */
+    width: calc(100% + 3rem);
+    height: 180px;
+    object-fit: cover;
     display: block;
-}
-
-/* Add padding back to the text content of the card */
-.data-card a, .data-card button {
-    margin-left: 1.5rem;
-    margin-right: 1.5rem;
+    margin: -1.5rem -1.5rem 1.5rem -1.5rem;
 }
 
 .data-card a {
@@ -187,9 +181,7 @@ a:hover {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    padding-top: 1.5rem;
 }
-
 
 .data-card h3 {
     font-family: var(--font-heading);
@@ -208,16 +200,26 @@ a:hover {
     color: var(--gray-text);
     font-weight: 500;
     text-transform: uppercase;
-    margin-bottom: 1rem !important; /* Override p margin */
+    margin-bottom: 1rem !important;
 }
 
 /* 6. Buttons and Inputs
 --------------------------------------------------------------------------------
 */
-button, input[type="text"] {
-    font-family: var(--font-body);
-    border-radius: 4px;
-    border: 1px solid var(--border-color);
+.summarize-case-button {
+    background-color: #fff;
+    color: var(--primary-blue);
+    border: 1px solid var(--primary-blue);
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    margin-top: auto;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.summarize-case-button:hover {
+    background-color: var(--primary-blue);
+    color: #fff;
 }
 
 #ai-query-button {
@@ -234,23 +236,6 @@ button, input[type="text"] {
     background-color: var(--primary-blue-hover);
 }
 
-.summarize-case-button {
-    background-color: #fff;
-    color: var(--primary-blue);
-    border: 1px solid var(--primary-blue);
-    font-weight: 500;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    margin-top: auto;
-    margin-bottom: 1.5rem; /* Add bottom margin */
-    transition: background-color 0.2s, color 0.2s;
-}
-
-.summarize-case-button:hover {
-    background-color: var(--primary-blue);
-    color: #fff;
-}
-
 .ai-input-group {
     display: flex;
     gap: 1rem;
@@ -261,47 +246,28 @@ button, input[type="text"] {
     width: 100%;
     padding: 0.75rem;
     font-size: 1rem;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
 }
 
-/* 7. Specific Components (Doctrine Quote, Status, etc.)
+/* 7. Specific Components
 --------------------------------------------------------------------------------
 */
 .doctrine-quote {
-    background-color: var(--background-color);
+    background-color: #e9ecef;
     border-left: 4px solid var(--primary-blue);
     padding: 1.5rem;
     margin: 1.5rem 0;
 }
 
-.doctrine-quote blockquote {
-    margin: 0;
-    font-style: italic;
-    font-size: 1.1rem;
+.doctrine-quote blockquote, .doctrine-quote footer {
+    text-shadow: none;
 }
 
-.doctrine-quote footer {
-    text-align: right;
-    margin-top: 1rem;
-    font-style: normal;
-    font-weight: 500;
-}
-
-.status {
-    font-weight: 700;
-}
-
+.status { font-weight: 700; }
 .status.RESOLVED { color: #28a745; }
 .status.UNDER\.REVIEW { color: #fd7e14; }
 .status.ACTIVE { color: var(--red-accent); }
-
-/* AI Response and Modal styles remain largely unchanged */
-.ai-response-area, .ai-placeholder {
-    background-color: #f8f9fa;
-    border: 1px solid #dee2e6;
-    border-radius: 4px;
-    padding: 1.5rem;
-    min-height: 100px;
-}
 .hidden { display: none; }
 .spinner {
     border: 4px solid rgba(0, 0, 0, 0.1);
@@ -312,12 +278,6 @@ button, input[type="text"] {
     animation: spin 1s ease infinite;
 }
 @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-.ai-loading-indicator {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    color: var(--gray-text);
-}
 
 /* 8. Footer
 --------------------------------------------------------------------------------
