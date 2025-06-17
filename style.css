@@ -1,336 +1,727 @@
 /*
-    Dark & Sophisticated Bing-like Style
-    - Deep dark backgrounds, subtle lighter surfaces.
-    - Prominent Microsoft Blue for links and highlights.
-    - Soft, diffuse shadows.
-    - Clean typography with Inter font.
+    Ministry of Digital Sovereignty Portal | style.css
+    **IMPROVED DARK BING.COM INTERFACE**
+    This stylesheet targets the provided HTML to achieve a sleek,
+    professional, dark theme similar to Bing.com's visual identity.
+
+    Key characteristics:
+    - Deep, rich dark backgrounds.
+    - Subtle differentiation in surface colors for UI elements.
+    - Prominent Microsoft Blue accents for links, buttons, and active states.
+    - Clean sans-serif typography (Inter).
+    - Soft, diffused shadows for depth without heaviness.
 */
 
-/* --- CSS Variables: The Bing.com Dark Mode Palette --- */
+/* --- CSS Variables: The Bing.com Dark Mode Palette (Centralized Control) --- */
 :root {
-    /* Colors (Inspired by Bing's dark theme) */
-    --bing-bg: #111116;             /* Deep dark blue-grey for main background */
-    --bing-surface-mid: #1A1A1F;    /* Slightly lighter surface for cards, search bars */
-    --bing-surface-light: #202026;  /* Even lighter for interactive elements (hover states etc.) */
-    
-    --bing-text-primary: #E0E0E0;   /* Soft white for main content text */
-    --bing-text-secondary: #AAAAAA; /* Muted gray for placeholder text, URLs, descriptions */
-    --bing-text-dimmed: #77777D;    /* Even more subtle for less important details */
+    /* Backgrounds & Surfaces */
+    --background-color: #111116;           /* Main page background (deep dark blue-grey) */
+    --surface-color: #1A1A1F;             /* Primary UI surfaces (cards, containers) */
+    --surface-light-color: #202026;       /* Secondary UI surfaces / Hover states (lighter interaction background) */
+    --input-field-color: #111116;         /* Input field background (matches main background for seamless look) */
 
-    --bing-accent-blue: #0078D4;    /* Microsoft's signature blue for links/active */
-    --bing-accent-blue-hover: #0099FF; /* Brighter blue on hover */
-    --bing-accent-green: #10A38D;   /* Bing's AI/action green (e.g., for search button in some contexts) */
-    --bing-accent-green-hover: #1DC1A4; /* Lighter green on hover */
-    --bing-accent-red: #A52A2A;     /* Used for 'active' pagination from your original (can be repurposed) */
+    /* Text Colors */
+    --text-color-primary: #E0E0E0;        /* Main content text (soft white) */
+    --text-color-secondary: #AAAAAA;      /* Muted gray for descriptions, URLs, placeholders */
+    --text-color-dimmed: #77777D;         /* Dimmed gray for minor details (e.g., footer) */
+    --text-color-light: #FFFFFF;          /* Pure white for text on accent backgrounds */
 
-    --bing-border-subtle: #2A2A30;  /* Very dark, almost invisible border for structure */
-    --bing-border-focus: var(--bing-accent-blue); /* Blue border for input focus */
+    /* Accent Colors (Microsoft Identity) */
+    --accent-blue: #0078D4;               /* Signature Microsoft Blue for links, primary buttons, active states */
+    --accent-blue-hover: #0099FF;         /* Brighter blue for link/button hover states */
+    --accent-green: #10A38D;              /* Green for success/resolved status */
+    --accent-red: #E81123;                /* Red for active/warning status (used for logo polygon as well) */
+    --accent-red-lighter: #FF4433;        /* A slightly softer red for internal highlights */
 
-    /* Shadows (Extremely subtle, diffused, common in dark UIs) */
-    --bing-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.2);
-    --bing-shadow-md: 0 4px 10px rgba(0, 0, 0, 0.3);
-    --bing-shadow-lg: 0 8px 25px rgba(0, 0, 0, 0.4); /* Deeper shadows for interactive lift */
 
-    /* Typography */
-    --bing-font-heading: 'Inter', sans-serif;    /* Keep Inter for headings - clean sans-serif is Bing-like */
-    --bing-font-body: 'Inter', sans-serif;       /* Keep Inter for body - consistent, clean, modern */
-    --bing-font-monospace: 'Roboto Mono', monospace; /* For code or technical details */
+    /* Borders */
+    --border-color-subtle: #2A2A30;       /* Very dark, subtle borders for separation */
+    --border-color-focus: var(--accent-blue); /* Accent blue border for input focus */
 
-    /* Spacing & Radii */
-    --bing-spacing-xs: 4px;
-    --bing-spacing-sm: 8px;
-    --bing-spacing-md: 12px;
-    --bing-spacing-lg: 20px;
-    --bing-spacing-xl: 30px;
-    --bing-spacing-xxl: 40px;
+    /* Shadows (Soft and diffused, common in dark UIs for subtle depth) */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0,0,0,0.1); /* Very light shadow, almost just a darker border */
+    --shadow-md: 0 4px 10px rgba(0, 0, 0, 0.3);                         /* Deeper shadow for elevated elements */
+    --shadow-lg: 0 8px 25px rgba(0, 0, 0, 0.4);                         /* Most pronounced for modal/strong lift */
 
-    --bing-radius-sm: 4px;
-    --bing-radius-md: 8px;
-    --bing-radius-lg: 24px; /* More rounded elements if desired */
+    /* Typography Settings */
+    --font-heading: 'Inter', sans-serif;    /* Clean sans-serif for all headings (similar to Segoe UI/Bing) */
+    --font-body: 'Inter', sans-serif;       /* Clean sans-serif for general text, also for Bing look */
+    --font-monospace: 'Roboto Mono', monospace; /* For code or technical details */
 
-    /* Transitions */
-    --bing-transition-default: 0.3s ease-out; /* Standard smooth transition */
-    --bing-transition-fast: 0.2s ease-in-out; /* Faster transitions for immediate feedback */
+    /* Spacing (Consistent vertical and horizontal rhythm) */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 12px;
+    --spacing-lg: 20px;
+    --spacing-xl: 30px;
+    --spacing-xxl: 40px; /* Generous padding for sections/main components */
+
+    /* Border Radii */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px; /* Slightly more rounded for elements like search bars, buttons, cards */
+
+    /* Transitions for smooth UI feedback */
+    --transition-fast: 0.2s ease-in-out;    /* Quicker feedback for direct interactions */
+    --transition-default: 0.3s ease-out;    /* Standard smooth transitions */
 }
 
-/* --- Base Styles and Global Resets --- */
-body {
-    font-family: var(--bing-font-body);
-    background-color: var(--bing-bg);
-    color: var(--bing-text-primary);
+/* --- Base HTML Element Styles --- */
+html {
+    font-size: 100%; /* Base for rem units (1rem = 16px usually) */
+    box-sizing: border-box; /* Consistent box model */
+    scroll-behavior: smooth; /* Smooth scroll when navigating to anchor links */
+}
+
+/* Inherit box-sizing for all elements */
+*, *::before, *::after {
+    box-sizing: inherit;
     margin: 0;
-    padding: var(--bing-spacing-xl); /* Generous padding around the entire content */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
-    box-sizing: border-box;
-    -webkit-font-smoothing: antialiased; /* Smoother font rendering for macOS */
-    -moz-osx-font-smoothing: grayscale; /* Smoother font rendering for Firefox on macOS */
-    line-height: 1.6; /* Improved readability for body text */
+    padding: 0;
 }
 
-/* Remove default link underline and add transition */
+body {
+    font-family: var(--font-body);
+    font-size: 0.9375rem; /* ~15px for body text, fine for dark background readability */
+    line-height: 1.6; /* Optimal line height for comfort */
+    background-color: var(--background-color); /* Deep dark background */
+    color: var(--text-color-primary); /* Soft white text */
+    min-height: 100vh; /* Ensure body covers at least full viewport height */
+    display: flex; /* Use flexbox for main layout */
+    flex-direction: column; /* Stack header, main, footer vertically */
+    align-items: center; /* Horizontally center content in body */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    padding: 0; /* Container will manage overall padding */
+    -webkit-font-smoothing: antialiased; /* Font rendering optimization for macOS/iOS */
+    -moz-osx-font-smoothing: grayscale;  /* Font rendering optimization for Firefox on macOS */
+}
+
+/* Links: Consistent Microsoft Blue accent */
 a {
-    color: var(--bing-accent-blue);
+    color: var(--accent-blue);
     text-decoration: none;
-    transition: color var(--bing-transition-default);
+    transition: color var(--transition-fast);
 }
 
-/* Slightly brighter blue and subtle underline on hover */
-a:hover {
-    color: var(--bing-accent-blue-hover);
-    text-decoration: underline; /* Bing often has a subtle underline on hover */
+a:hover,
+a:focus {
+    color: var(--accent-blue-hover);
+    text-decoration: underline; /* Subtle underline on hover, typical for Bing */
 }
 
-/* Default Heading styles */
+/* Headings: Unified font and styling */
 h1, h2, h3, h4, h5, h6 {
-    font-family: var(--bing-font-heading);
-    color: var(--bing-text-primary);
-    font-weight: 600; /* Medium-bold for Inter headings */
-    margin-top: 1.5em; /* Spacing above headings */
-    margin-bottom: 0.8em; /* Spacing below headings */
+    font-family: var(--font-heading); /* All headings use Inter */
+    color: var(--text-color-primary); /* Primary text color for clarity */
+    font-weight: 600; /* Medium-bold */
+    line-height: 1.2;
+    margin-top: 1.5rem; /* Top spacing */
+    margin-bottom: 0.75rem; /* Bottom spacing */
+    letter-spacing: -0.01em; /* Subtle tight tracking */
 }
 
-/* Paragraph styles for consistency */
+/* Paragraphs */
 p {
-    color: var(--bing-text-primary);
-    margin-bottom: var(--bing-spacing-md);
+    color: var(--text-color-primary);
+    margin-bottom: var(--spacing-md);
 }
 
-
-/* --- Main Search Container --- */
-.search-container {
-    background-color: var(--bing-surface-mid);
-    border: 1px solid var(--bing-border-subtle);
-    border-radius: var(--bing-radius-md);
-    box-shadow: var(--bing-shadow-md); /* Subtle depth */
-    padding: var(--bing-spacing-xxl); /* Generous padding */
+/* --- Global Container --- */
+/* The main wrapper for all content inside the body (excluding fixed canvas) */
+.container {
     width: 100%;
-    max-width: 700px;
+    max-width: 1200px; /* Max width for consistent layout on large screens */
+    padding: 0 var(--spacing-xl); /* Horizontal padding inside the container */
+    flex-grow: 1; /* Allows main content section to take up available vertical space */
+}
+
+/* --- WebGL Background Canvas --- */
+#canvas-bg {
+    position: fixed; /* Fixed position relative to the viewport */
+    top: 0;
+    left: 0;
+    width: 100vw;    /* Full viewport width */
+    height: 100vh;   /* Full viewport height */
+    z-index: -1;     /* Renders behind all other content */
+    display: block;  /* Remove any default browser margin/padding */
+}
+
+/* --- Site Header --- */
+.site-header {
+    width: 100%;
     display: flex;
-    flex-direction: column;
+    justify-content: space-between; /* Pushes logo to left, nav to right */
+    align-items: center; /* Vertically aligns logo and nav */
+    padding: var(--spacing-lg) 0; /* Vertical padding */
+    border-bottom: 1px solid var(--border-color-subtle); /* Subtle bottom border */
+    margin-bottom: var(--spacing-xl); /* Space below header before main content */
+}
+
+.site-header .logo {
+    display: flex;
     align-items: center;
-    margin-bottom: var(--bing-spacing-xxl);
-    animation: fadeIn 0.8s var(--bing-transition-default); /* Apply fade-in on load */
+    gap: var(--spacing-md); /* Space between SVG and text logo */
 }
 
-/* Simple fade-in animation for initial load */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+.site-header .logo svg {
+    width: 40px; /* Fixed SVG logo size */
+    height: 40px;
+}
+/* SVG styling for dark mode consistency */
+.site-header .logo svg path {
+    stroke: var(--text-color-primary); /* Use primary text color for SVG strokes */
+    stroke-width: 2px; /* Ensure stroke is visible */
+}
+.site-header .logo svg polygon {
+    fill: var(--accent-red); /* The distinctive red accent for the logo polygon */
 }
 
-/* Search Logo (e.g., for your search engine's name) */
-.search-logo {
-    font-family: var(--bing-font-heading); /* Use heading font for logo */
-    font-size: 2.8em; /* Slightly larger, adjusted */
-    color: var(--bing-text-primary);
-    margin-bottom: var(--bing-spacing-xxl); /* More space below logo */
-    letter-spacing: 0.5px; /* Subtle letter spacing */
-    text-shadow: 0 0 8px rgba(255, 255, 255, 0.05); /* Very soft white glow */
-    font-weight: 700; /* Ensure it's strong */
+.site-header .logo-text h1 {
+    font-family: var(--font-heading); /* Ensure Inter is used for the site title */
+    font-size: 1.8rem; /* Adjusted size for logo text */
+    font-weight: 700;
+    margin: 0; /* Remove default margins */
+    line-height: 1; /* Tight line height */
+    letter-spacing: 0.05em; /* Slightly wider for brand emphasis */
+    color: var(--text-color-primary); /* Primary text color */
 }
 
-.search-input-group {
+.site-header .logo-text span {
+    display: block; /* Tagline on a new line */
+    font-size: 0.8125rem; /* ~13px for tagline */
+    color: var(--text-color-secondary); /* Muted color for tagline */
+    letter-spacing: 0.08em; /* Wide spacing */
+    text-transform: uppercase; /* Uppercase */
+    font-weight: 500;
+}
+
+/* --- Main Navigation --- */
+.main-nav {
+    display: flex;
+    gap: var(--spacing-lg); /* Space between navigation links */
+}
+
+.main-nav a {
+    color: var(--text-color-primary); /* Nav links initially use primary text color */
+    font-weight: 500; /* Medium font weight */
+    font-size: 0.9375rem; /* ~15px */
+    padding: var(--spacing-sm) var(--spacing-xs); /* Padding around clickable area */
+    position: relative; /* For the animated underline effect */
+    transition: color var(--transition-fast);
+}
+
+.main-nav a::after {
+    content: ''; /* Creates a pseudo-element for the underline */
+    position: absolute;
+    bottom: 0; /* Position at the bottom of the link */
+    left: 50%; /* Start in the middle */
+    width: 0; /* Start with no width */
+    height: 2px;
+    background-color: var(--accent-blue); /* Bing blue underline color */
+    transition: width var(--transition-fast), left var(--transition-fast); /* Animate width and position */
+}
+
+.main-nav a:hover::after,
+.main-nav a.active::after { /* Apply hover and active state */
+    width: 100%; /* Expands to full width */
+    left: 0; /* Shifts to the left edge */
+}
+
+.main-nav a:hover,
+.main-nav a.active {
+    color: var(--accent-blue-hover); /* Nav text turns brighter blue on hover/active */
+}
+
+
+/* --- Section General Styling --- */
+main .section { /* Target sections directly inside main */
+    padding: var(--spacing-xxl) 0; /* Top and bottom padding for main sections */
+    border-bottom: 1px solid var(--border-color-subtle); /* Subtle separator between sections */
+}
+
+main .section:last-child {
+    border-bottom: none; /* No border for the last section in main */
+}
+
+.section-title {
+    font-size: 2rem; /* h2 section titles */
+    color: var(--accent-blue); /* Section titles in signature Bing blue */
+    font-weight: 700;
+    text-align: center; /* Center align section titles */
+    margin-bottom: var(--spacing-xl);
+    position: relative;
+    padding-bottom: var(--spacing-sm);
+}
+.section-title::after {
+    content: ''; /* Underline pseudo-element */
+    display: block;
+    width: 80px; /* Fixed width underline */
+    height: 3px;
+    background-color: var(--accent-blue);
+    margin: var(--spacing-xs) auto 0; /* Center the underline */
+    border-radius: var(--radius-sm);
+}
+
+/* --- AI Search Section --- */
+.ai-search-section {
+    max-width: 900px; /* Allows the search section to be wider than default content */
+    margin: 0 auto; /* Center the section */
+    text-align: center; /* Center align text elements */
+    padding-top: var(--spacing-xl); /* Less top padding for sections below the header */
+    padding-bottom: var(--spacing-xl);
+}
+.ai-search-section p {
+    color: var(--text-color-secondary); /* Muted description text */
+    margin-bottom: var(--spacing-xl);
+}
+
+.ai-input-group {
     display: flex;
     width: 100%;
-    gap: var(--bing-spacing-md); /* Consistent gap between input and button */
+    gap: var(--spacing-md);
+    max-width: 700px; /* Max width for the input/button group */
+    margin: 0 auto; /* Center the input group */
 }
 
-.search-input {
-    flex-grow: 1;
-    padding: var(--bing-spacing-md) var(--bing-spacing-lg); /* Generous input padding */
-    border: 1px solid var(--bing-border-subtle);
-    border-radius: var(--bing-radius-md);
-    background-color: var(--bing-bg); /* Input background slightly darker than container */
-    color: var(--bing-text-primary);
-    font-size: 1.1em;
-    outline: none;
-    transition: border-color var(--bing-transition-fast), box-shadow var(--bing-transition-fast);
+.ai-query-input {
+    flex-grow: 1; /* Input field takes most available space */
+    padding: var(--spacing-md) var(--spacing-lg);
+    border: 1px solid var(--border-color-subtle);
+    border-radius: var(--radius-md); /* Rounded corners */
+    background-color: var(--input-field-color); /* Matches main background for clean look */
+    color: var(--text-color-primary); /* Primary text color for input */
+    font-size: 1.1rem;
+    outline: none; /* Remove default focus outline */
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast); /* Smooth transitions for focus */
 }
 
-.search-input::placeholder {
-    color: var(--bing-text-secondary); /* Use muted text color for placeholders */
+.ai-query-input::placeholder {
+    color: var(--text-color-secondary); /* Muted color for placeholder text */
 }
 
-.search-input:focus {
-    border-color: var(--bing-accent-blue); /* Clear blue border on focus */
-    box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.4); /* A more subtle, Bing-like blue focus glow */
+.ai-query-input:focus {
+    border-color: var(--border-color-focus); /* Blue border on focus */
+    box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.4); /* Soft blue glow on focus */
 }
 
-/* Search Button */
-.search-button {
-    padding: var(--bing-spacing-md) var(--bing-spacing-lg);
-    background-color: var(--bing-accent-blue); /* Bing's blue button */
-    color: white; /* White text on blue button */
+.ai-query-button {
+    padding: var(--spacing-md) var(--spacing-xl);
+    background-color: var(--accent-blue); /* Bing signature blue button */
+    color: var(--text-color-light); /* White text on blue button */
     border: none;
-    border-radius: var(--bing-radius-md);
-    font-size: 1.1em;
+    border-radius: var(--radius-md);
+    font-size: 1.1rem;
     font-weight: 500;
     cursor: pointer;
-    transition: background-color var(--bing-transition-fast), transform var(--bing-transition-fast), box-shadow var(--bing-transition-fast);
+    transition: background-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
     flex-shrink: 0; /* Prevents button from shrinking in flex container */
     letter-spacing: 0.5px;
 }
 
-.search-button:hover {
-    background-color: var(--bing-accent-blue-hover); /* Brighter blue on hover */
-    transform: translateY(-1px); /* Subtle lift */
-    box-shadow: var(--bing-shadow-sm); /* Subtle shadow on lift */
+.ai-query-button:hover {
+    background-color: var(--accent-blue-hover); /* Brighter blue on hover */
+    transform: translateY(-1px); /* Subtle lift effect */
+    box-shadow: var(--shadow-sm); /* Soft shadow on hover */
 }
-
-.search-button:active {
-    transform: translateY(0); /* Press effect */
-    background-color: color-mix(in srgb, var(--bing-accent-blue) 90%, black); /* Slightly darker when pressed */
+.ai-query-button:active {
+    transform: translateY(0); /* "Pressed in" effect */
     box-shadow: none; /* No shadow when pressed */
+    background-color: color-mix(in srgb, var(--accent-blue) 90%, black); /* Slightly darker when pressed */
 }
 
-/* --- Search Results Section --- */
-.results-section {
-    width: 100%;
-    max-width: 700px; /* Match search container width for alignment */
-}
-
-.result-card {
-    background-color: var(--bing-surface-mid); /* Match search container surface */
-    border: 1px solid var(--bing-border-subtle);
-    border-radius: var(--bing-radius-md);
-    padding: var(--bing-spacing-lg); /* Generous padding */
-    margin-bottom: var(--bing-spacing-lg); /* Consistent spacing between cards */
-    box-shadow: var(--bing-shadow-sm); /* Very light shadow */
-    transition: transform var(--bing-transition-fast), box-shadow var(--bing-transition-fast);
-}
-
-.result-card:hover {
-    transform: translateY(-3px); /* Subtle lift on hover */
-    box-shadow: var(--bing-shadow-md); /* More pronounced shadow on lift */
-}
-
-.result-card h3 {
-    font-family: var(--bing-font-heading);
-    font-size: 1.3em;
-    margin-top: 0;
-    margin-bottom: var(--bing-spacing-xs); /* Tighter spacing below title */
-    color: var(--bing-accent-blue); /* Result titles are distinct blue links */
-}
-
-.result-card .url {
-    font-family: var(--bing-font-monospace); /* Monospace for URLs is good */
-    font-size: 0.85em;
-    color: var(--bing-text-secondary); /* Muted gray for URLs */
-    margin-bottom: var(--bing-spacing-md);
-    display: block; /* Ensures it takes its own line */
-    word-break: break-all; /* Prevents long URLs from overflowing */
-}
-
-.result-card p {
-    font-size: 0.95em;
+.ai-response-area {
+    background-color: var(--surface-color); /* Matches card surfaces */
+    border: 1px solid var(--border-color-subtle);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-lg);
+    margin-top: var(--spacing-xxl); /* Space between input and response */
+    min-height: 150px; /* Minimum height for visible response area */
+    text-align: left; /* Response text aligns left */
+    box-shadow: var(--shadow-sm); /* Subtle shadow */
+    color: var(--text-color-primary);
+    font-size: 0.95rem;
+    overflow-y: auto; /* Enable scrolling for long responses */
+    max-height: 300px; /* Max height before scrolling */
     line-height: 1.6;
-    color: var(--bing-text-primary); /* Main text color for snippets */
-    margin-bottom: 0; /* Remove bottom margin for last paragraph in card */
 }
 
-/* --- Pagination --- */
-.pagination {
+.ai-placeholder {
+    color: var(--text-color-dimmed); /* Very dim placeholder text */
+    font-style: italic;
+    text-align: center;
+    padding: var(--spacing-lg); /* Padding for the placeholder text */
+}
+
+.ai-loading-indicator {
     display: flex;
-    justify-content: center;
-    margin-top: var(--bing-spacing-xxl);
-    gap: var(--bing-spacing-md); /* Consistent gap between buttons */
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-lg);
+    color: var(--accent-blue); /* Loading text/spinner in accent blue */
+}
+.ai-loading-indicator.hidden {
+    display: none; /* Hide when not active */
+}
+/* Spinner animation for loading indicator */
+.ai-loading-indicator .spinner {
+    border: 4px solid var(--border-color-subtle);
+    border-top: 4px solid var(--accent-blue); /* Only top border is blue for spinning effect */
+    border-radius: 50%; /* Make it circular */
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite; /* Spin continuously */
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
-.pagination-button {
-    padding: var(--bing-spacing-md) var(--bing-spacing-lg);
-    background-color: var(--bing-surface-mid); /* Matches card background */
-    border: 1px solid var(--bing-border-subtle);
-    border-radius: var(--bing-radius-md); /* More pill-like/rounded shape */
-    color: var(--bing-text-primary);
-    font-size: 0.95em;
-    cursor: pointer;
-    transition: background-color var(--bing-transition-fast), color var(--bing-transition-fast), border-color var(--bing-transition-fast);
+/* --- Foundational Doctrine Quote Section --- */
+.doctrine-quote {
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color-subtle);
+    border-left: 5px solid var(--accent-blue); /* Strong left border in Bing blue */
+    border-radius: var(--radius-md);
+    padding: var(--spacing-lg);
+    margin: var(--spacing-xl) auto; /* Center with auto margins */
+    max-width: 800px;
+    box-shadow: var(--shadow-sm);
+    font-style: italic; /* Bing often uses italics for quotes */
+    color: var(--text-color-primary);
+    line-height: 1.6;
+}
+.doctrine-quote blockquote {
+    font-size: 1.1rem; /* Slightly larger quote text */
+    margin: 0; /* Remove default blockquote margins */
+    padding: 0;
+    line-height: 1.6;
+}
+.doctrine-quote footer {
+    font-size: 0.9rem;
+    margin-top: var(--spacing-md);
+    text-align: right; /* Aligns author/source to the right */
+    color: var(--text-color-secondary); /* Muted color for footer */
+}
+
+
+/* --- Data Grids (for Directives, Case Files, Analysis, Resources sections) --- */
+.data-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive grid with min width per column */
+    gap: var(--spacing-lg); /* Gap between grid items */
+    margin-top: var(--spacing-lg);
+    max-width: 1000px; /* Limit overall grid width if centered */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.data-card {
+    background-color: var(--surface-color); /* Matches container/surface background */
+    border: 1px solid var(--border-color-subtle);
+    border-radius: var(--radius-md); /* Rounded corners */
+    box-shadow: var(--shadow-sm); /* Subtle shadow */
+    padding: var(--spacing-lg);
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast); /* Smooth hover effects */
+    display: flex; /* Flexbox for internal content alignment */
+    flex-direction: column; /* Stack content vertically */
+    height: 100%; /* Ensure cards in a row have same height */
+}
+
+.data-card:hover {
+    transform: translateY(-3px); /* Subtle lift on hover */
+    box-shadow: var(--shadow-md); /* More pronounced shadow on hover */
+}
+
+/* For cards where the entire content is wrapped in an `<a>` tag */
+.data-card a {
+    text-decoration: none; /* No underline by default */
+    color: var(--text-color-primary); /* Text color primary by default */
+    flex-grow: 1; /* Allows link content to fill available space */
+}
+.data-card a:hover {
+    color: var(--accent-blue-hover); /* Brighter blue on link hover */
+    text-decoration: none; /* Keep no underline on link hover */
+}
+
+.data-card h3 {
+    font-family: var(--font-heading);
+    font-size: 1.15rem; /* ~18px for card titles */
+    margin-top: 0; /* Remove top margin */
+    margin-bottom: var(--spacing-sm);
+    color: var(--accent-blue); /* Card titles as prominent blue links */
+}
+
+.data-card .card-meta {
+    font-family: var(--font-monospace); /* Monospace for meta info */
+    font-size: 0.8125rem; /* ~13px */
+    color: var(--text-color-secondary); /* Muted secondary color */
+    margin-bottom: var(--spacing-md);
+    line-height: 1.4; /* Adjusted for better spacing */
+}
+
+.data-card p { /* Description within the card */
+    font-size: 0.9375rem; /* ~15px */
+    color: var(--text-color-primary);
+    margin-bottom: 0; /* Remove bottom margin for descriptions inside cards */
+}
+
+/* Status Badges within Data Cards */
+.data-card .status {
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem; /* Smaller text for badges */
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-left: var(--spacing-xs);
+    display: inline-block; /* For proper padding and background */
+    letter-spacing: 0.05em;
+    color: var(--text-color-light); /* White text on colored badges */
+}
+
+.status.RESOLVED {
+    background-color: var(--accent-green); /* Green for resolved */
+}
+
+.status.UNDER\.REVIEW { /* CSS escape for '.' in class name */
+    background-color: color-mix(in srgb, var(--accent-blue) 80%, black); /* A muted blue for 'under review' */
+}
+
+.status.ACTIVE {
+    background-color: var(--accent-red); /* Red for active status */
+}
+
+/* Summarize Case Button on Data Cards (secondary action) */
+.summarize-case-button {
+    margin-top: var(--spacing-md); /* Space above the button */
+    padding: 8px 15px;
+    background-color: transparent; /* Transparent background */
+    border: 1px solid var(--accent-blue); /* Blue border */
+    color: var(--accent-blue); /* Blue text */
+    border-radius: var(--radius-md);
+    font-size: 0.9375rem;
     font-weight: 500;
+    cursor: pointer;
+    transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+    align-self: flex-start; /* Aligns button to the left if the card content is narrow */
 }
 
-.pagination-button:hover {
-    background-color: var(--bing-surface-light); /* Lighter dark on hover */
-    color: var(--bing-accent-blue); /* Text turns blue on hover */
-    border-color: var(--bing-accent-blue); /* Border turns blue */
+.summarize-case-button:hover {
+    background-color: var(--accent-blue); /* Solid blue fill on hover */
+    color: var(--text-color-light); /* White text on hover */
+    box-shadow: var(--shadow-sm); /* Subtle shadow on hover */
 }
 
-.pagination-button.active {
-    background-color: var(--bing-accent-blue); /* Active uses Bing blue */
-    color: white;
-    border-color: var(--bing-accent-blue);
-    font-weight: bold;
-    cursor: default; /* No pointer on active button */
+/* --- Footer --- */
+.site-footer {
+    width: 100%;
+    padding: var(--spacing-lg) var(--spacing-xl);
+    border-top: 1px solid var(--border-color-subtle);
+    margin-top: var(--spacing-xxl); /* Push footer down from main content */
+    text-align: center;
+    color: var(--text-color-dimmed); /* Dimmed text for footer */
+    font-size: 0.8125rem; /* ~13px */
 }
 
-.pagination-button.active:hover {
-    background-color: var(--bing-accent-blue); /* Active state doesn't change on hover */
-    color: white;
-    border-color: var(--bing-accent-blue);
+.site-footer p {
+    margin-bottom: var(--spacing-xs);
+    color: inherit; /* Inherit color from footer div for paragraphs */
 }
+.site-footer p:last-child {
+    margin-bottom: 0;
+}
+
+/* --- AI Summary Modal --- */
+.ai-summary-modal {
+    position: fixed; /* Fixed position, covers the screen */
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.75); /* Dark semi-transparent overlay */
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center;     /* Center vertically */
+    z-index: 1000; /* Ensure it's on top of everything else */
+    opacity: 0;              /* Start hidden */
+    visibility: hidden;      /* Ensure it's not interactive when hidden */
+    transition: opacity var(--transition-default), visibility var(--transition-default); /* Smooth fade-in/out */
+}
+.ai-summary-modal.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background-color: var(--surface-color); /* Matches card surface color */
+    border: 1px solid var(--border-color-subtle);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-xl);
+    max-width: 600px; /* Max width for readability within the modal */
+    width: 90%;      /* Responsive width */
+    box-shadow: var(--shadow-lg); /* Stronger shadow for prominent modal */
+    position: relative; /* For positioning close button */
+    color: var(--text-color-primary);
+}
+
+.modal-content h3 {
+    font-size: 1.4rem;
+    color: var(--accent-blue); /* Modal title in Bing blue */
+    margin-top: 0;
+    margin-bottom: var(--spacing-md);
+    border-bottom: 1px dashed var(--border-color-subtle); /* Dashed bottom border for title */
+    padding-bottom: var(--spacing-sm);
+}
+
+#modal-summary-content {
+    min-height: 100px; /* Ensures minimal visible space for content */
+    max-height: 40vh;  /* Max height before content itself becomes scrollable */
+    overflow-y: auto; /* Scroll for long summaries */
+    padding-right: var(--spacing-sm); /* Adds space for potential scrollbar */
+    line-height: 1.6;
+    font-size: 0.95rem; /* Match general paragraph size */
+    color: var(--text-color-primary);
+}
+#modal-summary-content p {
+    margin-bottom: var(--spacing-md);
+    color: inherit; /* Inherit color */
+}
+
+.close-button {
+    position: absolute;
+    top: var(--spacing-md);
+    right: var(--spacing-md);
+    font-size: 1.5rem;
+    color: var(--text-color-secondary); /* Muted close button */
+    cursor: pointer;
+    transition: color var(--transition-fast);
+}
+
+.close-button:hover {
+    color: var(--text-color-primary); /* Brighter on hover */
+}
+
 
 /* --- Responsive Adjustments --- */
+/* For Tablets and smaller Desktops */
+@media (max-width: 1024px) {
+    .container {
+        padding: 0 var(--spacing-lg); /* Reduce horizontal padding */
+    }
+    .main-nav {
+        gap: var(--spacing-md); /* Reduce nav item spacing */
+    }
+    .site-header .logo-text h1 {
+        font-size: 1.5rem; /* Smaller logo title */
+    }
+    .site-header .logo-text span {
+        font-size: 0.75rem; /* Smaller tagline */
+    }
+    .section-title {
+        font-size: 1.8rem;
+    }
+    .doctrine-quote blockquote {
+        font-size: 1.05rem; /* Slightly smaller quote text */
+    }
+}
+
+/* For Mobile Devices (Phones) */
 @media (max-width: 768px) {
     body {
-        padding: var(--bing-spacing-lg); /* Reduced padding on smaller screens */
+        padding: var(--spacing-md); /* Overall smaller page padding */
+        font-size: 0.9375rem; /* Maintain ~15px base text */
     }
-    .search-container {
-        padding: var(--bing-spacing-xl);
+    .container {
+        padding: 0; /* Let body padding handle it */
     }
-    .search-logo {
-        font-size: 2.2em;
-        margin-bottom: var(--bing-spacing-xl);
+    .site-header {
+        flex-direction: column; /* Stack logo and nav vertically */
+        text-align: center;
+        gap: var(--spacing-md);
+        padding-top: var(--spacing-md);
+        padding-bottom: var(--spacing-md);
+        margin-bottom: var(--spacing-lg);
     }
-    .search-input-group {
-        flex-direction: column; /* Stack input and button vertically */
-        gap: var(--bing-spacing-lg);
+    .main-nav {
+        flex-wrap: wrap; /* Allow navigation links to wrap */
+        justify-content: center;
+        gap: var(--spacing-md);
     }
-    .search-button {
-        width: 100%; /* Make button full width when stacked */
+    .main-nav a {
+        font-size: 0.875rem; /* Smaller nav links */
+        padding: var(--spacing-xs) var(--spacing-sm);
+    }
+
+    .section-title {
+        font-size: 1.6rem;
+        margin-bottom: var(--spacing-lg);
+    }
+    .ai-search-section, .doctrine-quote, .data-grid {
+        padding: 0; /* Remove section padding within container */
+    }
+    .ai-input-group {
+        flex-direction: column; /* Stack input and button */
+        gap: var(--spacing-sm);
+    }
+    .ai-query-button {
+        width: 100%; /* Make button full width */
         text-align: center;
     }
-    .result-card {
-        padding: var(--bing-spacing-md);
-        margin-bottom: var(--bing-spacing-md);
+    .ai-response-area {
+        margin-top: var(--spacing-lg);
+        min-height: 100px;
     }
-    .result-card h3 {
-        font-size: 1.2em;
+    .data-grid {
+        grid-template-columns: 1fr; /* Single column for all data cards */
+        gap: var(--spacing-md);
     }
-    .result-card p {
-        font-size: 0.9em;
+    .data-card {
+        padding: var(--spacing-md);
     }
-    .pagination {
-        flex-wrap: wrap; /* Allow pagination buttons to wrap */
-        gap: var(--bing-spacing-sm);
-        margin-top: var(--bing-spacing-xl);
+    .summarize-case-button {
+        width: 100%; /* Make button full width */
+        text-align: center;
+    }
+    .modal-content {
+        width: 95%; /* Wider modal on small screens */
+        padding: var(--spacing-lg);
     }
 }
 
 @media (max-width: 480px) {
     body {
-        padding: var(--bing-spacing-md);
+        font-size: 0.875rem; /* ~14px base for very small screens for compact readability */
+        padding: var(--spacing-sm);
     }
-    .search-container {
-        padding: var(--bing-spacing-lg);
+    .site-header .logo-text h1 {
+        font-size: 1.2rem;
     }
-    .search-logo {
-        font-size: 2em;
-        margin-bottom: var(--bing-spacing-lg);
+    .site-header .logo-text span {
+        font-size: 0.6875rem; /* ~11px */
     }
-    .search-input {
-        font-size: 1em;
-        padding: var(--bing-spacing-sm) var(--bing-spacing-md);
+    .section-title {
+        font-size: 1.4rem;
+        margin-bottom: var(--spacing-md);
     }
-    .search-button {
-        font-size: 1em;
-        padding: var(--bing-spacing-sm) var(--bing-spacing-md);
+    .ai-query-input, .ai-query-button {
+        font-size: 0.9375rem; /* ~15px */
+        padding: var(--spacing-sm);
     }
-    .result-card {
-        margin-bottom: var(--bing-spacing-md);
+    .data-card h3 {
+        font-size: 1rem;
     }
-    .result-card h3 {
-        font-size: 1.1em;
+    .data-card .card-meta, .data-card p {
+        font-size: 0.875rem; /* Smaller text within cards */
+    }
+    .summarize-case-button {
+        font-size: 0.875rem;
+        padding: 6px 12px;
+    }
+    .site-footer {
+        padding: var(--spacing-md) var(--spacing-sm);
+        font-size: 0.75rem;
+    }
+    .doctrine-quote blockquote {
+        font-size: 0.95rem; /* Smaller quote for very small screens */
     }
 }
