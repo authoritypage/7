@@ -1,6 +1,3 @@
-// Dynamic script.js for the Ministry of Digital Sovereignty Portal
-
-// Ensure the window is fully loaded before initializing Three.js and other scripts
 window.onload = function() {
     // --- Footer Year Update ---
     const yearSpan = document.getElementById('year');
