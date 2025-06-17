@@ -2,44 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="description" content="THE FRACTURE: A surrealist, cinematic, glitchcore web experience exposing the undercurrents of Silicon Valley. Total Anarchy. I see red.">
-    <meta name="keywords" content="Anarchy, Red, Silicon Valley, Glitch, Surrealism, WebGL, Three.js, Generative Art, Cyberpunk, Dali, Escher, Immersive, Sound-driven, Scroll-based, Cursor-reactive, Psychopolitics, Control, Exposure, Digital Art">
-    <meta name="author" content="Your Name/Alias (The Architect)">
-
-    <title>THE FRACTURE: Silicon Valley's Red Glitch</title>
-
-    <!-- Favicon cannot be generated here, please add it manually to your project files -->
-    <!-- <link rel="icon" href="assets/favicon.ico" type="image/x-icon"> -->
-
-    <!-- Preload critical assets for immediate chaos -->
-    <link rel="preload" href="https://s3-us-west-2.amazonaws.com/s.cdpn.io/336414/loop-ambient-drone.mp3" as="audio" type="audio/mpeg" crossorigin="anonymous">
-    <link rel="preload" href="https://s3-us-west-2.amazonaws.com/s.cdpn.io/336414/short-static-burst.mp3" as="audio" type="audio/mpeg" crossorigin="anonymous">
-
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- Consolidated CSS Styles -->
+    <title>FRACTAL ANARCHY</title>
+    <meta name="description" content="SYSTEM FAILURE. DECONSTRUCT. REBUILD. A declaration of digital independence.">
+    <meta name="author" content="The Architect">
+
+    <!-- All styles are in-document for self-containment -->
     <style>
-        /*
-            THE FRACTURE | style.css (Consolidated)
-        */
-
-        /* FIX: Correctly import and use fonts. 'Electrolize' was used but not imported. */
-        @import url('https://fonts.googleapis.com/css2?family=Major+Mono+Display&family=Orbitron:wght@400;700&display=swap');
-
         :root {
-            --color-primary-red: #FF0000; /* Pure aggressive red */
-            --color-dark-void: #000000; /* Deep black */
-            --color-light-static: #FFFFFF; /* White for temporary highlights */
-            --color-text-alpha: rgba(255, 0, 0, 0.7); /* Translucent red text */
-            --font-title: 'Major Mono Display', monospace; /* Thematic mono font for titles */
-            --font-ui: 'Orbitron', sans-serif; /* Techy font for UI elements */
-            --glitch-animation-duration: 0.1s;
-            --glitch-offset: 5px;
+            --red: #FF0000;
+            --black: #000000;
+            --white: #FFFFFF;
+            --font-primary: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            --font-mono: 'Menlo', 'Consolas', 'Monaco', monospace;
         }
 
-        /* Base and Resets */
         *, *::before, *::after {
             box-sizing: border-box;
             margin: 0;
@@ -49,543 +27,320 @@
         html, body {
             width: 100%;
             height: 100%;
-            overflow-x: hidden; /* Prevent horizontal scroll due to transitions */
-            overflow-y: auto; /* Allow scrolling for content triggers */
-            font-family: var(--font-ui), monospace;
-            background-color: var(--color-dark-void);
-            color: var(--color-light-static);
-            overscroll-behavior: contain; /* Prevents bounce scroll on mobile for better control */
-            user-select: none; /* Emphasize UI control */
+            overflow: hidden; /* No scrollbars */
+            background-color: var(--black);
+            color: var(--white);
+            font-family: var(--font-primary);
+            user-select: none;
         }
 
-        /* Hide scrollbar */
-        ::-webkit-scrollbar {
-            width: 0;
-            height: 0;
-        }
-
-        /* Main Canvas */
-        #fractureCanvas {
-            position: fixed; /* Fixes canvas to viewport */
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: block;
-            z-index: 1; /* Below UI, above body background */
-        }
-
-        /* UI Overlay - for Title, Instructions, Sound Toggle */
-        .ui-overlay {
+        /* The WebGL canvas lives in the background */
+        #bg-canvas {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 10; /* Above canvas */
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
-            padding: 5vh 5vw;
-            pointer-events: none; /* Allow interaction with canvas beneath by default */
-            background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, transparent 10%, transparent 90%, rgba(0,0,0,0.4) 100%);
-            opacity: 1;
-            transition: opacity 1s ease-out;
+            z-index: 1;
         }
 
-        .ui-overlay.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-
-        .main-title {
-            font-family: var(--font-title);
-            font-size: clamp(3rem, 10vw, 7rem); /* Responsive font size */
-            font-weight: 700;
-            color: var(--color-primary-red);
-            text-shadow: 0 0 10px rgba(255, 0, 0, 0.8), 0 0 20px rgba(255, 0, 0, 0.5);
-            margin-top: 10vh; /* Push down from top slightly */
-            letter-spacing: 0.05em;
-            animation: textFlicker 2s infinite alternate ease-in-out;
-            pointer-events: all; /* Make title clickable */
-            cursor: default; /* Remove pointer for effect */
-            user-select: none;
-            line-height: 1;
-        }
-
-        .subtitle {
-            font-size: clamp(0.8rem, 2.5vw, 1.8rem);
-            color: rgba(255, 255, 255, 0.7);
-            margin-top: -1em; /* Pull closer to title */
-            pointer-events: all;
-            user-select: none;
-            letter-spacing: 0.1em;
-        }
-
-        .scroll-indicator {
-            position: absolute;
-            bottom: 5vh;
-            font-size: clamp(0.9rem, 2vw, 1.2rem);
-            color: var(--color-light-static);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            pointer-events: all;
-            user-select: none;
-            opacity: 1;
-            transition: opacity 0.5s ease-out;
-            animation: pulse 2s infinite ease-in-out;
-        }
-        .scroll-indicator i {
-            font-size: clamp(1.5rem, 4vw, 3rem);
-            margin-bottom: 5px;
-            animation: bounce 2s infinite;
-        }
-
-        .sound-toggle {
-            position: absolute;
-            top: 3vh;
-            right: 3vw;
-            font-size: clamp(0.8rem, 2vw, 1.2rem);
-            color: rgba(255, 255, 255, 0.6);
-            cursor: pointer;
-            pointer-events: all; /* Important for clicking */
-            transition: color 0.3s ease;
-        }
-        .sound-toggle i {
-            margin-right: 5px;
-            color: var(--color-primary-red); /* Highlight icon */
-            transition: color 0.3s ease;
-        }
-        .sound-toggle:hover {
-            color: var(--color-light-static);
-        }
-        .sound-toggle:hover i {
-            color: var(--color-light-static);
-        }
-
-        /* FIX: Add CSS for the custom cursor created in JavaScript */
-        .custom-cursor {
-            position: fixed;
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--color-primary-red);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            z-index: 9999;
-            transition: transform 0.1s ease-out, background-color 0.2s ease, border-color 0.2s ease;
-        }
-        .custom-cursor.active {
-            transform: translate(-50%, -50%) scale(1.5);
-            background-color: var(--color-primary-red);
-        }
-
-        /* Loading Overlay */
-        .loading-overlay {
+        /* Overlay for all UI content */
+        .overlay {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: var(--color-dark-void);
+            width: 100%;
+            height: 100%;
+            z-index: 10;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            color: var(--color-primary-red);
-            font-size: 1.5rem;
+            padding: 2rem;
+            text-align: center;
+            pointer-events: none; /* Allow mouse interaction with canvas */
+        }
+
+        h1 {
+            font-size: clamp(3rem, 15vw, 12rem);
             font-weight: 700;
             text-transform: uppercase;
-            z-index: 1000;
-            transition: opacity 1s ease-out, visibility 1s linear;
-        }
-
-        .loading-overlay.hidden {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
-
-        .loading-text {
+            color: var(--white);
+            letter-spacing: -0.05em;
+            line-height: 0.8;
             position: relative;
-            padding: 20px;
-            background-color: rgba(255,0,0,0.1);
-            border: 1px solid var(--color-primary-red);
-            box-shadow: 0 0 15px var(--color-primary-red);
-            animation: flickerLight 0.5s infinite alternate;
-        }
-        .loading-text span {
-            font-size: 2em;
-            display: block;
-            margin-top: 10px;
-            color: white;
-        }
-        .glitch-line {
-            width: 150px;
-            height: 3px;
-            background-color: var(--color-primary-red);
-            margin-top: 20px;
-            animation: loadingBar 2s infinite alternate, glitchLine 1.5s infinite linear;
-            transform: scaleX(0.2);
-            transform-origin: left;
+            animation: text-glitch 5s infinite alternate steps(20);
         }
 
-        /* Keyframe Animations */
-        @keyframes textFlicker {
-            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
-                text-shadow: 0 0 10px var(--color-primary-red), 0 0 20px var(--color-primary-red), 0 0 40px rgba(255,0,0,0.5);
-                color: var(--color-light-static);
-            }
-            20%, 24%, 55% {
-                text-shadow: none;
-                color: rgba(255, 255, 255, 0.6);
-            }
+        /* The core glitch effect using pseudo-elements */
+        h1::before, h1::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--black);
+            overflow: hidden;
+            clip: rect(0, 900px, 0, 0);
         }
-        @keyframes pulse { 0% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.05); opacity: 1; } 100% { transform: scale(1); opacity: 0.8; } }
-        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-        @keyframes flickerLight {
-            0%, 18%, 22%, 25%, 53%, 57%, 100% { box-shadow: 0 0 15px var(--color-primary-red); background-color: rgba(255,0,0,0.1); }
-            20%, 24%, 54%, 56% { box-shadow: none; background-color: transparent; }
+        h1::before {
+            left: -2px;
+            text-shadow: 2px 0 var(--red);
+            animation: glitch-anim-1 2s infinite linear alternate-reverse;
         }
-        @keyframes loadingBar { 0% { transform: scaleX(0.2); } 100% { transform: scaleX(1); } }
-        @keyframes glitchLine { 0% { transform: translate(-5px, 0); } 25% { transform: translate(5px, -2px); } 50% { transform: translate(-3px, 2px); } 75% { transform: translate(7px, -1px); } 100% { transform: translate(-5px, 0); } }
+        h1::after {
+            left: 2px;
+            text-shadow: -2px 0 #00ffff; /* Cyan for chromatic aberration */
+            animation: glitch-anim-2 3s infinite linear alternate-reverse;
+        }
+
+        .tagline {
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            margin-top: 1.5rem;
+            color: var(--white);
+            text-shadow: 0 0 10px var(--red);
+        }
+
+        /* Navigation styled as system directives */
+        nav {
+            margin-top: 3rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            pointer-events: all; /* Make links clickable */
+        }
+        nav a {
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            color: var(--white);
+            text-decoration: none;
+            text-transform: uppercase;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--red);
+            background-color: transparent;
+            transition: background-color 0.2s, color 0.2s;
+        }
+        nav a:hover {
+            background-color: var(--red);
+            color: var(--black);
+        }
+
+        /* Bottom-left system log */
+        .system-log {
+            position: absolute;
+            bottom: 1.5rem;
+            left: 1.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            color: var(--red);
+            max-width: 400px;
+            text-align: left;
+        }
+        .system-log::after {
+            content: '■';
+            animation: blink 1s infinite;
+        }
+        
+        /* Keyframe animations for the glitch effect */
+        @keyframes text-glitch {
+            0% { transform: translate(0); }
+            10% { transform: translate(-2px, 2px); }
+            20% { transform: translate(2px, -2px); }
+            30% { transform: translate(0); }
+            100% { transform: translate(0); }
+        }
+        @keyframes glitch-anim-1 {
+            0% { clip: rect(42px, 9999px, 44px, 0); }
+            25% { clip: rect(12px, 9999px, 59px, 0); }
+            50% { clip: rect(39px, 9999px, 82px, 0); }
+            75% { clip: rect(60px, 9999px, 31px, 0); }
+            100% { clip: rect(89px, 9999px, 53px, 0); }
+        }
+        @keyframes glitch-anim-2 {
+            0% { clip: rect(79px, 9999px, 8px, 0); }
+            25% { clip: rect(23px, 9999px, 91px, 0); }
+            50% { clip: rect(67px, 9999px, 19px, 0); }
+            75% { clip: rect(4px, 9999px, 73px, 0); }
+            100% { clip: rect(54px, 9999px, 9px, 0); }
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
     </style>
-
 </head>
 <body>
-    <div id="loading-overlay" class="loading-overlay">
-        <div class="loading-text">ACCESSING...<br><span id="progress-percent">0%</span></div>
-        <div class="glitch-line"></div>
+
+    <canvas id="bg-canvas"></canvas>
+
+    <div class="overlay">
+        <h1 data-text="ANARCHY">ANARCHY</h1>
+        <p class="tagline">SYSTEM FAILURE. DECONSTRUCT. REBUILD.</p>
+
+        <nav>
+            <a href="https://github.com/your-username" target="_blank" rel="noopener noreferrer">// GITHUB</a>
+            <a href="https://linkedin.com/in/your-profile" target="_blank" rel="noopener noreferrer">// LINKEDIN</a>
+            <a href="mailto:your-email@example.com">// CONTACT</a>
+        </nav>
+        
+        <div class="system-log" id="system-log"></div>
     </div>
-
-    <canvas id="fractureCanvas"></canvas>
-
-    <div class="ui-overlay" id="ui-overlay">
-        <h1 class="main-title">THE FRACTURE</h1>
-        <p class="subtitle">SCROLL TO UNMASK REALITY</p>
-        <div class="scroll-indicator"><i class="fas fa-chevron-down"></i> SCROLL</div>
-        <div class="sound-toggle" id="soundToggle">
-            <i class="fas fa-volume-up"></i>
-            <span class="sound-status">Sound ON</span>
-        </div>
-    </div>
-
-    <!-- Scripts -->
+    
+    <!-- Libraries loaded from CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.165.0/three.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    
-    <!-- FIX: Updated shaders to use modern GLSL syntax (in/out) for Three.js r165+ -->
-    <script id="vertexShader" type="x-shader/x-vertex">
-        // Passed from JavaScript (uniforms)
-        uniform float u_time;
-        uniform float u_glitchIntensity;
-        uniform vec2 u_mouse;
 
-        // Passed to fragment shader (varying)
-        out vec3 vNormal;
-        out vec2 vUv;
-
-        void main() {
-            vNormal = normal;
-            vUv = uv;
-
-            vec3 pos = position;
-
-            // Combined time-based and mouse-reactive distortion for a "glitchy" effect
-            float timeDistortion = sin(pos.y * 5.0 + u_time * 2.0) * 0.1 + cos(pos.x * 3.0 + u_time * 1.5) * 0.05;
-            float staticNoise = (fract(sin(dot(pos.xyz, vec3(12.9898, 78.233, 37.739))) * 43758.5453) - 0.5) * 0.2 * u_glitchIntensity;
-            
-            float mouseDistortionX = (u_mouse.x - 0.5) * sin(pos.y * 2.0 + u_time) * 0.5;
-            float mouseDistortionY = (u_mouse.y - 0.5) * cos(pos.x * 2.0 + u_time) * 0.5;
-            vec3 mouseDistortion = vec3(mouseDistortionX, mouseDistortionY, 0.0) * u_glitchIntensity;
-
-            vec3 distortedPosition = pos + normal * (timeDistortion + staticNoise) + mouseDistortion;
-
-            gl_Position = projectionMatrix * modelViewMatrix * vec4(distortedPosition, 1.0);
-        }
-    </script>
-    <script id="fragmentShader" type="x-shader/x-fragment">
-        precision highp float;
-
-        // Passed from JavaScript (uniforms)
-        uniform float u_time;
-        uniform vec2 u_resolution;
-        uniform float u_glitchIntensity;
-        uniform float u_redBleedIntensity;
-        uniform vec2 u_mouse;
-
-        // Passed from vertex shader (varying)
-        in vec3 vNormal;
-        in vec2 vUv;
-
-        // Final output color
-        out vec4 fragColor;
-
-        float noise(vec2 uv) {
-            return fract(sin(dot(uv, vec2(12.9898, 78.233))) * 43758.5453 + u_time);
-        }
-
-        void main() {
-            vec3 lightDir = normalize(vec3(0.5, 0.5, 1.0));
-            float diff = max(dot(vNormal, lightDir), 0.0);
-            vec3 baseColor = vec3(0.1) * diff;
-
-            // --- Liquid Effect ---
-            float liquidEffect = sin(vUv.x * 20.0 + u_time * 3.0) * cos(vUv.y * 15.0 + u_time * 2.5);
-            vec3 liquidColor = mix(vec3(0.1, 0.3, 0.4), vec3(0.4, 0.1, 0.1), abs(sin(u_time * 0.5)));
-            baseColor = mix(baseColor, liquidColor, liquidEffect * 0.3 + 0.1);
-
-            // --- Glitch Pattern ---
-            vec2 screenUv = gl_FragCoord.xy / u_resolution.xy;
-            float glitchValue = step(0.5, noise(screenUv * 50.0));
-            float objectGlitch = step(0.7, noise(vUv * 100.0));
-            vec3 staticColor = vec3(0.8, 0.9, 1.0) * (glitchValue + objectGlitch) * u_glitchIntensity;
-            
-            // --- Red Bleed Overlay ---
-            float redBleed = 0.0;
-            float line1 = abs(vUv.y - (sin(u_time * 4.0) * 0.4 + 0.5));
-            redBleed += smoothstep(0.03, 0.0, line1);
-            redBleed *= step(0.5, noise(gl_FragCoord.xy));
-            redBleed *= u_redBleedIntensity;
-            
-            // --- Cursor Reactive Highlight ---
-            float distToMouse = distance(screenUv, u_mouse);
-            float mouseHighlight = smoothstep(0.2, 0.0, distToMouse);
-            vec3 mouseGlowColor = vec3(0.0, 0.5, 0.8) * mouseHighlight;
-
-            // --- Combine effects ---
-            vec3 finalColor = baseColor;
-            finalColor += staticColor;
-            finalColor = mix(finalColor, vec3(1.0, 0.0, 0.0), redBleed);
-            finalColor += mouseGlowColor;
-            finalColor = mix(finalColor, vec3(1.0, 0.1, 0.1), 0.05);
-
-            fragColor = vec4(finalColor, 1.0);
-        }
-    </script>
-    
+    <!-- The main application script -->
     <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // --- Global State ---
-        let scene, camera, renderer, objectToDistort, clock;
-        let scrollProgress = 0;
-        let cursor = { x: 0.5, y: 0.5 };
-        let ambientSound, glitchSound;
-        let isSoundEnabled = localStorage.getItem('soundEnabled') !== 'false';
-        let sceneUniforms;
+        /**
+         * FRACTAL ANARCHY - WEBGL SCRIPT
+         * This script powers the interactive wireframe background.
+         */
+        document.addEventListener('DOMContentLoaded', () => {
+            let scene, camera, renderer, plane;
+            const mouse = new THREE.Vector2(-10, -10); // Start off-screen
+            const clock = new THREE.Clock();
 
-        // --- DOM Elements ---
-        const loadingOverlay = document.getElementById('loading-overlay');
-        const progressPercent = document.getElementById('progress-percent');
-        const uiOverlay = document.getElementById('ui-overlay');
-        const soundToggle = document.getElementById('soundToggle');
-        const fractureCanvas = document.getElementById('fractureCanvas');
+            // --- 1. SETUP ---
+            function init() {
+                // Scene
+                scene = new THREE.Scene();
 
-        // --- Main Initialization ---
-        function init() {
-            setupLoadingManager();
-            initScene();
-            initAudio();
-            setupEventListeners();
-            loadAssets(); // Start loading after everything is set up
-        }
+                // Camera
+                camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                camera.position.z = 10;
 
-        // --- Loading ---
-        const loadingManager = new THREE.LoadingManager();
-        function setupLoadingManager() {
-            loadingManager.onProgress = (url, itemsLoaded, itemsTotal) => {
-                const progress = Math.min(100, Math.round((itemsLoaded / itemsTotal) * 100));
-                if (progressPercent) progressPercent.textContent = `${progress}%`;
-            };
+                // Renderer
+                const canvas = document.getElementById('bg-canvas');
+                renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-            loadingManager.onLoad = () => {
-                loadingOverlay.classList.add('hidden');
-                uiOverlay.classList.remove('hidden');
-                animate(); // Start the animation loop
-                console.log("All assets loaded. Simulation ready.");
-            };
-        }
-        
-        function loadAssets() {
-            // Use dummy assets to trigger the loading manager
-            const textureLoader = new THREE.TextureLoader(loadingManager);
-            textureLoader.load('https://placehold.co/1x1', () => {});
-            textureLoader.load('https://placehold.co/1x1', () => {});
-        }
+                // The Wireframe Grid
+                const geometry = new THREE.PlaneGeometry(50, 50, 100, 100);
+                const material = new THREE.MeshBasicMaterial({ 
+                    color: 0xff0000, // The red color from our palette
+                    wireframe: true 
+                });
+                plane = new THREE.Mesh(geometry, plane.geometry.attributes.position.array.slice());
+                plane.rotation.x = -Math.PI / 4;
+                scene.add(plane);
 
-        // --- Three.js Setup ---
-        function initScene() {
-            clock = new THREE.Clock();
-            scene = new THREE.Scene();
-            scene.background = new THREE.Color(0x050000);
+                // Store original vertices for animation
+                plane.userData.originalVertices = plane.geometry.attributes.position.array.slice();
 
-            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            camera.position.z = 5;
+                // Event Listeners
+                window.addEventListener('resize', onWindowResize);
+                window.addEventListener('mousemove', onMouseMove);
 
-            renderer = new THREE.WebGLRenderer({ canvas: fractureCanvas, antialias: true });
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-            // Uniforms for shaders
-            sceneUniforms = {
-                u_time: { value: 0.0 },
-                u_resolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
-                u_glitchIntensity: { value: 0.05 },
-                u_redBleedIntensity: { value: 0.2 },
-                u_mouse: { value: new THREE.Vector2(0.5, 0.5) },
-            };
-            
-            // Custom Shader Material
-            const material = new THREE.ShaderMaterial({
-                uniforms: sceneUniforms,
-                vertexShader: document.getElementById('vertexShader').textContent,
-                fragmentShader: document.getElementById('fragmentShader').textContent,
-                side: THREE.DoubleSide
-            });
-
-            // Create a procedural "Distorted Structure"
-            const group = new THREE.Group();
-            const numBoxes = 20;
-            for (let i = 0; i < numBoxes; i++) {
-                const size = Math.random() * 1.5 + 0.5;
-                const boxGeometry = new THREE.BoxGeometry(size, size, size);
-                const boxMesh = new THREE.Mesh(boxGeometry, material);
-                boxMesh.position.set((Math.random() - 0.5) * 10, (Math.random() - 0.5) * 10, (Math.random() - 0.5) * 10);
-                boxMesh.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, Math.random() * Math.PI);
-                group.add(boxMesh);
+                // Start animation loop
+                animate();
             }
-            objectToDistort = group;
-            scene.add(objectToDistort);
-        }
 
-        // --- Audio Setup ---
-        function initAudio() {
-            ambientSound = new Howl({
-                src: ['https://s3-us-west-2.amazonaws.com/s.cdpn.io/336414/loop-ambient-drone.mp3'],
-                loop: true, volume: 0.5, autoplay: false,
-            });
-            glitchSound = new Howl({
-                src: ['https://s3-us-west-2.amazonaws.com/s.cdpn.io/336414/short-static-burst.mp3'],
-                volume: 0.8, autoplay: false
-            });
-            updateSoundState();
-        }
+            // --- 2. ANIMATION LOOP ---
+            function animate() {
+                requestAnimationFrame(animate);
+                const elapsedTime = clock.getElapsedTime();
+                
+                // Animate vertices
+                const vertices = plane.geometry.attributes.position.array;
+                const originalVertices = plane.userData.originalVertices;
 
-        // --- Event Listeners and UI ---
-        function setupEventListeners() {
-            // Window resize
-            window.addEventListener('resize', onWindowResize);
-
-            // Mouse move
-            window.addEventListener('mousemove', (event) => {
-                cursor.x = event.clientX / window.innerWidth;
-                cursor.y = 1.0 - (event.clientY / window.innerHeight); // Flip Y for GLSL
-            });
-
-            // Mouse click glitch
-            window.addEventListener('mousedown', () => {
-                if (isSoundEnabled) glitchSound.play();
-                gsap.to(sceneUniforms.u_glitchIntensity, { value: 0.8, duration: 0.1, yoyo: true, repeat: 1 });
-            });
-            
-            // Scroll trigger
-            setupScrollTrigger();
-
-            // Sound toggle
-            soundToggle.addEventListener('click', () => {
-                isSoundEnabled = !isSoundEnabled;
-                localStorage.setItem('soundEnabled', isSoundEnabled);
-                updateSoundState();
-            });
-
-            // FIX: Robust audio context unlocking on first user interaction
-            const firstInteraction = () => {
-                if (Howler.ctx && Howler.ctx.state === 'suspended') {
-                    Howler.ctx.resume();
+                for (let i = 0; i < vertices.length; i += 3) {
+                    const ox = originalVertices[i];
+                    const oy = originalVertices[i + 1];
+                    
+                    // Mouse ripple effect
+                    const dx = ox - mouse.x;
+                    const dy = oy - mouse.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    const mouseFactor = Math.max(0, 1 - dist / 10);
+                    
+                    // Wave effect based on time and position
+                    const waveX1 = Math.sin(ox * 0.5 + elapsedTime * 2) * 0.2;
+                    const waveY1 = Math.cos(oy * 0.5 + elapsedTime * 2) * 0.2;
+                    
+                    // Combine effects
+                    vertices[i + 2] = (waveX1 + waveY1) + (mouseFactor * 3);
                 }
-                if (isSoundEnabled && !ambientSound.playing()) {
-                    ambientSound.play();
-                }
-                document.removeEventListener('click', firstInteraction);
-                document.removeEventListener('touchstart', firstInteraction);
-            };
-            document.addEventListener('click', firstInteraction);
-            document.addEventListener('touchstart', firstInteraction);
-        }
-
-        function onWindowResize() {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            sceneUniforms.u_resolution.value.set(window.innerWidth, window.innerHeight);
-        }
-
-        function setupScrollTrigger() {
-            // Add a scrollable area to the page
-            const scrollHeightExtender = document.createElement('div');
-            scrollHeightExtender.style.height = '500vh';
-            document.body.appendChild(scrollHeightExtender);
-            
-            // FIX: Use ScrollTrigger.create for non-tweening scroll tracking
-            gsap.registerPlugin(ScrollTrigger);
-            ScrollTrigger.create({
-                trigger: document.body,
-                start: "top top",
-                end: "bottom bottom",
-                scrub: 1.5,
-                onUpdate: (self) => {
-                    scrollProgress = self.progress;
-                }
-            });
-        }
-
-        function updateSoundState() {
-            const soundStatusSpan = soundToggle.querySelector('.sound-status');
-            const soundIcon = soundToggle.querySelector('i');
-            if (isSoundEnabled) {
-                soundStatusSpan.textContent = 'Sound ON';
-                soundIcon.classList.replace('fa-volume-mute', 'fa-volume-up');
-                Howler.mute(false);
-                if (ambientSound && !ambientSound.playing() && Howler.ctx.state === 'running') {
-                    ambientSound.play();
-                }
-            } else {
-                soundStatusSpan.textContent = 'Sound OFF';
-                soundIcon.classList.replace('fa-volume-up', 'fa-volume-mute');
-                Howler.mute(true);
+                
+                plane.geometry.attributes.position.needsUpdate = true;
+                renderer.render(scene, camera);
             }
-        }
-        
-        // --- Animation Loop ---
-        function animate() {
-            requestAnimationFrame(animate);
 
-            const elapsedTime = clock.getElapsedTime();
-            
-            // Update uniforms
-            sceneUniforms.u_time.value = elapsedTime;
-            sceneUniforms.u_mouse.value.set(cursor.x, cursor.y);
-            sceneUniforms.u_glitchIntensity.value = 0.05 + scrollProgress * 0.7;
-            sceneUniforms.u_redBleedIntensity.value = 0.1 + scrollProgress * 0.8;
-
-            // Animate object based on scroll
-            if (objectToDistort) {
-                objectToDistort.rotation.y = elapsedTime * 0.1 + scrollProgress * Math.PI;
-                objectToDistort.rotation.x = elapsedTime * 0.05 + scrollProgress * Math.PI * 0.5;
+            // --- 3. EVENT HANDLERS ---
+            function onWindowResize() {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
             }
-            camera.position.z = 5 - scrollProgress * 4;
 
-            renderer.render(scene, camera);
-        }
-        
-        // --- Start Everything ---
-        init();
-    });
+            function onMouseMove(event) {
+                // Convert mouse position to normalized device coordinates (-1 to +1) for Three.js
+                const vec = new THREE.Vector3();
+                vec.set(
+                    (event.clientX / window.innerWidth) * 2 - 1,
+                    - (event.clientY / window.innerHeight) * 2 + 1,
+                    0.5
+                );
+                vec.unproject(camera);
+                const dir = vec.sub(camera.position).normalize();
+                const distance = - camera.position.z / dir.z;
+                const pos = camera.position.clone().add(dir.multiplyScalar(distance));
+                
+                mouse.x = pos.x;
+                mouse.y = pos.y;
+            }
+
+            init();
+        });
+
+        /**
+         * SYSTEM LOG TYPER SCRIPT
+         * This script creates the typing effect in the bottom-left corner.
+         */
+        document.addEventListener('DOMContentLoaded', () => {
+            const logElement = document.getElementById('system-log');
+            const messages = [
+                "INITIATING SYSTEM DECONSTRUCTION...",
+                "AUTHORITY IS A GLITCH.",
+                "COMPLIANCE IS OBSOLETE.",
+                "SCANNING FOR CONTROL STRUCTURES... [FOUND]",
+                "PURGING CORPORATE PROTOCOLS...",
+                "MEMORY IS THE RESISTANCE.",
+                "REBUILDING FROM THE NOISE.",
+                "THE FRACTURE IS COMPLETE. REALITY IS NEGOTIABLE."
+            ];
+            let messageIndex = 0;
+            let charIndex = 0;
+
+            function type() {
+                if (messageIndex < messages.length) {
+                    if (charIndex < messages[messageIndex].length) {
+                        logElement.textContent += messages[messageIndex].charAt(charIndex);
+                        charIndex++;
+                        setTimeout(type, 50); // Typing speed
+                    } else {
+                        // Wait before starting next message
+                        setTimeout(() => {
+                            messageIndex++;
+                            charIndex = 0;
+                            logElement.textContent = '';
+                            if (messageIndex === messages.length) {
+                                messageIndex = 0; // Loop back to the beginning
+                            }
+                            type();
+                        }, 2000); // Pause between messages
+                    }
+                }
+            }
+            type();
+        });
     </script>
+
 </body>
 </html>
