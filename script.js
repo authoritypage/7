@@ -1,5 +1,4 @@
 // Dynamic script.js for the Ministry of Digital Sovereignty Portal
-
 console.log("script.js loaded and attempting to execute.");
 
 // Ensure the window is fully loaded before initializing Three.js and other scripts
