@@ -1,0 +1,579 @@
+/* Enhanced style.css for the Ministry of Digital Sovereignty Portal */
+
+:root {
+    --background-color: #0A0A0A; /* Deeper dark background */
+    --text-color: #EAEAEA;
+    --red-accent: #B71C1C; /* A deep, institutional red */
+    --blue-accent: #0077B6; /* A subtle, techy blue for particles/highlights */
+    --border-color: #333333; /* Softer border */
+    --card-bg: #1A1A1A; /* Darker card background */
+    --header-font: 'Roboto Slab', serif;
+    --body-font: 'Inter', sans-serif;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-family: var(--body-font);
+    font-size: 16px;
+    line-height: 1.6;
+    width: 100%;
+    min-height: 100%; /* Ensure full height */
+    overflow-x: hidden;
+}
+
+/* The subtle WebGL background */
+#canvas-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1; /* Below content */
+    opacity: 0.25; /* More visible, but still subtle */
+}
+
+/* Main container for all content */
+.container {
+    position: relative;
+    z-index: 10;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem;
+    background: rgba(10, 10, 10, 0.85); /* Slightly less transparent */
+    backdrop-filter: blur(5px); /* Stronger blur for more depth */
+    border-left: 1px solid var(--border-color);
+    border-right: 1px solid var(--border-color);
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.5); /* Soft, wide shadow */
+    animation: fadeIn 1s ease-out; /* Fade in effect */
+}
+
+/* --- Keyframe Animations --- */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulseBorder {
+    0% { border-color: var(--red-accent); }
+    50% { border-color: rgba(183, 28, 28, 0.7); }
+    100% { border-color: var(--red-accent); }
+}
+
+/* Spinner for loading indicator */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+
+/* --- Header --- */
+.site-header {
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping for responsiveness */
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--red-accent);
+    padding-bottom: 1.5rem;
+    margin-bottom: 3rem;
+    animation: fadeIn 1.2s ease-out;
+}
+.logo {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem; /* Space for wrap */
+}
+.logo svg {
+    width: 60px; /* Slightly larger logo */
+    height: 60px;
+    margin-right: 1rem;
+    fill: var(--text-color);
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3)); /* Subtle glow */
+}
+.logo-text h1 {
+    font-family: var(--header-font);
+    font-size: 1.8rem; /* Slightly larger text */
+    margin: 0;
+    line-height: 1.1;
+    text-transform: uppercase;
+    color: var(--text-color);
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.15); /* Subtle text glow */
+}
+.logo-text span {
+    font-size: 0.95rem;
+    color: #aaa;
+    letter-spacing: 1px; /* More spaced out */
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
+}
+.main-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 1rem; /* Space for wrap */
+}
+.main-nav a {
+    color: var(--text-color);
+    text-decoration: none;
+    margin: 0 0.75rem; /* Closer spacing */
+    font-weight: 500;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    position: relative;
+    padding-bottom: 8px; /* More padding for pseudo-element */
+    transition: color 0.3s ease;
+}
+.main-nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px; /* Thicker underline */
+    background-color: var(--red-accent);
+    transform: scaleX(0);
+    transform-origin: center; /* Scale from center */
+    transition: transform 0.3s ease;
+}
+.main-nav a:hover {
+    color: var(--red-accent); /* Red text on hover */
+}
+.main-nav a:hover::after {
+    transform: scaleX(1);
+}
+
+/* --- Content Sections --- */
+.section {
+    margin-bottom: 4.5rem; /* More space between sections */
+    border-top: 1px solid var(--border-color);
+    padding-top: 2.5rem; /* More padding */
+    animation: fadeIn 1.5s ease-out; /* Staggered fade in */
+}
+.section-title {
+    font-family: var(--header-font);
+    font-size: 2.3rem; /* Larger title */
+    color: var(--red-accent);
+    margin-bottom: 2rem; /* More space below title */
+    text-transform: uppercase;
+    letter-spacing: 2px; /* More spaced out */
+    text-shadow: 0 0 15px rgba(183, 28, 28, 0.4); /* Red glow for titles */
+    text-align: center;
+}
+.section p {
+    margin-bottom: 1rem;
+    color: #DCDCDC; /* Slightly lighter body text for readability */
+}
+
+/* Foundational Doctrine Blockquote */
+.doctrine-quote {
+    background: #141414; /* Even darker background for quote */
+    border-left: 5px solid var(--red-accent); /* Thicker border */
+    padding: 2.5rem;
+    margin: 3rem 0; /* More margin */
+    font-size: 1.2rem; /* Larger font */
+    font-style: italic;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4); /* Deeper shadow */
+    border-radius: 5px;
+    position: relative;
+    overflow: hidden; /* Hide overflow for pseudo-element */
+}
+.doctrine-quote::before {
+    content: '“';
+    font-family: serif; /* Use a classic serif for the quote mark */
+    font-size: 8em; /* Large quote mark */
+    color: rgba(255, 255, 255, 0.05); /* Very subtle, transparent */
+    position: absolute;
+    top: -30px;
+    left: 10px;
+    z-index: 0;
+    pointer-events: none;
+}
+.doctrine-quote blockquote {
+    margin: 0;
+    position: relative; /* Ensure quote text is above pseudo-element */
+    z-index: 1;
+}
+.doctrine-quote footer {
+    margin-top: 1.5rem;
+    font-style: normal;
+    font-weight: 500;
+    text-align: right;
+    color: #bbb;
+}
+.doctrine-quote a {
+    color: var(--blue-accent); /* Blue accent for quote links */
+    text-decoration: none;
+    border-bottom: 1px dotted var(--blue-accent);
+    transition: color 0.3s ease, border-color 0.3s ease;
+}
+.doctrine-quote a:hover {
+    color: var(--text-color);
+    border-bottom-style: solid;
+    border-color: var(--text-color);
+}
+
+/* Data grids for cases and resources */
+.data-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem; /* Larger gap */
+}
+.data-card {
+    background: var(--card-bg); /* Darker card background */
+    border: 1px solid var(--border-color);
+    padding: 2rem; /* More padding */
+    transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Deeper shadow */
+    border-radius: 8px; /* Slightly more rounded */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.data-card:hover {
+    border-color: var(--red-accent);
+    transform: translateY(-8px); /* Lift more on hover */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5); /* Stronger shadow on hover */
+}
+.data-card h3 {
+    font-family: var(--header-font);
+    font-size: 1.5rem; /* Larger card title */
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+    color: var(--text-color);
+    transition: color 0.3s ease;
+}
+.data-card a {
+    color: var(--text-color);
+    text-decoration: none;
+    /* Removed display: block and height: 100% so button can be added */
+}
+.data-card a:hover h3 {
+    color: var(--red-accent); /* Red title on hover */
+}
+.card-meta {
+    font-size: 0.85rem;
+    color: #999; /* Slightly darker meta text */
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+    letter-spacing: 0.75px;
+}
+.card-meta .status {
+    font-weight: bold;
+    color: var(--red-accent);
+    background-color: rgba(183, 28, 28, 0.2); /* Subtle background for status */
+    padding: 0.2em 0.5em;
+    border-radius: 3px;
+    font-size: 0.75rem;
+    display: inline-block;
+    margin-left: 0.5rem;
+}
+/* Specific status colors */
+.status.RESOLVED {
+    color: #28a745; /* Green */
+    background-color: rgba(40, 167, 69, 0.2);
+}
+.status.UNDER.REVIEW {
+    color: #ffc107; /* Yellow */
+    background-color: rgba(255, 193, 7, 0.2);
+}
+.status.ACTIVE {
+    color: var(--red-accent);
+    background-color: rgba(183, 28, 28, 0.2);
+}
+
+.data-card p {
+    flex-grow: 1; /* Ensures cards with less text still align their footers */
+    margin-bottom: 0; /* Remove default paragraph margin if it's the last element */
+    color: #DCDCDC;
+}
+
+/* Footer */
+.site-footer {
+    text-align: center;
+    padding: 2.5rem 0; /* More padding */
+    border-top: 2px solid var(--red-accent);
+    margin-top: 3rem; /* More margin */
+    font-size: 0.9rem;
+    color: #999; /* Slightly darker footer text */
+    animation: fadeIn 1.8s ease-out; /* Staggered fade in */
+}
+.site-footer p {
+    margin: 0.5rem 0;
+}
+
+/* --- AI Search Section Styles (Existing) --- */
+.ai-search-section {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    padding: 3rem; /* More padding for prominence */
+    margin-bottom: 4.5rem;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); /* Deeper shadow */
+}
+
+.ai-input-group {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+#ai-query-input {
+    flex-grow: 1;
+    padding: 1rem 1.25rem;
+    background: #0A0A0A; /* Dark input background */
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    color: var(--text-color);
+    font-size: 1.1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#ai-query-input::placeholder {
+    color: #777;
+    font-style: italic;
+}
+
+#ai-query-input:focus {
+    outline: none;
+    border-color: var(--red-accent);
+    box-shadow: 0 0 10px rgba(183, 28, 28, 0.5); /* Red glow on focus */
+}
+
+#ai-query-button {
+    padding: 1rem 2rem;
+    background: var(--red-accent);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+#ai-query-button:hover {
+    background-color: #d13030; /* Slightly lighter red */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+}
+
+#ai-query-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.ai-response-area {
+    background: #0A0A0A;
+    border: 1px dashed var(--border-color); /* Dashed border for response area */
+    padding: 1.5rem;
+    min-height: 150px; /* Minimum height for response area */
+    border-radius: 5px;
+    font-size: 1.05rem;
+    color: #DCDCDC;
+    line-height: 1.8;
+    overflow-y: auto; /* Allow scrolling if content is long */
+    max-height: 400px; /* Max height before scrolling */
+    white-space: pre-wrap; /* Preserve whitespace and wrap text */
+    word-wrap: break-word; /* Break long words */
+}
+
+.ai-response-area p {
+    margin-bottom: 1rem; /* Adjust paragraph spacing within response */
+}
+
+.ai-placeholder {
+    color: #777;
+    font-style: italic;
+    text-align: center;
+    padding-top: 50px;
+}
+
+/* Loading Indicator (Shared by both AI features) */
+.ai-loading-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    color: var(--red-accent);
+    font-weight: bold;
+    font-size: 1.1rem;
+    gap: 10px;
+}
+
+.ai-loading-indicator.hidden {
+    display: none;
+}
+
+.spinner {
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-top: 4px solid var(--red-accent);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+
+/* --- New Styles for AI Summary Modal --- */
+.ai-summary-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Darker overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Above all other content */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.ai-summary-modal.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background: var(--background-color); /* Matches main background */
+    border: 2px solid var(--red-accent); /* Strong red border */
+    border-radius: 10px;
+    padding: 3rem;
+    width: 90%;
+    max-width: 800px;
+    position: relative;
+    box-shadow: 0 0 30px rgba(183, 28, 28, 0.5); /* Glowing red shadow */
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+
+.ai-summary-modal.visible .modal-content {
+    transform: scale(1);
+}
+
+.modal-content h3 {
+    font-family: var(--header-font);
+    font-size: 1.8rem;
+    color: var(--red-accent);
+    margin-bottom: 1.5rem;
+    text-align: center;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1rem;
+}
+
+.modal-content #modal-summary-content {
+    background: #141414; /* Slightly lighter inner background */
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    padding: 1.5rem;
+    min-height: 150px;
+    max-height: 400px; /* Control height of summary text */
+    overflow-y: auto;
+    line-height: 1.7;
+    color: #DCDCDC;
+    font-size: 1.05rem;
+    white-space: pre-wrap; /* Ensure newlines from AI are respected */
+}
+
+.close-button {
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    color: var(--text-color);
+    font-size: 2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.2s ease;
+    z-index: 10; /* Ensure it's clickable */
+}
+
+.close-button:hover {
+    color: var(--red-accent);
+    transform: rotate(90deg);
+}
+
+/* Styles for the new "Summarize Case" buttons */
+.summarize-case-button {
+    background-color: var(--blue-accent); /* Use blue accent for summary button */
+    color: white;
+    border: none;
+    padding: 0.75rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-top: 1rem; /* Space from description */
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    align-self: flex-start; /* Align button to the start of the flex container */
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.summarize-case-button:hover {
+    background-color: #008cc9; /* Lighter blue on hover */
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.summarize-case-button:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+
+/* --- Responsive Adjustments for AI Summary Modal --- */
+@media (max-width: 768px) {
+    .modal-content {
+        padding: 2rem;
+        width: 95%;
+    }
+    .modal-content h3 {
+        font-size: 1.6rem;
+    }
+    .modal-content #modal-summary-content {
+        padding: 1rem;
+        font-size: 1rem;
+        max-height: 300px;
+    }
+    .close-button {
+        font-size: 1.8rem;
+        top: 0.8rem;
+        right: 1rem;
+    }
+    .summarize-case-button {
+        width: 100%; /* Full width on small screens */
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .modal-content {
+        padding: 1.5rem;
+    }
+    .modal-content h3 {
+        font-size: 1.4rem;
+        margin-bottom: 1rem;
+    }
+    .modal-content #modal-summary-content {
+        padding: 0.8rem;
+        font-size: 0.9rem;
+        max-height: 250px;
+    }
+    .close-button {
+        font-size: 1.5rem;
+        top: 0.5rem;
+        right: 0.8rem;
+    }
+}
