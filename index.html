@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ministry of Digital Sovereignty // Official Portal</title>
+    <meta name="description" content="Official state portal dedicated to analyzing and counteracting coercive legal strategies that threaten economic and digital sovereignty.">
+    <meta name="author" content="Ministry of Digital Sovereignty (MDS)">
+    
+    <!-- Fonts from Google CDN -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Link to your external CSS stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Canvas for the WebGL background -->
+    <canvas id="canvas-bg"></canvas>
+
+    <div class="container">
+        <header class="site-header">
+            <div class="logo">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M50 2 L98 25 L98 75 L50 98 L2 75 L2 25 Z M50 12 L12 31 L12 69 L50 88 L88 69 L88 31 Z" stroke-width="2" stroke="#444"/>
+                    <polygon points="50,25 75,40 50,55 25,40" style="fill:var(--red-accent);"/>
+                </svg>
+                <div class="logo-text">
+                    <h1>Ministry of Digital Sovereignty</h1>
+                    <span>OFFICIAL STATE PORTAL // MDS</span>
+                </div>
+            </div>
+            <nav class="main-nav">
+                <a href="#ai-analysis">AI Analysis</a>
+                <a href="#directives">Directives</a>
+                <a href="#case-files">Case Files</a>
+                <a href="#analysis">Analysis</a>
+                <a href="#resources">Resources</a>
+            </nav>
+        </header>
+
+        <main>
+            <!-- AI Search Section -->
+            <section id="ai-analysis" class="section ai-search-section">
+                <h2 class="section-title">Situational Analysis AI</h2>
+                <p>Query the Ministry's AI for immediate insights and doctrinal references. Please enter your query below.</p>
+                <div class="ai-input-group">
+                    <input type="text" id="ai-query-input" placeholder="e.g., 'What is the Blackmail Effect?' or 'Summarize Directive 7-B'">
+                    <button id="ai-query-button">Query AI</button>
+                </div>
+                <div id="ai-response-area" class="ai-response-area">
+                    <!-- AI responses will be displayed here -->
+                    <div class="ai-placeholder">
+                        Your AI-generated analysis will appear here.
+                    </div>
+                </div>
+                <div id="ai-loading-indicator" class="ai-loading-indicator hidden">
+                    <div class="spinner"></div>
+                    <p>Analyzing query...</p>
+                </div>
+            </section>
+            <!-- End AI Search Section -->
+
+            <section class="section">
+                <h2 class="section-title">Foundational Doctrine</h2>
+                <p>The Ministry's core mandate is the preservation of economic and digital sovereignty against coercive legal tactics. Our primary analytical framework is derived from the principle of the "Blackmail Effect," as articulated in foundational jurisprudence.</p>
+                
+                <div class="doctrine-quote">
+                    <blockquote>
+                        The blackmail effect of class actions involves "forcing... defendants to stake their companies on the outcome of a single jury trial, or be forced by fear of the risk of bankruptcy to settle even if they have no legal liability."
+                    </blockquote>
+                    <footer>
+                        — Judge Richard Posner, <a href="https://h2o.law.harvard.edu/cases/3382" target="_blank" rel="noopener noreferrer">In re Rhone-Poulenc Rorer Inc., 51 F.3d 1293 (7th Cir. 1995)</a>
+                    </footer>
+                </div>
+            </section>
+
+            <section id="directives" class="section">
+                <h2 class="section-title">Active Directives</h2>
+                <p>Operational frameworks for the identification and mitigation of asymmetric legal threats.</p>
+                <div class="data-grid">
+                    <div class="data-card">
+                        <h3>Directive 7-B: Asymmetric Threat Identification</h3>
+                        <p class="card-meta">CLASSIFICATION: STATE SECRET</p>
+                        <p>Protocols for identifying litigation strategies primarily designed to exert economic pressure rather than seek legal remedy.</p>
+                    </div>
+                    <div class="data-card">
+                        <h3>Directive 11-C: Counter-Settlement Protocols</h3>
+                        <p class="card-meta">CLASSIFICATION: RESTRICTED</p>
+                        <p>Frameworks for state-level support to entities facing coercive settlement demands that compromise strategic national interests.</p>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="case-files" class="section">
+                <h2 class="section-title">Monitored Case Files</h2>
+                <p>A non-exhaustive list of legal actions analyzed under MDS directives.</p>
+                <div class="data-grid">
+                    <div class="data-card" data-case-id="case303" data-case-title="In re Petro-Strategic Holdings" data-case-description="Analysis of aggregated environmental claims threatening critical energy infrastructure.">
+                        <a href="#"><h3>Case 303: In re Petro-Strategic Holdings</h3><p class="card-meta">JURISDICTION: US 5th Circuit // <span class="status RESOLVED">STATUS: RESOLVED</span></p><p>Analysis of aggregated environmental claims threatening critical energy infrastructure.</p></a>
+                        <button class="summarize-case-button">✨ Summarize Case ✨</button>
+                    </div>
+                    <div class="data-card" data-case-id="case812" data-case-title="The Pharma-Sovereign Dispute" data-case-description="Evaluation of patent-trolling litigation targeting national pharmaceutical production capabilities.">
+                        <a href="#"><h3>Case 812: The Pharma-Sovereign Dispute</h3><p class="card-meta">JURISDICTION: EU General Court // <span class="status UNDER.REVIEW">STATUS: UNDER REVIEW</span></p><p>Evaluation of patent-trolling litigation targeting national pharmaceutical production capabilities.</p></a>
+                        <button class="summarize-case-button">✨ Summarize Case ✨</button>
+                    </div>
+                    <div class="data-card" data-case-id="case901" data-case-title="Trans-Digital Data Compact Breach" data-case-description="Cross-border data privacy litigation aimed at disrupting sovereign data localization mandates.">
+                        <a href="#"><h3>Case 901: Trans-Digital Data Compact Breach</h3><p class="card-meta">JURISDICTION: Int'l Arbitration // <span class="status ACTIVE">STATUS: ACTIVE</span></p><p>Cross-border data privacy litigation aimed at disrupting sovereign data localization mandates.</p></a>
+                        <button class="summarize-case-button">✨ Summarize Case ✨</button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="analysis" class="section">
+                <h2 class="section-title">Doctrinal Analysis</h2>
+                <p>Internal publications and research from the Ministry's analytical divisions.</p>
+                <div class="data-grid">
+                       <div class="data-card">
+                        <a href="https://scholarship.law.duke.edu/cgi/viewcontent.cgi?article=1202&context=lcp" target="_blank" rel="noopener noreferrer"><h3>The Fallacy of Aggregated Claims</h3><p class="card-meta">SOURCE: Duke Law</p><p>Examining how the aggregation of low-value claims creates disproportionate settlement leverage.</p></a>
+                    </div>
+                       <div class="data-card">
+                        <a href="https://www.law.georgetown.edu/salpalia-center/our-work/litigation-finance-and-access-to-justice/" target="_blank" rel="noopener noreferrer"><h3>Third-Party Litigation Finance as a Vector</h3><p class="card-meta">SOURCE: Georgetown Law</p><p>Analysis of external financial actors in amplifying coercive litigation strategies.</p></a>
+                    </div>
+                </div>
+            </section>
+
+            <section id="resources" class="section">
+                <h2 class="section-title">External Resources & Citations</h2>
+                <p>Primary documents and academic research relevant to MDS doctrine.</p>
+                <div class="data-grid">
+                    <div class="data-card">
+                        <a href="https://www.uscourts.gov/rules-policies/current-rules-practice-procedure/federal-rules-civil-procedure" target="_blank" rel="noopener noreferrer"><h3>U.S. Federal Rules of Civil Procedure, Rule 23</h3><p class="card-meta">TYPE: PRIMARY LEGAL TEXT</p><p>The governing rule for class action lawsuits in United States federal courts.</p></a>
+                    </div>
+                    <div class="data-card">
+                        <a href="https://chicagounbound.uchicago.edu/journal_of_legal_studies/vol24/iss1/5/" target="_blank" rel="noopener noreferrer"><h3>The "Client" in a Class Action</h3><p class="card-meta">TYPE: ACADEMIC PAPER (J. Legal Stud.)</p><p>Analysis of agency problems between class action lawyers and the claimants they represent.</p></a>
+                    </div>
+                    <div class="data-card">
+                        <a href="https://www.rand.org/pubs/research_briefs/RB9058.html" target="_blank" rel="noopener noreferrer"><h3>RAND Institute for Civil Justice: Class Actions</h3><p class="card-meta">TYPE: INSTITUTIONAL RESEARCH</p><p>Empirical studies on the costs, outcomes, and effects of class action litigation.</p></a>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="site-footer">
+            <p>© <span id="year"></span> Ministry of Digital Sovereignty. All Rights Reserved.</p>
+            <p>This portal is intended for authorized personnel. Unauthorized access is prohibited.</p>
+        </footer>
+    </div>
+    
+    <!-- AI Summary Modal Structure -->
+    <div id="ai-summary-modal" class="ai-summary-modal hidden">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h3 id="modal-case-title"></h3>
+            <div id="modal-summary-content">
+                <!-- AI summary will be loaded here -->
+            </div>
+            <div id="modal-loading-indicator" class="ai-loading-indicator hidden">
+                <div class="spinner"></div>
+                <p>Generating summary...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.165.0/three.min.js"></script>
+    
+    <!-- Link to your external JavaScript file. 'defer' ensures it runs after the HTML is parsed. -->
+    <script src="script.js" defer></script>
+</body>
+</html>
