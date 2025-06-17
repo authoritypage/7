@@ -7,18 +7,15 @@
     <meta name="description" content="Official state portal dedicated to analyzing and counteracting coercive legal strategies that threaten economic and digital sovereignty.">
     <meta name="author" content="Ministry of Digital Sovereignty (MDS)">
     
-    <!-- Fonts from Google CDN -->
+    <!-- Updated Google Fonts Link: Replaced Roboto Slab with Merriweather -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Merriweather:wght@700&display=swap" rel="stylesheet">
     
     <!-- Link to your external CSS stylesheet -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-    <!-- Canvas for the WebGL background (remains in case you want to switch back) -->
-    <canvas id="canvas-bg"></canvas>
 
     <div class="container">
         <header class="site-header">
@@ -165,25 +162,21 @@
         </footer>
     </div>
     
-    <!-- AI Summary Modal Structure -->
+    <!-- AI Summary Modal is unchanged -->
     <div id="ai-summary-modal" class="ai-summary-modal hidden">
         <div class="modal-content">
             <span class="close-button">×</span>
             <h3 id="modal-case-title"></h3>
-            <div id="modal-summary-content">
-                <!-- AI summary will be loaded here -->
-            </div>
+            <div id="modal-summary-content"></div>
             <div id="modal-loading-indicator" class="ai-loading-indicator hidden">
                 <div class="spinner"></div>
                 <p>Generating summary...</p>
             </div>
         </div>
     </div>
-
-    <!-- JavaScript Libraries -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.165.0/three.min.js"></script>
     
-    <!-- Link to your external JavaScript file. 'defer' ensures it runs after the HTML is parsed. -->
+    <!-- JS files are unchanged -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.165.0/three.min.js"></script>
     <script src="script.js" defer></script>
 </body>
 </html>
