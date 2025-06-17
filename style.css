@@ -1,6 +1,6 @@
 /*
 ================================================================================
-OFFICIAL PORTAL STYLESHEET - MINISTRY OF DIGITAL SOVEREIGNTY (V4 - POLISHED)
+OFFICIAL PORTAL STYLESHEET - MINISTRY OF DIGITAL SOVEREIGNTY (V5 - BING NEWS STYLE)
 ================================================================================
 */
 
@@ -8,7 +8,6 @@ OFFICIAL PORTAL STYLESHEET - MINISTRY OF DIGITAL SOVEREIGNTY (V4 - POLISHED)
 --------------------------------------------------------------------------------
 */
 :root {
-    /* Color Palette */
     --background-color: #f8f9fa;
     --card-background: #ffffff;
     --text-color: #212529;
@@ -18,8 +17,6 @@ OFFICIAL PORTAL STYLESHEET - MINISTRY OF DIGITAL SOVEREIGNTY (V4 - POLISHED)
     --border-color: #dee2e6;
     --red-accent: #b31b1b;
     --gray-text: #6c757d;
-
-    /* Typography - NEW FONT for headings */
     --font-heading: 'Merriweather', serif;
     --font-body: 'Inter', sans-serif;
 }
@@ -34,7 +31,6 @@ body {
     line-height: 1.7;
     margin: 0;
     padding: 0;
-    /* Add a subtle shadow to text to improve readability against the background */
     text-shadow: 0 0 4px rgba(255, 255, 255, 0.5);
 }
 
@@ -45,16 +41,11 @@ body {
     max-width: 1100px;
     margin: 0 auto;
     padding: 0 2rem;
-    /* REDUCED OPACITY to make background more visible */
     background-color: rgba(248, 249, 250, 0.92); 
     box-shadow: 0 0 25px rgba(0,0,0,0.15);
 }
 
-#canvas-bg {
-    display: none;
-}
-
-/* 3. Header, Logo, and Navigation
+/* 3. Header and Global Styles (largely unchanged)
 --------------------------------------------------------------------------------
 */
 .site-header {
@@ -65,84 +56,20 @@ body {
     border-bottom: 2px solid var(--border-color);
     margin-bottom: 2rem;
 }
+.logo { display: flex; align-items: center; }
+.logo svg { width: 60px; height: 60px; margin-right: 15px; }
+.logo svg path { stroke: var(--heading-color); }
+.logo svg polygon { fill: var(--red-accent); }
+.logo-text h1 { font-family: var(--font-heading); font-size: 1.75rem; color: var(--heading-color); margin: 0; text-shadow: none; }
+.logo-text span { font-size: 0.8rem; color: var(--gray-text); text-transform: uppercase; letter-spacing: 0.5px; }
+.main-nav a { color: var(--text-color); text-decoration: none; margin-left: 1.5rem; font-weight: 500; transition: color 0.2s; }
+.main-nav a:hover { color: var(--primary-blue); text-decoration: underline; }
+.section { background-color: var(--card-background); border: 1px solid var(--border-color); border-radius: 4px; padding: 2rem; margin-bottom: 2.5rem; }
+.section-title { font-family: var(--font-heading); color: var(--heading-color); font-size: 2rem; margin-top: 0; border-bottom: 1px solid var(--border-color); padding-bottom: 0.75rem; margin-bottom: 1.5rem; text-shadow: none; }
+a { color: var(--primary-blue); text-decoration: none; }
+a:hover { text-decoration: underline; }
 
-.logo {
-    display: flex;
-    align-items: center;
-}
-
-.logo svg {
-    width: 60px;
-    height: 60px;
-    margin-right: 15px;
-}
-.logo svg path {
-    stroke: var(--heading-color);
-}
-.logo svg polygon {
-    fill: var(--red-accent);
-}
-
-.logo-text h1 {
-    font-family: var(--font-heading);
-    font-size: 1.75rem;
-    color: var(--heading-color);
-    margin: 0;
-    text-shadow: none; /* Remove body text-shadow from main heading */
-}
-
-.logo-text span {
-    font-size: 0.8rem;
-    color: var(--gray-text);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.main-nav a {
-    color: var(--text-color);
-    text-decoration: none;
-    margin-left: 1.5rem;
-    font-weight: 500;
-    transition: color 0.2s ease-in-out;
-}
-
-.main-nav a:hover {
-    color: var(--primary-blue);
-    text-decoration: underline;
-}
-
-/* 4. Sections and Typography
---------------------------------------------------------------------------------
-*/
-.section {
-    background-color: var(--card-background);
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-    padding: 2rem;
-    margin-bottom: 2.5rem;
-}
-
-.section-title {
-    font-family: var(--font-heading);
-    color: var(--heading-color);
-    font-size: 2rem;
-    margin-top: 0;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 0.75rem;
-    margin-bottom: 1.5rem;
-    text-shadow: none; /* Remove body text-shadow from section titles */
-}
-
-a {
-    color: var(--primary-blue);
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
-/* 5. Data Cards and Grids
+/* 4. Data Grids and Standard Cards
 --------------------------------------------------------------------------------
 */
 .data-grid {
@@ -151,6 +78,7 @@ a:hover {
     gap: 1.5rem;
 }
 
+/* Standard card style for cards WITHOUT images */
 .data-card {
     background-color: var(--background-color);
     border: 1px solid var(--border-color);
@@ -158,21 +86,12 @@ a:hover {
     padding: 1.5rem;
     display: flex;
     flex-direction: column;
-    transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
-    overflow: hidden;
+    transition: box-shadow 0.2s, transform 0.2s;
 }
 
-.data-card:hover {
+.data-card:not(.has-image):hover {
     transform: translateY(-3px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-}
-
-.card-image {
-    width: calc(100% + 3rem);
-    height: 180px;
-    object-fit: cover;
-    display: block;
-    margin: -1.5rem -1.5rem 1.5rem -1.5rem;
 }
 
 .data-card a {
@@ -203,90 +122,85 @@ a:hover {
     margin-bottom: 1rem !important;
 }
 
-/* 6. Buttons and Inputs
+/* 5. NEW BING-STYLE IMAGE CARD LAYOUT
 --------------------------------------------------------------------------------
 */
-.summarize-case-button {
-    background-color: #fff;
-    color: var(--primary-blue);
-    border: 1px solid var(--primary-blue);
-    font-weight: 500;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    margin-top: auto;
-    transition: background-color 0.2s, color 0.2s;
+.data-card.has-image {
+    padding: 0; /* Remove padding from the main card container */
+}
+.data-card.has-image:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
 }
 
-.summarize-case-button:hover {
-    background-color: var(--primary-blue);
-    color: #fff;
+.card-image-container {
+    position: relative; /* This is the anchor for the overlay */
+    height: 220px; /* Set a fixed height for the image area */
+    overflow: hidden;
 }
 
-#ai-query-button {
-    background-color: var(--primary-blue);
-    color: #fff;
-    border: none;
-    font-weight: 500;
-    padding: 0.75rem 1.5rem;
-    cursor: pointer;
-    transition: background-color 0.2s ease-in-out;
-}
-
-#ai-query-button:hover {
-    background-color: var(--primary-blue-hover);
-}
-
-.ai-input-group {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-}
-
-#ai-query-input {
+.card-image {
     width: 100%;
-    padding: 0.75rem;
-    font-size: 1rem;
-    border-radius: 4px;
-    border: 1px solid var(--border-color);
+    height: 100%;
+    object-fit: cover; /* Cover the container without distortion */
+    transition: transform 0.3s ease;
 }
 
-/* 7. Specific Components
+.data-card.has-image:hover .card-image {
+    transform: scale(1.05); /* Subtle zoom effect on hover */
+}
+
+.card-text-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1.5rem;
+    /* The gradient for text readability */
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0) 100%);
+    color: #fff;
+    text-decoration: none;
+    transition: background 0.3s ease;
+}
+
+.card-text-overlay:hover {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.1) 100%);
+}
+
+.card-text-overlay h3,
+.card-text-overlay .card-meta {
+    color: #fff;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.7);
+}
+
+.card-text-overlay .card-meta {
+    margin-bottom: 0 !important;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.card-content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+/* 6. Buttons, Inputs, and other components (mostly unchanged)
 --------------------------------------------------------------------------------
 */
-.doctrine-quote {
-    background-color: #e9ecef;
-    border-left: 4px solid var(--primary-blue);
-    padding: 1.5rem;
-    margin: 1.5rem 0;
-}
-
-.doctrine-quote blockquote, .doctrine-quote footer {
-    text-shadow: none;
-}
-
+.summarize-case-button { background-color: #fff; color: var(--primary-blue); border: 1px solid var(--primary-blue); font-weight: 500; padding: 0.5rem 1rem; cursor: pointer; margin-top: auto; transition: background-color 0.2s, color 0.2s; }
+.summarize-case-button:hover { background-color: var(--primary-blue); color: #fff; }
+#ai-query-button { background-color: var(--primary-blue); color: #fff; border: none; font-weight: 500; padding: 0.75rem 1.5rem; cursor: pointer; transition: background-color 0.2s; }
+#ai-query-button:hover { background-color: var(--primary-blue-hover); }
+.ai-input-group { display: flex; gap: 1rem; margin-bottom: 1.5rem; }
+#ai-query-input { width: 100%; padding: 0.75rem; font-size: 1rem; border-radius: 4px; border: 1px solid var(--border-color); }
+.doctrine-quote { background-color: #e9ecef; border-left: 4px solid var(--primary-blue); padding: 1.5rem; margin: 1.5rem 0; }
+.doctrine-quote blockquote, .doctrine-quote footer { text-shadow: none; }
 .status { font-weight: 700; }
-.status.RESOLVED { color: #28a745; }
-.status.UNDER\.REVIEW { color: #fd7e14; }
+.status.RESOLVED { color: #50c878; } /* Emerald Green */
+.status.UNDER\.REVIEW { color: #ffbf00; } /* Amber */
 .status.ACTIVE { color: var(--red-accent); }
 .hidden { display: none; }
-.spinner {
-    border: 4px solid rgba(0, 0, 0, 0.1);
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    border-left-color: var(--primary-blue);
-    animation: spin 1s ease infinite;
-}
+.spinner { border: 4px solid rgba(0, 0, 0, 0.1); width: 36px; height: 36px; border-radius: 50%; border-left-color: var(--primary-blue); animation: spin 1s ease infinite; }
 @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-/* 8. Footer
---------------------------------------------------------------------------------
-*/
-.site-footer {
-    text-align: center;
-    padding: 2rem 0;
-    margin-top: 2rem;
-    border-top: 1px solid var(--border-color);
-    color: var(--gray-text);
-    font-size: 0.9rem;
-}
+.site-footer { text-align: center; padding: 2rem 0; margin-top: 2rem; border-top: 1px solid var(--border-color); color: var(--gray-text); font-size: 0.9rem; }
