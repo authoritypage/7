@@ -1,171 +1,346 @@
-Here’s an enhanced and corrected version of your CSS code. I’ve focused on improving readability, consistency, and removing redundant or unnecessary styles. I’ve also ensured proper formatting and organization for better maintainability.
-
-```css
+/* Custom Properties */
 :root {
-    --background-color: #f8f9fa;
-    --card-background: #ffffff;
-    --text-color: #212529;
-    --heading-color: #343a40;
-    --primary-blue: #0d47a1;
-    --primary-blue-hover: #0b3c8a;
-    --border-color: #dee2e6;
-    --red-accent: #b31b1b;
-    --gray-text: #6c757d;
-    --font-heading: 'Helvetica', sans-serif;
-    --font-body: 'Helvetica', sans-serif;
+    --color-primary: #3498db; /* A vibrant blue for main actions */
+    --color-primary-dark: #2980b9;
+    --color-accent-red: #e74c3c; /* For warnings, issues */
+    --color-accent-green: #2ecc71; /* For positive indications (if needed) */
+    --color-dark-text: #2c3e50; /* Primary headings, strong text */
+    --color-medium-text: #34495e; /* Body text */
+    --color-light-text: #7f8c8d; /* Subtitles, meta info, footer */
+    --color-background-light: #ecf0f1; /* Light background for sections/cards */
+    --color-background-dark: rgba(236, 240, 241, 0.95); /* Semi-transparent container background */
+    --color-border: #bdc3c7; /* Subtle border color */
+    --color-console-bg: #fdfefe; /* For AI console background */
+
+    --font-heading: 'Montserrat', sans-serif;
+    --font-body: 'Inter', sans-serif;
+
+    --card-border-radius: 12px; /* Distinct rounded corners */
+    --image-overlay-gradient: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.6) 50%, rgba(0, 0, 0, 0) 100%);
+    --text-shadow-strong: 0 2px 4px rgba(0,0,0,0.8); /* For text on dark gradients */
 }
 
 /* Base Styles */
+html {
+    scroll-behavior: smooth; /* Smooth scrolling for nav links */
+}
+
 body {
     font-family: var(--font-body);
-    color: var(--text-color);
-    background-image: url('https://media.istockphoto.com/id/178581840/photo/santa-barbara-promenade-with-the-lighthouse-over-mountains.jpg?s=612x612&w=0&k=20&c=yO0f0GcEdH0hOEX0dHha-MkmakonkRX54Na4KiW4wSs=');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    line-height: 1.7;
+    color: var(--color-medium-text);
+    background-color: #000; /* Dark base for Three.js */
     margin: 0;
     padding: 0;
-    /* Removed text-shadow as it can reduce readability on complex backgrounds */
+    line-height: 1.6;
+    overflow-x: hidden; /* Prevent horizontal scroll due to canvas */
+    position: relative; /* For canvas positioning */
+}
+
+/* Three.js Background Canvas */
+#canvas-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1; /* Behind all content */
+    display: block; /* Ensure it takes up space */
 }
 
 a {
-    color: var(--primary-blue);
+    color: var(--color-primary);
     text-decoration: none;
+    transition: color 0.2s ease;
 }
 
 a:hover {
+    color: var(--color-primary-dark);
     text-decoration: underline;
 }
 
-/* Layout */
-.container {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 0 2rem;
-    background-color: rgba(248, 249, 250, 0.92);
-    box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    color: var(--color-dark-text);
+    margin-top: 0;
+    margin-bottom: 1rem;
+    line-height: 1.2;
 }
 
+/* Layout Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem; /* Consistent padding */
+    background-color: var(--color-background-dark);
+    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.2);
+    position: relative; /* For stacking context with canvas */
+    z-index: 0; /* Above canvas */
+}
+
+/* Header */
 .site-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 1.5rem 0;
-    border-bottom: 2px solid var(--border-color);
+    border-bottom: 1px solid var(--color-border);
     margin-bottom: 2rem;
 }
 
-.section {
-    background-color: var(--card-background);
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-    padding: 2rem;
-    margin-bottom: 2.5rem;
-}
-
-.section-title {
-    font-family: var(--font-heading);
-    color: var(--heading-color);
-    font-size: 2rem;
-    margin-top: 0;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 0.75rem;
-    margin-bottom: 1.5rem;
-}
-
-/* Header Components */
 .logo {
     display: flex;
     align-items: center;
+    text-decoration: none;
 }
 
 .logo svg {
-    width: 60px;
-    height: 60px;
+    width: 48px;
+    height: 48px;
     margin-right: 15px;
-}
-
-.logo svg path {
-    stroke: var(--heading-color);
-}
-
-.logo svg polygon {
-    fill: var(--red-accent);
+    flex-shrink: 0; /* Prevent shrinking */
 }
 
 .logo-text h1 {
-    font-family: var(--font-heading);
-    font-size: 1.75rem;
-    color: var(--heading-color);
+    font-size: 1.8rem;
     margin: 0;
+    color: var(--color-dark-text);
+    letter-spacing: -0.5px;
 }
 
 .logo-text span {
-    font-size: 0.8rem;
-    color: var(--gray-text);
+    font-size: 0.85rem;
+    color: var(--color-light-text);
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.7px;
+    display: block;
+    margin-top: 2px;
 }
 
 .main-nav a {
-    color: var(--text-color);
-    text-decoration: none;
-    margin-left: 1.5rem;
+    color: var(--color-dark-text);
     font-weight: 500;
-    transition: color 0.2s;
+    margin-left: 2rem;
+    position: relative; /* For underline effect */
 }
 
 .main-nav a:hover {
-    color: var(--red-accent);
-    text-decoration: underline;
+    color: var(--color-primary);
+    text-decoration: none; /* Handled by pseudo-element */
 }
 
-/* Cards */
+.main-nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--color-primary);
+    transition: width 0.3s ease;
+}
+
+.main-nav a:hover::after {
+    width: 100%;
+}
+
+.nav-toggle {
+    display: none; /* Hidden by default, shown on mobile */
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    z-index: 100;
+}
+
+.hamburger {
+    width: 25px;
+    height: 3px;
+    background-color: var(--color-dark-text);
+    position: relative;
+    transition: all 0.3s ease-in-out;
+}
+
+.hamburger::before,
+.hamburger::after {
+    content: '';
+    width: 25px;
+    height: 3px;
+    background-color: var(--color-dark-text);
+    position: absolute;
+    transition: all 0.3s ease-in-out;
+}
+
+.hamburger::before {
+    transform: translateY(-8px);
+}
+
+.hamburger::after {
+    transform: translateY(8px);
+}
+
+.nav-toggle.open .hamburger {
+    background-color: transparent;
+}
+
+.nav-toggle.open .hamburger::before {
+    transform: rotate(45deg);
+}
+
+.nav-toggle.open .hamburger::after {
+    transform: rotate(-45deg);
+}
+
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url('https://via.placeholder.com/1600x600/34495e/ecf0f1?text=AI+Image:+Santa+Barbara+Skyline+Night') no-repeat center center/cover;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+    margin-bottom: 2.5rem;
+    border-radius: var(--card-border-radius);
+    overflow: hidden;
+    padding: 2rem;
+}
+
+.hero-content {
+    max-width: 800px;
+}
+
+.hero-title {
+    font-size: 3.2rem;
+    color: #fff;
+    margin-bottom: 1rem;
+    text-shadow: var(--text-shadow-strong);
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+
+.button {
+    display: inline-block;
+    padding: 0.9rem 2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.primary-button {
+    background-color: var(--color-primary);
+    color: #fff;
+    border: 2px solid var(--color-primary);
+}
+
+.primary-button:hover {
+    background-color: var(--color-primary-dark);
+    border-color: var(--color-primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.secondary-button {
+    background-color: transparent;
+    color: var(--color-primary);
+    border: 2px solid var(--color-primary);
+}
+
+.secondary-button:hover {
+    background-color: var(--color-primary);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+
+/* Section Styling */
+.section {
+    background-color: var(--color-background-light);
+    border: 1px solid var(--color-border);
+    border-radius: var(--card-border-radius);
+    padding: 2.5rem;
+    margin-bottom: 2.5rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.section-title {
+    font-size: 2.4rem;
+    color: var(--color-dark-text);
+    text-align: center;
+    margin-bottom: 1rem;
+    position: relative;
+    padding-bottom: 1rem;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+    width: 60px;
+    height: 3px;
+    background-color: var(--color-primary);
+    border-radius: 2px;
+}
+
+.section-description {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 2.5rem auto;
+    font-size: 1.1rem;
+    color: var(--color-medium-text);
+}
+
+
+/* Data Grid & Cards */
 .data-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem; /* Increased gap for better spacing */
 }
 
 .data-card {
-    background-color: var(--card-background);
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    transition: box-shadow 0.2s, transform 0.2s;
-    overflow: hidden;
+    background-color: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: var(--card-border-radius);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden; /* Ensures rounded corners on image container apply correctly */
+    display: flex;
+    flex-direction: column; /* For consistent height in flex column */
 }
 
 .data-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-.data-card.has-image {
-    position: relative;
-}
-
-.data-card.has-image:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
 .card-image-container {
-    height: 300px;
     position: relative;
+    width: 100%;
+    height: 250px; /* Consistent image height */
     overflow: hidden;
+    border-radius: var(--card-border-radius) var(--card-border-radius) 0 0; /* Top corners rounded */
 }
 
 .card-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.3s ease;
+    transition: transform 0.4s ease;
 }
 
-.data-card.has-image:hover .card-image {
-    transform: scale(1.05);
+.data-card:hover .card-image {
+    transform: scale(1.08);
 }
 
 .card-text-overlay {
@@ -173,115 +348,81 @@ a:hover {
     bottom: 0;
     left: 0;
     right: 0;
-    padding: 1.5rem;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.4) 50%, rgba(0, 0, 0, 0) 100%);
+    padding: 1.5rem 1.2rem; /* Adjust padding for better look */
+    background: var(--image-overlay-gradient);
     color: #fff;
-    transition: background 0.3s ease;
-    z-index: 2;
-}
-
-.data-card.has-image:hover .card-text-overlay {
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.5) 50%, rgba(0, 0, 0, 0) 100%);
+    pointer-events: none; /* Allow clicks to pass through to underlying card */
 }
 
 .card-text-overlay h3 {
-    font-family: var(--font-heading);
-    font-size: 1.25rem;
-    margin: 0 0 0.5rem 0;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+    font-size: 1.4rem;
+    margin: 0 0 0.4rem 0;
+    color: #fff;
+    text-shadow: var(--text-shadow-strong);
+    line-height: 1.3;
 }
 
 .card-text-overlay .card-meta {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     font-weight: 500;
-    text-transform: uppercase;
     color: rgba(255, 255, 255, 0.85);
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
-    margin-bottom: 0;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .card-content {
     padding: 1.5rem;
+    flex-grow: 1; /* Allow content to grow and push buttons down */
+    display: flex;
+    flex-direction: column;
 }
 
 .card-content h3 {
-    font-family: var(--font-heading);
-    font-size: 1.25rem;
+    font-size: 1.3rem;
     margin: 0 0 1rem 0;
-    color: var(--heading-color);
-}
-
-.card-content ul,
-.card-content table {
-    margin-bottom: 1rem;
+    color: var(--color-dark-text);
 }
 
 .card-content ul {
-    padding-left: 1.2rem;
+    list-style: none; /* Remove default bullets */
+    padding: 0;
+    margin: 0 0 1.5rem 0;
 }
 
 .card-content li {
-    margin-bottom: 0.5rem;
-    line-height: 1.5;
+    position: relative;
+    padding-left: 1.5rem; /* Space for custom bullet */
+    margin-bottom: 0.7rem;
+    font-size: 1rem;
+    color: var(--color-medium-text);
 }
 
-.card-content table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 1rem;
-}
-
-.card-content th,
-.card-content td {
-    border: 1px solid var(--border-color);
-    padding: 0.75rem;
-    text-align: left;
-    vertical-align: top;
-    font-size: 0.9rem;
-}
-
-.card-content th {
-    background-color: #f1f3f5;
-    font-weight: 600;
-    color: var(--heading-color);
+.card-content li::before {
+    content: '•'; /* Custom bullet point */
+    position: absolute;
+    left: 0;
+    color: var(--color-primary); /* Blue bullet */
+    font-weight: bold;
+    font-size: 1.2em;
+    line-height: 1;
 }
 
 .card-content small {
     display: block;
-    margin-top: 0.5rem;
-    font-size: 0.75rem;
-    color: var(--gray-text);
+    margin-top: 1rem;
+    font-size: 0.8rem;
+    color: var(--color-light-text);
+    line-height: 1.4;
 }
 
-/* Components */
-.summarize-case-button {
-    background-color: #fff;
-    color: var(--primary-blue);
-    border: 1px solid var(--primary-blue);
-    font-weight: 500;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    margin-top: auto;
-    transition: background-color 0.2s, color 0.2s;
-}
-
-.summarize-case-button:hover {
-    background-color: var(--primary-blue);
-    color: #fff;
-}
-
-#ai-query-button {
-    background-color: var(--primary-blue);
-    color: #fff;
-    border: none;
-    font-weight: 500;
-    padding: 0.75rem 1.5rem;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-#ai-query-button:hover {
-    background-color: var(--primary-blue-hover);
+/* AI Console Specific Styles */
+.ai-console-wrapper {
+    background-color: var(--color-console-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--card-border-radius);
+    padding: 2rem;
+    box-shadow: inset 0 2px 8px rgba(0,0,0,0.05); /* Inner shadow for depth */
 }
 
 .ai-input-group {
@@ -291,47 +432,75 @@ a:hover {
 }
 
 #ai-query-input {
-    width: 100%;
-    padding: 0.75rem;
+    flex-grow: 1; /* Take up available space */
+    padding: 0.9rem 1.2rem;
     font-size: 1rem;
-    border-radius: 4px;
-    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    border: 1px solid var(--color-border);
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    font-family: var(--font-body);
+    color: var(--color-medium-text);
 }
 
-.doctrine-quote {
-    background-color: #e9ecef;
-    border-left: 4px solid var(--primary-blue);
+#ai-query-input::placeholder {
+    color: var(--color-light-text);
+}
+
+#ai-query-input:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2); /* Soft focus ring */
+}
+
+.ai-response-area {
+    min-height: 120px; /* Ensure it's visible even when empty */
+    background-color: #f8f9fa; /* Lighter background for response */
+    border: 1px dashed var(--color-border); /* Dashed border to indicate interactive area */
+    border-radius: 8px;
     padding: 1.5rem;
-    margin: 1.5rem 0;
+    margin-bottom: 1.5rem;
+    overflow-y: auto; /* Enable scrolling for long responses */
+    max-height: 400px; /* Max height before scrolling */
+    line-height: 1.7;
+    color: var(--color-dark-text);
 }
 
-.status {
-    font-weight: 700;
+.ai-response-area p:first-child {
+    margin-top: 0;
+}
+.ai-response-area p:last-child {
+    margin-bottom: 0;
 }
 
-.status.RESOLVED {
-    color: #50c878;
+.ai-loading-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    color: var(--color-primary);
+    font-weight: 500;
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
 }
 
-.status.UNDER_REVIEW {
-    color: #ffbf00;
+.ai-loading-indicator p {
+    margin: 0;
 }
 
-.status.ACTIVE {
-    color: var(--red-accent);
-}
-
-.hidden {
-    display: none;
+.ai-disclaimer {
+    font-size: 0.85rem;
+    color: var(--color-light-text);
+    text-align: center;
+    margin-top: 1rem;
 }
 
 .spinner {
-    border: 4px solid rgba(0, 0, 0, 0.1);
-    width: 36px;
-    height: 36px;
+    border: 4px solid rgba(52, 152, 219, 0.2); /* Lighter border color */
+    width: 30px; /* Slightly smaller */
+    height: 30px;
     border-radius: 50%;
-    border-left-color: var(--primary-blue);
-    animation: spin 1s ease infinite;
+    border-top-color: var(--color-primary); /* Primary blue for spinning part */
+    animation: spin 0.8s linear infinite; /* Faster and linear animation */
 }
 
 @keyframes spin {
@@ -339,22 +508,137 @@ a:hover {
     100% { transform: rotate(360deg); }
 }
 
+.hidden {
+    display: none !important;
+}
+
+
+/* Footer */
 .site-footer {
     text-align: center;
     padding: 2rem 0;
-    margin-top: 2rem;
-    border-top: 1px solid var(--border-color);
-    color: var(--gray-text);
+    margin-top: 3rem;
+    border-top: 1px solid var(--color-border);
+    color: var(--color-light-text);
     font-size: 0.9rem;
+    line-height: 1.8;
 }
-```
 
-### Key Enhancements:
-1. **Removed Redundant Styles**: Eliminated repeated or unnecessary styles (e.g., redundant box-shadows).
-2. **Improved Readability**: Consistent indentation and spacing for better readability.
-3. **Removed Text Shadow on Body**: Text shadows on body text can reduce readability, especially on complex backgrounds.
-4. **Consistent Naming**: Ensured consistent class naming and removed unused comments.
-5. **Organized Sections**: Grouped related styles together for better organization.
-6. **Removed Unnecessary Overrides**: Removed overrides that were not adding value (e.g., `text-shadow: none;` in multiple places).
+.site-footer a {
+    color: var(--color-light-text);
+}
 
-This version should be cleaner, more maintainable, and easier to work with.
+.site-footer a:hover {
+    color: var(--color-primary);
+}
+
+/* Utility / Accessibility */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    border: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .main-nav {
+        display: none; /* Hide desktop nav */
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: var(--color-background-light);
+        border-top: 1px solid var(--color-border);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        padding: 1rem 0;
+        z-index: 99;
+    }
+
+    .main-nav.open {
+        display: flex;
+    }
+
+    .main-nav a {
+        margin: 0.5rem 1.5rem;
+        padding: 0.5rem 0;
+        text-align: center;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .main-nav a:last-child {
+        border-bottom: none;
+    }
+
+    .nav-toggle {
+        display: block; /* Show hamburger */
+    }
+
+    .site-header {
+        position: relative; /* For absolute positioned nav */
+    }
+
+    .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+
+    .section-title {
+        font-size: 2rem;
+    }
+
+    .section-description {
+        font-size: 1rem;
+    }
+
+    .data-grid {
+        grid-template-columns: 1fr; /* Single column on smaller screens */
+    }
+
+    .data-card {
+        margin: 0 auto;
+        max-width: 450px; /* Constrain width for single column cards */
+    }
+
+    .card-image-container {
+        height: 220px;
+    }
+
+    .card-text-overlay h3 {
+        font-size: 1.2rem;
+    }
+
+    .ai-input-group {
+        flex-direction: column; /* Stack input and button on small screens */
+    }
+
+    #ai-query-button {
+        width: 100%; /* Make button full width */
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 0 1rem;
+    }
+
+    .hero-title {
+        font-size: 2rem;
+    }
+
+    .section-title {
+        font-size: 1.8rem;
+    }
+
+    .card-text-overlay h3 {
+        font-size: 1.1rem;
+    }
+}
