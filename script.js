@@ -1,187 +1,191 @@
-Here’s an enhanced and cleaned-up version of your JavaScript code. I’ve focused on improving readability, modularity, error handling, and removing redundant or unnecessary parts. I’ve also ensured consistent coding standards and added comments for clarity.
-
-```javascript
-console.log("script.js loaded and attempting to execute.");
-
-// Ensure the window is fully loaded before initializing
-window.onload = function() {
-    console.log("window.onload event fired.");
-
-    // --- Footer Year Update ---
-    const yearSpan = document.getElementById('year');
-    if (yearSpan) {
-        yearSpan.textContent = new Date().getFullYear();
-        console.log("Footer year updated.");
-    } else {
-        console.warn("Footer year span with ID 'year' not found.");
-    }
-
-    // --- Three.js WebGL Background Setup ---
-    const canvas = document.getElementById('canvas-bg');
-    if (!canvas) {
-        console.error('Canvas element with ID "canvas-bg" not found. Three.js background cannot be initialized.');
-        return;
-    }
-    console.log("Canvas element found for Three.js background.");
-
-    let scene, camera, renderer;
-    let grid, particles;
-    const particleCount = 2000;
-
-    let mouseX = 0, mouseY = 0;
-    let targetMouseX = 0, targetMouseY = 0;
-
-    // Initialize Three.js scene
-    function initThreeJS() {
-        console.log("Initializing Three.js scene...");
-        scene = new THREE.Scene();
-
-        camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.z = 100;
-
-        renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(window.devicePixelRatio);
-        renderer.setClearColor(0x000000, 0);
-
-        createGrid();
-        createParticles();
-        setupEventListeners();
-        animate();
-    }
-
-    // Create grid helper
-    function createGrid() {
-        const size = 300;
-        const divisions = 40;
-        grid = new THREE.GridHelper(size, divisions, 0x0077B6, 0xB71C1C);
-        grid.rotation.x = Math.PI / 2.5;
-        grid.position.y = -50;
-        scene.add(grid);
-        console.log("Three.js grid added to scene.");
-    }
-
-    // Create particle system
-    function createParticles() {
-        const geometry = new THREE.BufferGeometry();
-        const positions = new Float32Array(particleCount * 3);
-        const colors = new Float32Array(particleCount * 3);
-
-        const colorRed = new THREE.Color(0xB71C1C);
-        const colorBlue = new THREE.Color(0x0077B6);
-
-        for (let i = 0; i < particleCount; i++) {
-            positions[i * 3] = (Math.random() * 600) - 300;
-            positions[i * 3 + 1] = (Math.random() * 600) - 300;
-            positions[i * 3 + 2] = (Math.random() * 600) - 300;
-
-            if (i % 2 === 0) {
-                colorRed.toArray(colors, i * 3);
-            } else {
-                colorBlue.toArray(colors, i * 3);
-            }
+// Ensure Three.js is loaded before executing any Three.js-related code
+if (typeof THREE === 'undefined') {
+    console.warn("Three.js library not loaded. Some interactive features may be unavailable.");
+} else {
+    // Three.js WebGL Background Setup - Only execute if Three.js is available
+    window.addEventListener('load', () => {
+        const canvas = document.getElementById('canvas-bg');
+        if (!canvas) {
+            console.error('Canvas element with ID "canvas-bg" not found. Three.js background cannot be initialized.');
+            return;
         }
 
-        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-        geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+        let scene, camera, renderer;
+        let grid, particles;
+        const particleCount = 2500; // Increased particle count for more density
+        let mouseX = 0, mouseY = 0;
+        let targetMouseX = 0, targetMouseY = 0;
 
-        const material = new THREE.PointsMaterial({
-            size: 1.8,
-            vertexColors: true,
-            transparent: true,
-            opacity: 0.9,
-            blending: THREE.AdditiveBlending
+        function initThreeJS() {
+            scene = new THREE.Scene();
+
+            // Camera setup
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 120; // Slightly further back
+
+            // Renderer setup
+            renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setClearColor(0x000000, 0); // Transparent background
+
+            // GridHelper
+            const size = 300;
+            const divisions = 40;
+            // Use subtle shades that match the theme
+            grid = new THREE.GridHelper(size, divisions, 0x34495e, 0x7f8c8d);
+            grid.rotation.x = Math.PI / 2.5;
+            grid.position.y = -50;
+            scene.add(grid);
+
+            // Particle System
+            const geometry = new THREE.BufferGeometry();
+            const positions = new Float32Array(particleCount * 3);
+            const colors = new Float32Array(particleCount * 3);
+
+            // Theme colors from CSS variables
+            const colorPrimary = new THREE.Color(0x3498db); // --color-primary
+            const colorAccentRed = new THREE.Color(0xe74c3c); // --color-accent-red
+
+            for (let i = 0; i < particleCount; i++) {
+                // Random positions in a larger volume
+                positions[i * 3 + 0] = (Math.random() * 600) - 300;
+                positions[i * 3 + 1] = (Math.random() * 600) - 300;
+                positions[i * 3 + 2] = (Math.random() * 600) - 300;
+
+                // Alternate colors for variety, or blend for subtle effect
+                if (i % 2 === 0) {
+                    colorPrimary.toArray(colors, i * 3);
+                } else {
+                    colorAccentRed.toArray(colors, i * 3);
+                }
+            }
+
+            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+            const material = new THREE.PointsMaterial({
+                size: 2, // Slightly larger particles
+                vertexColors: true,
+                transparent: true,
+                opacity: 0.8,
+                blending: THREE.AdditiveBlending
+            });
+
+            particles = new THREE.Points(geometry, material);
+            scene.add(particles);
+
+            window.addEventListener('resize', onWindowResize, false);
+            document.addEventListener('mousemove', onDocumentMouseMove, false);
+
+            animate();
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // Smoothly interpolate mouse movement
+            mouseX += (targetMouseX - mouseX) * 0.05;
+            mouseY += (targetMouseY - mouseY) * 0.05;
+
+            // Apply subtle rotation to particles and grid based on mouse position
+            particles.rotation.x = mouseY * 0.03;
+            particles.rotation.y = mouseX * 0.03;
+            grid.rotation.y = mouseX * 0.01; // Also rotate grid slightly
+
+            // Grid movement: continuously move forward and reset
+            grid.position.z += 0.08;
+            if (grid.position.z > 100) {
+                grid.position.z = -200; // Reset further back to avoid visible jump
+            }
+
+            // Particle subtle drift
+            const positions = particles.geometry.attributes.position.array;
+            for (let i = 0; i < particleCount; i++) {
+                positions[i * 3 + 0] += Math.sin(Date.now() * 0.00008 + i * 0.1) * 0.02;
+                positions[i * 3 + 1] += Math.cos(Date.now() * 0.00008 + i * 0.05) * 0.02;
+                positions[i * 3 + 2] += 0.15; // Move particles forward
+
+                if (positions[i * 3 + 2] > 300) {
+                    positions[i * 3 + 2] = -300; // Reset particle to the back
+                }
+            }
+            particles.geometry.attributes.position.needsUpdate = true;
+
+            renderer.render(scene, camera);
+        }
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        function onDocumentMouseMove(event) {
+            targetMouseX = (event.clientX / window.innerWidth) * 2 - 1;
+            targetMouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+        }
+
+        // Initialize the Three.js scene
+        try {
+            initThreeJS();
+        } catch (error) {
+            console.error("Error initializing Three.js:", error);
+            // Fallback message if WebGL is not supported or an error occurs
+            const fallbackMessage = document.createElement('div');
+            fallbackMessage.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                padding: 15px;
+                background-color: var(--color-accent-red);
+                color: white;
+                text-align: center;
+                font-family: var(--font-body);
+                z-index: 9999;
+                font-size: 0.9em;
+            `;
+            fallbackMessage.textContent = 'Interactive background could not load. Your browser may not support WebGL.';
+            document.body.prepend(fallbackMessage);
+        }
+    });
+}
+
+
+// General JavaScript for the rest of the site (footer year, nav toggle, AI Console)
+document.addEventListener('DOMContentLoaded', () => {
+    // Update current year in footer
+    const currentYearSpan = document.getElementById('current-year');
+    if (currentYearSpan) {
+        currentYearSpan.textContent = new Date().getFullYear();
+    }
+
+    // Mobile Navigation Toggle
+    const navToggle = document.querySelector('.nav-toggle');
+    const mainNav = document.querySelector('.main-nav');
+
+    if (navToggle && mainNav) {
+        navToggle.addEventListener('click', () => {
+            mainNav.classList.toggle('open');
+            navToggle.classList.toggle('open');
+            const isExpanded = navToggle.classList.contains('open');
+            navToggle.setAttribute('aria-expanded', isExpanded);
         });
 
-        particles = new THREE.Points(geometry, material);
-        scene.add(particles);
-        console.log("Three.js particles added to scene.");
+        // Close nav when a link is clicked (for smooth scrolling)
+        mainNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (mainNav.classList.contains('open')) {
+                    mainNav.classList.remove('open');
+                    navToggle.classList.remove('open');
+                    navToggle.setAttribute('aria-expanded', false);
+                }
+            });
+        });
     }
 
-    // Setup event listeners
-    function setupEventListeners() {
-        window.addEventListener('resize', onWindowResize, false);
-        document.addEventListener('mousemove', onDocumentMouseMove, false);
-        console.log("Three.js event listeners attached.");
-    }
-
-    // Animation loop
-    function animate() {
-        requestAnimationFrame(animate);
-
-        mouseX += (targetMouseX - mouseX) * 0.05;
-        mouseY += (targetMouseY - mouseY) * 0.05;
-
-        particles.rotation.x = mouseY * 0.05;
-        particles.rotation.y = mouseX * 0.05;
-
-        updateGrid();
-        updateParticles();
-
-        renderer.render(scene, camera);
-    }
-
-    // Update grid position
-    function updateGrid() {
-        grid.position.z += 0.05;
-        if (grid.position.z > 50) grid.position.z = -50;
-    }
-
-    // Update particle positions
-    function updateParticles() {
-        const positions = particles.geometry.attributes.position.array;
-        for (let i = 0; i < particleCount; i++) {
-            positions[i * 3] += Math.sin(Date.now() * 0.0001 + i * 0.1) * 0.03;
-            positions[i * 3 + 1] += Math.cos(Date.now() * 0.0001 + i * 0.05) * 0.03;
-            positions[i * 3 + 2] += 0.1;
-            if (positions[i * 3 + 2] > 300) positions[i * 3 + 2] = -300;
-        }
-        particles.geometry.attributes.position.needsUpdate = true;
-    }
-
-    // Handle window resize
-    function onWindowResize() {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        console.log("Window resized, Three.js renderer updated.");
-    }
-
-    // Handle mouse movement
-    function onDocumentMouseMove(event) {
-        targetMouseX = (event.clientX / window.innerWidth) * 2 - 1;
-        targetMouseY = -(event.clientY / window.innerHeight) * 2 + 1;
-    }
-
-    // Initialize Three.js with error handling
-    try {
-        initThreeJS();
-    } catch (error) {
-        console.error("Error initializing Three.js:", error);
-        showFallbackMessage();
-    }
-
-    // Show fallback message if Three.js fails to initialize
-    function showFallbackMessage() {
-        const fallbackMessage = document.createElement('div');
-        fallbackMessage.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 10px;
-            background-color: #dc3545;
-            color: white;
-            text-align: center;
-            font-family: 'Inter', sans-serif;
-            z-index: 9999;
-        `;
-        fallbackMessage.textContent = 'Interactive background could not load. Your browser may not support WebGL.';
-        document.body.prepend(fallbackMessage);
-        console.log("Three.js fallback message displayed.");
-    }
-
-    // --- AI Search Functionality ---
+    // --- AI Analysis Console Functionality ---
     const aiQueryInput = document.getElementById('ai-query-input');
     const aiQueryButton = document.getElementById('ai-query-button');
     const aiResponseArea = document.getElementById('ai-response-area');
@@ -189,198 +193,74 @@ window.onload = function() {
 
     if (aiQueryInput && aiQueryButton && aiResponseArea && aiLoadingIndicator) {
         aiQueryButton.addEventListener('click', performAISearch);
-        aiQueryInput.addEventListener('keypress', (event) => {
-            if (event.key === 'Enter') performAISearch();
+        aiQueryInput.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                performAISearch();
+            }
         });
-        console.log("AI Search elements found and event listeners attached.");
+        console.log("AI Analysis Console elements found and event listeners attached.");
     } else {
-        logMissingElements('AI Search');
+        console.warn('One or more AI Analysis Console elements not found. AI feature may not function.');
     }
 
     async function performAISearch() {
         const prompt = aiQueryInput.value.trim();
         if (!prompt) {
-            showAIResponse('Please enter a query to analyze.');
+            aiResponseArea.innerHTML = '<p style="color: var(--color-light-text); font-style: italic; text-align: center;">Please enter a query to analyze.</p>';
             return;
         }
 
-        showLoadingIndicator();
-        disableAIButton();
-
-        const chatHistory = createChatHistory(prompt);
-        const payload = { contents: chatHistory };
-
-        try {
-            const response = await fetchAIResponse(payload);
-            handleAIResponse(response);
-        } catch (error) {
-            handleAIError(error);
-        } finally {
-            hideLoadingIndicator();
-            enableAIButton();
-        }
-    }
-
-    function showAIResponse(message, style = {}) {
-        const styledMessage = `<p style="color: ${style.color || '#000'}; font-style: ${style.style || 'normal'}; text-align: center;">${message}</p>`;
-        aiResponseArea.innerHTML = styledMessage;
-    }
-
-    function showLoadingIndicator() {
         aiLoadingIndicator.classList.remove('hidden');
-    }
+        aiResponseArea.innerHTML = ''; // Clear previous content
+        aiQueryButton.disabled = true; // Disable button during search
 
-    function hideLoadingIndicator() {
-        aiLoadingIndicator.classList.add('hidden');
-    }
+        // IMPORTANT: For actual functionality, you need to replace this with a real API key and endpoint.
+        // This is a placeholder for demonstration purposes.
+        // Example: Using a mock API or a service like Google Gemini API (requires setup and a backend to keep key secure)
+        const mockApiResponse = new Promise(resolve => {
+            setTimeout(() => {
+                let responseText = "";
+                const lowerPrompt = prompt.toLowerCase();
 
-    function disableAIButton() {
-        aiQueryButton.disabled = true;
-    }
-
-    function enableAIButton() {
-        aiQueryButton.disabled = false;
-    }
-
-    function createChatHistory(prompt) {
-        return [{
-            role: "user",
-            parts: [{
-                text: `Act as a specialized AI for the Ministry of Digital Sovereignty. Provide concise, official answers regarding digital and economic sovereignty, focusing on coercive legal strategies. Query: "${prompt}"`
-            }]
-        }];
-    }
-
-    async function fetchAIResponse(payload) {
-        const apiKey = ""; // Placeholder for API key
-        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-        const response = await fetch(apiUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
+                if (lowerPrompt.includes("ambulance contract")) {
+                    responseText = "The Santa Barbara County ambulance contract issue involves a controversial decision to award a new contract despite a higher-ranked bidder. This resulted in the purchase of 35 ambulances that remain unused, leading to significant financial costs and a lawsuit from the previous provider. The situation highlights concerns about procurement transparency and public safety resource allocation.";
+                } else if (lowerPrompt.includes("homelessness funds")) {
+                    responseText = "Investigations into homelessness funds in Santa Barbara County are part of a broader federal probe into statewide spending. Billions of dollars are under scrutiny for potential fraud and mismanagement, with significant amounts unaccounted for. This raises serious questions about the effectiveness and accountability of programs designed to address the homelessness crisis.";
+                } else if (lowerPrompt.includes("judge michael j. carrozzo") || lowerPrompt.includes("judicial misconduct")) {
+                    responseText = "Former Santa Barbara County Judge Michael J. Carrozzo resigned and was permanently banned from the bench due to admitted willful misconduct. This included illegally practicing law while serving as a judge, a severe ethics violation that eroded public trust in the judiciary and judicial integrity within the county.";
+                } else if (lowerPrompt.includes("jail conditions") || lowerPrompt.includes("murray v. county of santa barbara")) {
+                    responseText = "The 'Murray v. County of Santa Barbara' class-action lawsuit is an ongoing federal litigation concerning severe deficiencies in the county jail. It addresses critical issues such as inadequate medical and mental health care for inmates, insufficient disability accommodations, and concerns regarding excessive solitary confinement, pointing to systemic failures in correctional facilities.";
+                } else if (lowerPrompt.includes("fiscal mismanagement") || lowerPrompt.includes("county spending")) {
+                    responseText = "Reports indicate significant fiscal mismanagement in Santa Barbara County, including questionable decision-making and alleged misuse of funds. Specific concerns involve supervisor pay raises and the financial fallout from the botched ambulance contract, signaling a need for greater financial oversight and accountability in public spending.";
+                }
+                else {
+                    responseText = `AI Response for "${prompt}": While our AI has access to extensive public data, this specific query may require more context or is outside the scope of detailed public records available for immediate analysis. Please try rephrasing or focusing on a specific county issue listed on this portal.`;
+                }
+                resolve({ candidates: [{ content: { parts: [{ text: responseText }] } }] });
+            }, 1500); // Simulate network delay
         });
-        if (!response.ok) throw new Error(`API error: ${response.status}`);
-        return response.json();
-    }
-
-    function handleAIResponse(result) {
-        if (isValidResponse(result)) {
-            const text = result.candidates[0].content.parts[0].text;
-            showAIResponse(text.replace(/\n/g, '<br>'));
-        } else {
-            showAIResponse('No valid response received from the AI.', { color: '#ffc107', style: 'italic' });
-        }
-    }
-
-    function handleAIError(error) {
-        console.error('Error fetching AI response:', error);
-        showAIResponse(`Error: ${error.message}. Please try again.`, { color: 'var(--red-accent)' });
-    }
-
-    function isValidResponse(result) {
-        return result.candidates && result.candidates.length > 0 &&
-               result.candidates[0].content && result.candidates[0].content.parts &&
-               result.candidates[0].content.parts.length > 0;
-    }
-
-    // --- AI Case Summary Feature ---
-    const summarizeButtons = document.querySelectorAll('.summarize-case-button');
-    const aiSummaryModal = document.getElementById('ai-summary-modal');
-    const modalCloseButton = aiSummaryModal?.querySelector('.close-button');
-    const modalCaseTitle = document.getElementById('modal-case-title');
-    const modalSummaryContent = document.getElementById('modal-summary-content');
-    const modalLoadingIndicator = aiSummaryModal?.querySelector('#modal-loading-indicator');
-
-    if (summarizeButtons.length && aiSummaryModal && modalCloseButton && modalCaseTitle && modalSummaryContent && modalLoadingIndicator) {
-        summarizeButtons.forEach(button => button.addEventListener('click', openCaseSummaryModal));
-        modalCloseButton.addEventListener('click', closeCaseSummaryModal);
-        aiSummaryModal.addEventListener('click', (event) => {
-            if (event.target === aiSummaryModal) closeCaseSummaryModal();
-        });
-        console.log("AI Case Summary elements found and event listeners attached.");
-    } else {
-        logMissingElements('AI Case Summary');
-    }
-
-    async function openCaseSummaryModal(event) {
-        const dataCard = event.target.closest('.data-card');
-        if (!dataCard) return;
-
-        const caseTitle = dataCard.getAttribute('data-case-title');
-        const caseDescription = dataCard.getAttribute('data-case-description');
-
-        modalCaseTitle.textContent = caseTitle;
-        showModalLoadingIndicator();
-        showModal();
-
-        const prompt = createSummaryPrompt(caseTitle, caseDescription);
-        const chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
-        const payload = { contents: chatHistory };
 
         try {
-            const response = await fetchAIResponse(payload);
-            handleSummaryResponse(response);
+            // Replace `mockApiResponse` with actual fetch to your AI API
+            // const response = await fetch(apiUrl, { ... });
+            // const result = await response.json();
+            const result = await mockApiResponse; // Use mock response for demo
+
+            if (result.candidates && result.candidates.length > 0 &&
+                result.candidates[0].content && result.candidates[0].content.parts &&
+                result.candidates[0].content.parts.length > 0) {
+                const text = result.candidates[0].content.parts[0].text;
+                aiResponseArea.innerHTML = `<p>${text.replace(/\n/g, '<br>')}</p>`;
+            } else {
+                aiResponseArea.innerHTML = '<p style="color: var(--color-accent-red); text-align: center;">No valid response received from the AI. Please try a different query.</p>';
+            }
+
         } catch (error) {
-            handleSummaryError(error);
+            console.error('Error fetching AI response:', error);
+            aiResponseArea.innerHTML = `<p style="color: var(--color-accent-red); text-align: center;">Error: ${error.message}. Please try again.</p>`;
         } finally {
-            hideModalLoadingIndicator();
+            aiLoadingIndicator.classList.add('hidden');
+            aiQueryButton.disabled = false;
         }
     }
-
-    function createSummaryPrompt(title, description) {
-        return `Analyze the case "${title}" described as "${description}". Discuss its relevance to digital and economic sovereignty, coercive legal strategies, and the "Blackmail Effect." Provide a summary for an official government portal.`;
-    }
-
-    function showModal() {
-        aiSummaryModal.classList.add('visible');
-    }
-
-    function closeCaseSummaryModal() {
-        aiSummaryModal.classList.remove('visible');
-    }
-
-    function showModalLoadingIndicator() {
-        modalLoadingIndicator.classList.remove('hidden');
-    }
-
-    function hideModalLoadingIndicator() {
-        modalLoadingIndicator.classList.add('hidden');
-    }
-
-    function handleSummaryResponse(result) {
-        if (isValidResponse(result)) {
-            const text = result.candidates[0].content.parts[0].text;
-            modalSummaryContent.innerHTML = `<p>${text.replace(/\n/g, '<br>')}</p>`;
-        } else {
-            modalSummaryContent.innerHTML = '<p style="color: #ffc107; font-style: italic; text-align: center;">Failed to generate summary.</p>';
-        }
-    }
-
-    function handleSummaryError(error) {
-        console.error('Error fetching AI case summary:', error);
-        modalSummaryContent.innerHTML = `<p style="color: var(--red-accent); text-align: center;">Error: ${error.message}. Could not retrieve summary.</p>`;
-    }
-
-    // Helper function to log missing elements
-    function logMissingElements(feature) {
-        console.error(`One or more ${feature} elements not found. Feature may not function.`);
-        const elements = {
-            'AI Search': [aiQueryInput, aiQueryButton, aiResponseArea, aiLoadingIndicator],
-            'AI Case Summary': [summarizeButtons, aiSummaryModal, modalCloseButton, modalCaseTitle, modalSummaryContent, modalLoadingIndicator]
-        };
-        elements[feature].forEach((el, index) => {
-            if (!el) console.error(`Missing element ${index + 1}`);
-        });
-    }
-};
-```
-
-### Key Enhancements:
-1. **Modularity**: Split functionality into smaller, reusable functions.
-2. **Error Handling**: Added try-catch blocks and fallback mechanisms.
-3. **Readability**: Improved variable naming and added comments for clarity.
-4. **Consistency**: Standardized coding style and structure.
-5. **Optimization**: Removed redundant code and improved performance.
-6. **Logging**: Enhanced logging for debugging and monitoring.
-
-This version is cleaner, more maintainable, and easier to debug.
+});
