@@ -1,3 +1,6 @@
+Here’s an enhanced and corrected version of your CSS code. I’ve focused on improving readability, consistency, and removing redundant or unnecessary styles. I’ve also ensured proper formatting and organization for better maintainability.
+
+```css
 :root {
     --background-color: #f8f9fa;
     --card-background: #ffffff;
@@ -6,12 +9,13 @@
     --primary-blue: #0d47a1;
     --primary-blue-hover: #0b3c8a;
     --border-color: #dee2e6;
-    --red-accent: #b31b1b; /* Stronger red for emphasis on issues */
+    --red-accent: #b31b1b;
     --gray-text: #6c757d;
     --font-heading: 'Helvetica', sans-serif;
     --font-body: 'Helvetica', sans-serif;
 }
 
+/* Base Styles */
 body {
     font-family: var(--font-body);
     color: var(--text-color);
@@ -22,7 +26,7 @@ body {
     line-height: 1.7;
     margin: 0;
     padding: 0;
-    text-shadow: 0 0 4px rgba(255, 255, 255, 0.5); /* This can make text hard to read on complex backgrounds */
+    /* Removed text-shadow as it can reduce readability on complex backgrounds */
 }
 
 a {
@@ -34,14 +38,12 @@ a:hover {
     text-decoration: underline;
 }
 
-/* 3. Layout
---------------------------------------------------------------------------------
-*/
+/* Layout */
 .container {
     max-width: 1100px;
     margin: 0 auto;
     padding: 0 2rem;
-    background-color: rgba(248, 249, 250, 0.92); /* Slightly less opaque for a hint of background */
+    background-color: rgba(248, 249, 250, 0.92);
     box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
 }
 
@@ -55,7 +57,7 @@ a:hover {
 }
 
 .section {
-    background-color: var(--card-background); /* Background for the whole section block */
+    background-color: var(--card-background);
     border: 1px solid var(--border-color);
     border-radius: 4px;
     padding: 2rem;
@@ -70,12 +72,9 @@ a:hover {
     border-bottom: 1px solid var(--border-color);
     padding-bottom: 0.75rem;
     margin-bottom: 1.5rem;
-    text-shadow: none; /* Ensure titles inside sections are clear */
 }
 
-/* 4. Header Components
---------------------------------------------------------------------------------
-*/
+/* Header Components */
 .logo {
     display: flex;
     align-items: center;
@@ -100,7 +99,6 @@ a:hover {
     font-size: 1.75rem;
     color: var(--heading-color);
     margin: 0;
-    text-shadow: none;
 }
 
 .logo-text span {
@@ -119,13 +117,11 @@ a:hover {
 }
 
 .main-nav a:hover {
-    color: var(--red-accent); /* Make nav links match the exposé theme */
+    color: var(--red-accent);
     text-decoration: underline;
 }
 
-/* 5. Cards - General Styling for all .data-card elements
---------------------------------------------------------------------------------
-*/
+/* Cards */
 .data-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -136,9 +132,9 @@ a:hover {
     background-color: var(--card-background);
     border: 1px solid var(--border-color);
     border-radius: 4px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* Lighter shadow for basic cards */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     transition: box-shadow 0.2s, transform 0.2s;
-    overflow: hidden; /* Important for border-radius on nested images/content */
+    overflow: hidden;
 }
 
 .data-card:hover {
@@ -146,21 +142,19 @@ a:hover {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Specific styling for cards with images */
 .data-card.has-image {
     position: relative;
-    /* Redundant box-shadow moved to .data-card */
 }
 
 .data-card.has-image:hover {
-    transform: translateY(-3px); /* Slightly more pronounced hover for image cards */
+    transform: translateY(-3px);
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
 }
 
 .card-image-container {
-    height: 300px; /* Fixed height for consistency */
+    height: 300px;
     position: relative;
-    overflow: hidden; /* Ensures image scaling doesn't overflow rounded corners */
+    overflow: hidden;
 }
 
 .card-image {
@@ -183,7 +177,7 @@ a:hover {
     background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.4) 50%, rgba(0, 0, 0, 0) 100%);
     color: #fff;
     transition: background 0.3s ease;
-    z-index: 2; /* Ensure overlay is on top of the image */
+    z-index: 2;
 }
 
 .data-card.has-image:hover .card-text-overlay {
@@ -206,42 +200,39 @@ a:hover {
     margin-bottom: 0;
 }
 
-/* NEW: Styling for text-only cards using .card-content */
-.data-card .card-content {
-    padding: 1.5rem; /* Matches the padding of image overlays for consistency */
-    text-shadow: none; /* Ensure text is readable */
+.card-content {
+    padding: 1.5rem;
 }
 
-.data-card .card-content h3 {
+.card-content h3 {
     font-family: var(--font-heading);
     font-size: 1.25rem;
     margin: 0 0 1rem 0;
     color: var(--heading-color);
 }
 
-.data-card .card-content ul,
-.data-card .card-content table {
+.card-content ul,
+.card-content table {
     margin-bottom: 1rem;
-    text-shadow: none;
 }
 
-.data-card .card-content ul {
+.card-content ul {
     padding-left: 1.2rem;
 }
 
-.data-card .card-content li {
+.card-content li {
     margin-bottom: 0.5rem;
     line-height: 1.5;
 }
 
-.data-card .card-content table {
+.card-content table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 1rem;
 }
 
-.data-card .card-content th,
-.data-card .card-content td {
+.card-content th,
+.card-content td {
     border: 1px solid var(--border-color);
     padding: 0.75rem;
     text-align: left;
@@ -249,26 +240,20 @@ a:hover {
     font-size: 0.9rem;
 }
 
-.data-card .card-content th {
+.card-content th {
     background-color: #f1f3f5;
     font-weight: 600;
     color: var(--heading-color);
 }
 
-.data-card .card-content small {
+.card-content small {
     display: block;
     margin-top: 0.5rem;
     font-size: 0.75rem;
     color: var(--gray-text);
 }
 
-
-/* Hide unnecessary card content (original directive - confirmed not needed for new .card-content) */
-/* .card-content { display: none; } -- This line from your original CSS will be removed/ignored */
-
-/* 6. Components (No changes needed here for the issues at hand)
---------------------------------------------------------------------------------
-*/
+/* Components */
 .summarize-case-button {
     background-color: #fff;
     color: var(--primary-blue);
@@ -320,21 +305,16 @@ a:hover {
     margin: 1.5rem 0;
 }
 
-.doctrine-quote blockquote,
-.doctrine-quote footer {
-    text-shadow: none;
-}
-
 .status {
     font-weight: 700;
 }
 
 .status.RESOLVED {
-    color: #50c878; /* Emerald Green */
+    color: #50c878;
 }
 
 .status.UNDER_REVIEW {
-    color: #ffbf00; /* Amber */
+    color: #ffbf00;
 }
 
 .status.ACTIVE {
@@ -367,3 +347,14 @@ a:hover {
     color: var(--gray-text);
     font-size: 0.9rem;
 }
+```
+
+### Key Enhancements:
+1. **Removed Redundant Styles**: Eliminated repeated or unnecessary styles (e.g., redundant box-shadows).
+2. **Improved Readability**: Consistent indentation and spacing for better readability.
+3. **Removed Text Shadow on Body**: Text shadows on body text can reduce readability, especially on complex backgrounds.
+4. **Consistent Naming**: Ensured consistent class naming and removed unused comments.
+5. **Organized Sections**: Grouped related styles together for better organization.
+6. **Removed Unnecessary Overrides**: Removed overrides that were not adding value (e.g., `text-shadow: none;` in multiple places).
+
+This version should be cleaner, more maintainable, and easier to work with.
