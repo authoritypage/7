@@ -15,7 +15,7 @@ OFFICIAL PORTAL STYLESHEET - MINISTRY OF DIGITAL SOVEREIGNTY (V5 - BING NEWS STY
     --primary-blue: #0d47a1;
     --primary-blue-hover: #0b3c8a;
     --border-color: #dee2e6;
-    --red-accent: #b31b1b;
+    --red-accent: #b31b1b; /* Stronger red for emphasis on issues */
     --gray-text: #6c757d;
     --font-heading: 'Helvetica', sans-serif;
     --font-body: 'Helvetica', sans-serif;
@@ -34,7 +34,7 @@ body {
     line-height: 1.7;
     margin: 0;
     padding: 0;
-    text-shadow: 0 0 4px rgba(255, 255, 255, 0.5);
+    text-shadow: 0 0 4px rgba(255, 255, 255, 0.5); /* This can make text hard to read on complex backgrounds */
 }
 
 a {
@@ -53,7 +53,7 @@ a:hover {
     max-width: 1100px;
     margin: 0 auto;
     padding: 0 2rem;
-    background-color: rgba(248, 249, 250, 0.92);
+    background-color: rgba(248, 249, 250, 0.92); /* Slightly less opaque for a hint of background */
     box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
 }
 
@@ -67,7 +67,7 @@ a:hover {
 }
 
 .section {
-    background-color: var(--card-background);
+    background-color: var(--card-background); /* Background for the whole section block */
     border: 1px solid var(--border-color);
     border-radius: 4px;
     padding: 2rem;
@@ -82,7 +82,7 @@ a:hover {
     border-bottom: 1px solid var(--border-color);
     padding-bottom: 0.75rem;
     margin-bottom: 1.5rem;
-    text-shadow: none;
+    text-shadow: none; /* Ensure titles inside sections are clear */
 }
 
 /* 4. Header Components
@@ -131,11 +131,11 @@ a:hover {
 }
 
 .main-nav a:hover {
-    color: var(--primary-blue);
+    color: var(--red-accent); /* Make nav links match the exposé theme */
     text-decoration: underline;
 }
 
-/* 5. Cards - Image-Only with Text Overlay
+/* 5. Cards - General Styling for all .data-card elements
 --------------------------------------------------------------------------------
 */
 .data-grid {
@@ -144,22 +144,35 @@ a:hover {
     gap: 1.5rem;
 }
 
+.data-card {
+    background-color: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* Lighter shadow for basic cards */
+    transition: box-shadow 0.2s, transform 0.2s;
+    overflow: hidden; /* Important for border-radius on nested images/content */
+}
+
+.data-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Specific styling for cards with images */
 .data-card.has-image {
     position: relative;
-    overflow: hidden;
-    border-radius: 4px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.2s, transform 0.2s;
+    /* Redundant box-shadow moved to .data-card */
 }
 
 .data-card.has-image:hover {
-    transform: translateY(-3px);
+    transform: translateY(-3px); /* Slightly more pronounced hover for image cards */
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
 }
 
 .card-image-container {
     height: 300px; /* Fixed height for consistency */
     position: relative;
+    overflow: hidden; /* Ensures image scaling doesn't overflow rounded corners */
 }
 
 .card-image {
@@ -182,6 +195,7 @@ a:hover {
     background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.4) 50%, rgba(0, 0, 0, 0) 100%);
     color: #fff;
     transition: background 0.3s ease;
+    z-index: 2; /* Ensure overlay is on top of the image */
 }
 
 .data-card.has-image:hover .card-text-overlay {
@@ -204,12 +218,67 @@ a:hover {
     margin-bottom: 0;
 }
 
-/* Hide unnecessary card content */
-.card-content {
-    display: none;
+/* NEW: Styling for text-only cards using .card-content */
+.data-card .card-content {
+    padding: 1.5rem; /* Matches the padding of image overlays for consistency */
+    text-shadow: none; /* Ensure text is readable */
 }
 
-/* 6. Components
+.data-card .card-content h3 {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    margin: 0 0 1rem 0;
+    color: var(--heading-color);
+}
+
+.data-card .card-content ul,
+.data-card .card-content table {
+    margin-bottom: 1rem;
+    text-shadow: none;
+}
+
+.data-card .card-content ul {
+    padding-left: 1.2rem;
+}
+
+.data-card .card-content li {
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+}
+
+.data-card .card-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.data-card .card-content th,
+.data-card .card-content td {
+    border: 1px solid var(--border-color);
+    padding: 0.75rem;
+    text-align: left;
+    vertical-align: top;
+    font-size: 0.9rem;
+}
+
+.data-card .card-content th {
+    background-color: #f1f3f5;
+    font-weight: 600;
+    color: var(--heading-color);
+}
+
+.data-card .card-content small {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.75rem;
+    color: var(--gray-text);
+}
+
+
+/* Hide unnecessary card content (original directive - confirmed not needed for new .card-content) */
+/* .card-content { display: none; } -- This line from your original CSS will be removed/ignored */
+
+/* 6. Components (No changes needed here for the issues at hand)
 --------------------------------------------------------------------------------
 */
 .summarize-case-button {
