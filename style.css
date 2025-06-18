@@ -1,11 +1,3 @@
-Here’s an improved version of your `style.css` file. The improvements focus on:
-
-1. **Consistency**: Ensuring consistent naming conventions and formatting.
-2. **Readability**: Breaking down sections and using comments effectively.
-3. **Efficiency**: Removing redundant code and optimizing selectors.
-4. **Maintainability**: Grouping related styles together and using logical ordering.
-
-```css
 /*
 ================================================================================
 OFFICIAL PORTAL STYLESHEET - MINISTRY OF DIGITAL SOVEREIGNTY (V5 - BING NEWS STYLE)
@@ -143,7 +135,7 @@ a:hover {
     text-decoration: underline;
 }
 
-/* 5. Cards
+/* 5. Cards - Image-Only with Text Overlay
 --------------------------------------------------------------------------------
 */
 .data-grid {
@@ -152,63 +144,22 @@ a:hover {
     gap: 1.5rem;
 }
 
-.data-card {
-    background-color: var(--background-color);
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    transition: box-shadow 0.2s, transform 0.2s;
-}
-
-.data-card:not(.has-image):hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-}
-
-.data-card a {
-    text-decoration: none;
-    color: inherit;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-}
-
-.data-card h3 {
-    font-family: var(--font-heading);
-    font-size: 1.25rem;
-    color: var(--heading-color);
-    margin: 0 0 0.5rem 0;
-}
-
-.data-card p {
-    margin: 0 0 1rem 0;
-    flex-grow: 1;
-}
-
-.card-meta {
-    font-size: 0.8rem;
-    color: var(--gray-text);
-    font-weight: 500;
-    text-transform: uppercase;
-    margin-bottom: 1rem;
-}
-
-/* Image Card Specific Styles */
 .data-card.has-image {
-    padding: 0;
+    position: relative;
+    overflow: hidden;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.2s, transform 0.2s;
 }
 
 .data-card.has-image:hover {
     transform: translateY(-3px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
 }
 
 .card-image-container {
+    height: 300px; /* Fixed height for consistency */
     position: relative;
-    height: 220px;
-    overflow: hidden;
 }
 
 .card-image {
@@ -228,31 +179,34 @@ a:hover {
     left: 0;
     right: 0;
     padding: 1.5rem;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0) 100%);
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.4) 50%, rgba(0, 0, 0, 0) 100%);
     color: #fff;
     transition: background 0.3s ease;
 }
 
-.card-text-overlay:hover {
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.1) 100%);
+.data-card.has-image:hover .card-text-overlay {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.5) 50%, rgba(0, 0, 0, 0) 100%);
 }
 
-.card-text-overlay h3,
-.card-text-overlay .card-meta {
-    color: #fff;
+.card-text-overlay h3 {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    margin: 0 0 0.5rem 0;
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
 }
 
 .card-text-overlay .card-meta {
-    margin-bottom: 0;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-transform: uppercase;
     color: rgba(255, 255, 255, 0.85);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+    margin-bottom: 0;
 }
 
+/* Hide unnecessary card content */
 .card-content {
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
+    display: none;
 }
 
 /* 6. Components
@@ -356,13 +310,3 @@ a:hover {
     color: var(--gray-text);
     font-size: 0.9rem;
 }
-```
-
-### Key Improvements:
-1. **Grouping**: Related styles are grouped together (e.g., header components, cards, components).
-2. **Consistency**: Consistent indentation and spacing.
-3. **Removed Redundancy**: Removed duplicate or unnecessary styles.
-4. **Optimized Selectors**: Simplified selectors where possible.
-5. **Readability**: Added clear section headers and comments for better navigation.
-
-This version is cleaner, more maintainable, and easier to understand.
