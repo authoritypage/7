@@ -12,9 +12,6 @@
     --font-body: 'Helvetica', sans-serif;
 }
 
-/* 2. Global Styles
---------------------------------------------------------------------------------
-*/
 body {
     font-family: var(--font-body);
     color: var(--text-color);
