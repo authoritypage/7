@@ -9,6 +9,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <!-- Three.js Library -->
   <script async src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.158.0/three.min.js"></script>
 </head>
@@ -21,21 +23,23 @@
       <header class="site-header">
         <a href="/" class="logo" aria-label="Santa Barbara County Oversight Portal Homepage">
           <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <!-- Simple, modern icon -->
-            <path d="M50 10 L85 90 L15 90 Z" fill="rgba(255,255,255,0.8)" stroke="rgba(0,0,0,0.4)" stroke-width="2" stroke-linejoin="round" />
-            <circle cx="50" cy="40" r="12" fill="rgba(52,152,219,0.9)" />
+            <!-- Simplified, clean logo icon: A stylized eye over a county map outline -->
+            <rect x="0" y="0" width="100" height="100" fill="none"/>
+            <path d="M50 15 C 25 15, 15 50, 50 85, 85 50, 75 15, 50 15 Z" fill="rgba(0,120,212,0.9)" stroke="rgba(255,255,255,0.8)" stroke-width="3" />
+            <circle cx="50" cy="50" r="15" fill="rgba(255,255,255,0.95)" />
+            <circle cx="50" cy="50" r="5" fill="rgba(0,120,212,0.9)" />
           </svg>
           <div class="logo-text">
-            <h1>Santa Barbara County</h1>
-            <span>Transparency & Oversight Initiative</span>
+            <h1>SBC Transparency</h1>
+            <span>Oversight Initiative</span>
           </div>
         </a>
         <nav class="main-nav" aria-label="Main Navigation">
-          <a href="#issues">County Issues</a>
-          <a href="#reports">Official Reports</a>
+          <a href="#issues">Issues</a>
+          <a href="#reports">Reports</a>
           <a href="#ai-console">AI Analysis</a>
-          <a href="#services">Key Services</a>
-          <a href="#contact">Contact & Tips</a>
+          <a href="#services">Services</a>
+          <a href="#contact">Contact</a>
         </nav>
         <button class="nav-toggle" aria-controls="main-nav" aria-expanded="false">
           <span class="sr-only">Toggle navigation</span>
@@ -46,86 +50,78 @@
       <main>
         <section class="hero-section">
           <div class="hero-content">
-            <h2 class="hero-title">Unveiling Santa Barbara County:<br>Insights into Local Governance</h2>
-            <p class="hero-subtitle">Dedicated to promoting transparency, accountability, and informed civic engagement. Discover the realities beyond the scenic facade.</p>
-            <a href="#issues" class="button primary-button">Explore Current Issues</a>
+            <h2 class="hero-title">Santa Barbara County: Transparency & Accountability</h2>
+            <p class="hero-subtitle">Exploring local governance to foster informed civic engagement.</p>
+            <a href="#issues" class="button primary-button">Explore Issues <i class="fas fa-arrow-right icon-after"></i></a>
           </div>
         </section>
 
         <section class="section" id="issues">
-          <h2 class="section-title">Critical Challenges Facing Santa Barbara County</h2>
-          <p class="section-description">We delve into the pressing issues affecting our community, from fiscal management to public services and judicial integrity. Our aim is to foster a more transparent and accountable government.</p>
+          <h2 class="section-title">Critical Challenges <i class="fas fa-exclamation-triangle"></i></h2>
+          <p class="section-description">Key areas demanding immediate attention and oversight within our county.</p>
 
           <div class="data-grid">
-            <!-- Card 1: Government Mismanagement & Fund Misuse - YOUR IMAGE -->
+            <!-- Card 1: Government Mismanagement & Fund Misuse - YOUR IMAGE (2_50AM.jpeg) -->
             <div class="data-card has-image">
               <div class="card-image-container">
                 <img class="card-image" src="https://tinypic.host/images/2025/06/18/Generated-Image-June-18-2025---2_50AM.jpeg" alt="Abstract depiction of fractured finances and mismanagement." loading="lazy">
                 <div class="card-text-overlay">
-                  <h3>Fiscal Mismanagement & Misuse of Public Funds</h3>
-                  <div class="card-meta">Investigating questionable spending and budget discrepancies.</div>
+                  <h3>Fiscal Mismanagement</h3>
+                  <div class="card-meta">Fund Misuse & Questionable Decisions</div>
                 </div>
               </div>
               <div class="card-content">
-                <ul>
-                  <li>Significant government mismanagement, including fund misuse and questionable decision-making.</li>
-                  <li><strong>Supervisor Spending Controversy:</strong> Allegations of pay raises amidst budget concerns and reported misuse of funds.</li>
-                  <li><strong>Homelessness Funds Probe:</strong> Ongoing federal task force investigation into potential fraud and unaccounted funds in statewide homelessness initiatives, impacting local allocations.</li>
-                </ul>
+                <p><i class="fas fa-dollar-sign icon-leading"></i>Allegations of fund misuse and controversial pay raises. Ongoing federal probe into homelessness spending.</p>
+                <div class="card-feature"><i class="fas fa-chart-line icon-leading"></i><span>$11.1M Ambulance Lawsuit</span></div>
+                <div class="card-feature"><i class="fas fa-search icon-leading"></i><span>Homeless Funds Under Federal Scrutiny</span></div>
               </div>
             </div>
 
-            <!-- Card 2: Ambulance Contract & Public Safety Concerns - Placeholder (no image provided for this) -->
+            <!-- Card 2: Ambulance Contract & Public Safety Concerns - PLACEHOLDER (No image provided for this specific topic) -->
             <div class="data-card has-image">
               <div class="card-image-container">
                 <img class="card-image" src="https://via.placeholder.com/600x400/a3a3a3/e6e6e6?text=AI+Image:+Idle+Ambulances" alt="Conceptual image of ambulances sitting idle, representing stalled public services." loading="lazy">
                 <div class="card-text-overlay">
-                  <h3>Ambulance Contract Disputes & Stalled Services</h3>
-                  <div class="card-meta">Analyzing critical failures in emergency service procurement.</div>
+                  <h3>Ambulance Contract</h3>
+                  <div class="card-meta">Stalled Services & Costs</div>
                 </div>
               </div>
               <div class="card-content">
-                <ul>
-                  <li>Controversial ambulance contract disputes, leading to stalled public safety resources.</li>
-                  <li><strong>Idle Ambulances Scandal:</strong> 35 ambulances, purchased for $3.5M, remain unused due to a disputed contract awarded controversially over a higher-ranked bidder.</li>
-                  <li>Legal challenges from the previous provider (AMR) and State Attorney General intervention.</li>
-                </ul>
+                <p><i class="fas fa-ambulance icon-leading"></i>35 ambulances purchased for $3.5M remain unused due to a disputed contract, sparking lawsuits and state intervention.</p>
+                <div class="card-feature"><i class="fas fa-file-alt icon-leading"></i><span>Controversial Contract Award</span></div>
+                <div class="card-feature"><i class="fas fa-handshake-alt-slash icon-leading"></i><span>AMR Lawsuit & State AG Action</span></div>
               </div>
             </div>
 
-            <!-- Card 3: Judicial Misconduct & Ethics Violations - YOUR IMAGE -->
+            <!-- Card 3: Judicial Misconduct & Ethics Violations - YOUR IMAGE (5_14AM-9.jpeg) -->
             <div class="data-card has-image">
               <div class="card-image-container">
                 <img class="card-image" src="https://tinypic.host/images/2025/06/18/Generated-Image-June-18-2025---5_14AM-9.jpeg" alt="Stylized image of a gavel, symbolizing judicial integrity." loading="lazy">
                 <div class="card-text-overlay">
-                  <h3>Judicial Misconduct & Ethics Violations</h3>
-                  <div class="card-meta">Examining breaches of trust within the legal system.</div>
+                  <h3>Judicial Misconduct</h3>
+                  <div class="card-meta">Ethics Breaches & Resignation</div>
                 </div>
               </div>
               <div class="card-content">
-                <ul>
-                  <li>A Santa Barbara County judge forced to resign amid severe ethics violations.</li>
-                  <li>Judge Michael J. Carrozzo admitted to willful misconduct, including illegally practicing law while serving on the bench, leading to a lifetime ban.</li>
-                  <li>This case severely undermines public trust and judicial integrity.</li>
-                </ul>
+                <p><i class="fas fa-gavel icon-leading"></i>Judge Michael J. Carrozzo resigned and faced a lifetime ban for illegally practicing law while serving on the bench, eroding public trust.</p>
+                <div class="card-feature"><i class="fas fa-user-shield icon-leading"></i><span>Ethics Violations Admitted</span></div>
+                <div class="card-feature"><i class="fas fa-balance-scale-right icon-leading"></i><span>Undermining Public Trust</span></div>
               </div>
             </div>
 
-            <!-- Card 4: Jail Conditions & Human Rights Concerns - Placeholder (no image provided for this) -->
+            <!-- Card 4: Jail Conditions & Human Rights Concerns - PLACEHOLDER (No image provided for this specific topic) -->
             <div class="data-card has-image">
               <div class="card-image-container">
                 <img class="card-image" src="https://via.placeholder.com/600x400/7a7a7a/c2c2c2?text=AI+Image:+Jail+Conditions" alt="Conceptual image of challenging jail conditions and human rights concerns." loading="lazy">
                 <div class="card-text-overlay">
-                  <h3>County Jail Conditions & Federal Litigation</h3>
-                  <div class="card-meta">Addressing critical deficiencies and inmate welfare.</div>
+                  <h3>County Jail Conditions</h3>
+                  <div class="card-meta">Federal Litigation & Deficiencies</div>
                 </div>
               </div>
               <div class="card-content">
-                <ul>
-                  <li>Ongoing federal litigation (`Murray v. County of Santa Barbara`) highlights severe deficiencies.</li>
-                  <li>Concerns include inadequate inmate medical care, mental health services, and disability accommodations.</li>
-                  <li>Issues surrounding excessive solitary confinement are under scrutiny, revealing profound systemic failures.</li>
-                </ul>
+                <p><i class="fas fa-lock icon-leading"></i>Ongoing 'Murray v. County' lawsuit highlights severe deficiencies in inmate medical care, mental health services, and solitary confinement.</p>
+                <div class="card-feature"><i class="fas fa-notes-medical icon-leading"></i><span>Inadequate Medical Care</span></div>
+                <div class="card-feature"><i class="fas fa-user-times icon-leading"></i><span>Human Rights Concerns</span></div>
               </div>
             </div>
 
@@ -133,32 +129,30 @@
         </section>
 
         <section class="section" id="reports">
-          <h2 class="section-title">Official Reports & Grand Jury Findings</h2>
-          <p class="section-description">Access public reports and findings from oversight bodies that highlight areas requiring immediate attention and reform within county agencies.</p>
+          <h2 class="section-title">Official Reports <i class="fas fa-file-invoice"></i></h2>
+          <p class="section-description">Access public reports and findings from oversight bodies.</p>
 
           <div class="data-grid">
             <div class="data-card">
               <div class="card-content">
-                <h3>2024-2025 Grand Jury Findings</h3>
-                <p>The latest Grand Jury reports reveal a troubling pattern of agencies agreeing with findings but failing to implement key recommendations. This systemic resistance to oversight impacts public accountability.</p>
-                <ul>
-                  <li><strong>Lompoc Tourism Improvement District:</strong> Financial irregularities and conflicts of interest.</li>
-                  <li><strong>Death-in-Custody Investigations:</strong> Lack of transparency and inadequate procedures.</li>
-                </ul>
-                <small>Sources: KEYT - March 10, 2025; edhat - March 2025</small>
-                <a href="#" class="button secondary-button">Read Full Grand Jury Report</a>
+                <h3>Grand Jury Findings <i class="fas fa-newspaper"></i></h3>
+                <p><i class="fas fa-hand-point-right icon-leading"></i>2024-2025 Grand Jury reports show agencies agreeing with findings but failing to implement key recommendations, indicating systemic resistance to oversight.</p>
+                <div class="card-meta-line">
+                    <span><i class="fas fa-calendar-alt icon-leading-small"></i> Mar 2025</span>
+                    <span><i class="fas fa-link icon-leading-small"></i> KEYT, edhat</span>
+                </div>
+                <a href="#" class="button secondary-button">View Report <i class="fas fa-external-link-alt icon-after"></i></a>
               </div>
             </div>
             <div class="data-card">
               <div class="card-content">
-                <h3>Federal Audit on Homelessness Spending</h3>
-                <p>A multi-agency federal task force has launched a probe into the allocation and expenditure of over $24 billion in statewide homelessness funds, with a significant portion unaccounted for. Local implications for Santa Barbara County are under review.</p>
-                <ul>
-                  <li>Focus on transparency and effectiveness of homelessness initiatives.</li>
-                  <li>Review of spending oversight and accountability mechanisms.</li>
-                </ul>
-                <small>Source: Los Angeles County Audit Findings</small>
-                <a href="#" class="button secondary-button">View Audit Details</a>
+                <h3>Homelessness Audit <i class="fas fa-clipboard-list"></i></h3>
+                <p><i class="fas fa-hand-point-right icon-leading"></i>Federal task force probes potential fraud in $24B statewide homelessness spending, with $2B unaccounted for. Implications for SBC reviewed.</p>
+                <div class="card-meta-line">
+                    <span><i class="fas fa-tasks icon-leading-small"></i> Federal Task Force</span>
+                    <span><i class="fas fa-map-marker-alt icon-leading-small"></i> Statewide Implication</span>
+                </div>
+                <a href="#" class="button secondary-button">Audit Details <i class="fas fa-external-link-alt icon-after"></i></a>
               </div>
             </div>
           </div>
@@ -166,13 +160,13 @@
 
         <!-- AI Analysis Console Section -->
         <section class="section" id="ai-console">
-          <h2 class="section-title">AI Analysis Console</h2>
-          <p class="section-description">Utilize our AI-powered console to explore specific aspects of county governance, legal implications, and historical context of reported issues. The AI model is trained to provide concise, factual responses based on public information.</p>
+          <h2 class="section-title">AI Analysis Console <i class="fas fa-brain"></i></h2>
+          <p class="section-description">Utilize our AI-powered console to explore specific aspects of county governance, legal implications, and historical context of reported issues. The AI model provides concise, factual responses based on public information.</p>
 
           <div class="ai-console-wrapper">
             <div class="ai-input-group">
               <input type="text" id="ai-query-input" placeholder="e.g., Explain the ambulance contract issue..." aria-label="AI Query Input">
-              <button id="ai-query-button" class="button primary-button">Analyze</button>
+              <button id="ai-query-button" class="button primary-button">Analyze <i class="fas fa-cogs icon-after"></i></button>
             </div>
             <div class="ai-response-area" id="ai-response-area">
               <p>Your AI analysis will appear here.</p>
@@ -186,20 +180,20 @@
         </section>
 
         <section class="section" id="services">
-          <h2 class="section-title">Essential County Services: Our Public Obligation</h2>
-          <p class="section-description">While highlighting challenges, we also recognize the vital services provided by dedicated county personnel. Ensuring these services are delivered efficiently and ethically is paramount.</p>
+          <h2 class="section-title">Essential County Services <i class="fas fa-hands-helping"></i></h2>
+          <p class="section-description">Ensuring these services are delivered efficiently and ethically is paramount for community well-being.</p>
           <div class="data-grid">
-            <!-- Public Works - YOUR IMAGE -->
+            <!-- Public Works - YOUR IMAGE (5_14AM-3.jpeg) -->
             <div class="data-card has-image">
               <div class="card-image-container">
                 <img class="card-image" src="https://tinypic.host/images/2025/06/18/Generated-Image-June-18-2025---5_14AM-3.jpeg" alt="Conceptual image of modern public infrastructure." loading="lazy">
                 <div class="card-text-overlay">
                   <h3>Public Works</h3>
-                  <div class="card-meta">Maintaining Critical Infrastructure</div>
+                  <div class="card-meta">Maintaining Infrastructure</div>
                 </div>
               </div>
             </div>
-            <!-- Parks & Recreation - YOUR IMAGE -->
+            <!-- Parks & Recreation - YOUR IMAGE (5_14AM-6.jpeg) -->
             <div class="data-card has-image">
               <div class="card-image-container">
                 <img class="card-image" src="https://tinypic.host/images/2025/06/18/Generated-Image-June-18-2025---5_14AM-6.jpeg" alt="Modern urban park space for recreation." loading="lazy">
@@ -209,13 +203,13 @@
                 </div>
               </div>
             </div>
-            <!-- Health Services - YOUR IMAGE -->
+            <!-- Health Services - YOUR IMAGE (5_14AM-5.jpeg) -->
             <div class="data-card has-image">
               <div class="card-image-container">
                 <img class="card-image" src="https://tinypic.host/images/2025/06/18/Generated-Image-June-18-2025---5_14AM-5.jpeg" alt="Modern interior of a health facility, symbolizing care." loading="lazy">
                 <div class="card-text-overlay">
                   <h3>Health Services</h3>
-                  <div class="card-meta">Protecting Community Well-being</div>
+                  <div class="card-meta">Community Well-being</div>
                 </div>
               </div>
             </div>
@@ -223,12 +217,12 @@
         </section>
 
         <section class="section" id="contact">
-          <h2 class="section-title">Contact & Tip Submission</h2>
+          <h2 class="section-title">Contact & Tips <i class="fas fa-comment-dots"></i></h2>
           <p class="section-description">Your voice is crucial. If you have information or inquiries related to county operations and public accountability, please reach out.</p>
           <div class="contact-info">
-            <p>Email us at: <a href="mailto:info@sbc-oversight.org">info@sbc-oversight.org</a></p>
-            <p>Anonymous tips can be submitted via our secure form (coming soon).</p>
-            <p>Follow us on social media for updates.</p>
+            <p><i class="fas fa-envelope icon-leading"></i> Email us at: <a href="mailto:info@sbc-oversight.org">info@sbc-oversight.org</a></p>
+            <p><i class="fas fa-file-alt icon-leading"></i> Anonymous tips can be submitted via our secure form (coming soon).</p>
+            <p><i class="fas fa-share-alt icon-leading"></i> Follow us on social media for updates.</p>
           </div>
         </section>
       </main>
