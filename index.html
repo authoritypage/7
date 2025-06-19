@@ -3,236 +3,85 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Santa Barbara County: Transparency & Oversight</title>
+  <title>Wikipidea - AI Toxicity Detector</title>
   <link rel="stylesheet" href="style.css">
-  <!-- Google Fonts for professional typography (Inter is a good substitute for Segoe UI) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <!-- Font Awesome for Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <!-- Three.js Library -->
-  <script async src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.158.0/three.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-  <!-- Three.js Background Canvas -->
-  <canvas id="canvas-bg"></canvas>
-
-  <div class="container-wrapper"> <!-- New wrapper for frosted glass effect -->
+  <!-- Navbar -->
+  <nav id="navbar">
     <div class="container">
-      <header class="site-header">
-        <a href="/" class="logo" aria-label="Santa Barbara County Oversight Portal Homepage">
-          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <!-- Simplified, clean logo icon: A stylized eye over a county map outline -->
-            <rect x="0" y="0" width="100" height="100" fill="none"/>
-            <path d="M50 15 C 25 15, 15 50, 50 85, 85 50, 75 15, 50 15 Z" fill="rgba(0,120,212,0.9)" stroke="rgba(255,255,255,0.8)" stroke-width="3" />
-            <circle cx="50" cy="50" r="15" fill="rgba(255,255,255,0.95)" />
-            <circle cx="50" cy="50" r="5" fill="rgba(0,120,212,0.9)" />
-          </svg>
-          <div class="logo-text">
-            <h1>SBC Transparency</h1>
-            <span>Oversight Initiative</span>
-          </div>
-        </a>
-        <nav class="main-nav" aria-label="Main Navigation">
-          <a href="#issues">Issues</a>
-          <a href="#reports">Reports</a>
-          <a href="#ai-console">AI Analysis</a>
-          <a href="#services">Services</a>
-          <a href="#contact">Contact</a>
-        </nav>
-        <button class="nav-toggle" aria-controls="main-nav" aria-expanded="false">
-          <span class="sr-only">Toggle navigation</span>
-          <div class="hamburger"></div>
-        </button>
-      </header>
-
-      <main>
-        <section class="hero-section">
-          <div class="hero-content">
-            <h2 class="hero-title">Santa Barbara County: Transparency & Accountability</h2>
-            <p class="hero-subtitle">Exploring local governance to foster informed civic engagement.</p>
-            <a href="#issues" class="button primary-button">Explore Issues <i class="fas fa-arrow-right icon-after"></i></a>
-          </div>
-        </section>
-
-        <section class="section" id="issues">
-          <h2 class="section-title">Critical Challenges <i class="fas fa-exclamation-triangle"></i></h2>
-          <p class="section-description">Key areas demanding immediate attention and oversight within our county.</p>
-
-          <div class="data-grid">
-            <!-- Card 1: Government Mismanagement & Fund Misuse - YOUR IMAGE (2_50AM.jpeg) -->
-            <div class="data-card has-image">
-              <div class="card-image-container">
-                <img class="card-image" src="https://tinypic.host/images/2025/06/18/Generated-Image-June-18-2025---2_50AM.jpeg" alt="Abstract depiction of fractured finances and mismanagement." loading="lazy">
-                <div class="card-text-overlay">
-                  <h3>Fiscal Mismanagement</h3>
-                  <div class="card-meta">Fund Misuse & Questionable Decisions</div>
-                </div>
-              </div>
-              <div class="card-content">
-                <p><i class="fas fa-dollar-sign icon-leading"></i>Allegations of fund misuse and controversial pay raises. Ongoing federal probe into homelessness spending.</p>
-                <div class="card-feature"><i class="fas fa-chart-line icon-leading"></i><span>$11.1M Ambulance Lawsuit</span></div>
-                <div class="card-feature"><i class="fas fa-search icon-leading"></i><span>Homeless Funds Under Federal Scrutiny</span></div>
-              </div>
-            </div>
-
-            <!-- Card 2: Ambulance Contract & Public Safety Concerns - PLACEHOLDER (No image provided for this specific topic) -->
-            <div class="data-card has-image">
-              <div class="card-image-container">
-                <img class="card-image" src="https://via.placeholder.com/600x400/a3a3a3/e6e6e6?text=AI+Image:+Idle+Ambulances" alt="Conceptual image of ambulances sitting idle, representing stalled public services." loading="lazy">
-                <div class="card-text-overlay">
-                  <h3>Ambulance Contract</h3>
-                  <div class="card-meta">Stalled Services & Costs</div>
-                </div>
-              </div>
-              <div class="card-content">
-                <p><i class="fas fa-ambulance icon-leading"></i>35 ambulances purchased for $3.5M remain unused due to a disputed contract, sparking lawsuits and state intervention.</p>
-                <div class="card-feature"><i class="fas fa-file-alt icon-leading"></i><span>Controversial Contract Award</span></div>
-                <div class="card-feature"><i class="fas fa-handshake-alt-slash icon-leading"></i><span>AMR Lawsuit & State AG Action</span></div>
-              </div>
-            </div>
-
-            <!-- Card 3: Judicial Misconduct & Ethics Violations - YOUR IMAGE (5_14AM-9.jpeg) -->
-            <div class="data-card has-image">
-              <div class="card-image-container">
-                <img class="card-image" src="https://tinypic.host/images/2025/06/18/Generated-Image-June-18-2025---5_14AM-9.jpeg" alt="Stylized image of a gavel, symbolizing judicial integrity." loading="lazy">
-                <div class="card-text-overlay">
-                  <h3>Judicial Misconduct</h3>
-                  <div class="card-meta">Ethics Breaches & Resignation</div>
-                </div>
-              </div>
-              <div class="card-content">
-                <p><i class="fas fa-gavel icon-leading"></i>Judge Michael J. Carrozzo resigned and faced a lifetime ban for illegally practicing law while serving on the bench, eroding public trust.</p>
-                <div class="card-feature"><i class="fas fa-user-shield icon-leading"></i><span>Ethics Violations Admitted</span></div>
-                <div class="card-feature"><i class="fas fa-balance-scale-right icon-leading"></i><span>Undermining Public Trust</span></div>
-              </div>
-            </div>
-
-            <!-- Card 4: Jail Conditions & Human Rights Concerns - PLACEHOLDER (No image provided for this specific topic) -->
-            <div class="data-card has-image">
-              <div class="card-image-container">
-                <img class="card-image" src="https://via.placeholder.com/600x400/7a7a7a/c2c2c2?text=AI+Image:+Jail+Conditions" alt="Conceptual image of challenging jail conditions and human rights concerns." loading="lazy">
-                <div class="card-text-overlay">
-                  <h3>County Jail Conditions</h3>
-                  <div class="card-meta">Federal Litigation & Deficiencies</div>
-                </div>
-              </div>
-              <div class="card-content">
-                <p><i class="fas fa-lock icon-leading"></i>Ongoing 'Murray v. County' lawsuit highlights severe deficiencies in inmate medical care, mental health services, and solitary confinement.</p>
-                <div class="card-feature"><i class="fas fa-notes-medical icon-leading"></i><span>Inadequate Medical Care</span></div>
-                <div class="card-feature"><i class="fas fa-user-times icon-leading"></i><span>Human Rights Concerns</span></div>
-              </div>
-            </div>
-
-          </div>
-        </section>
-
-        <section class="section" id="reports">
-          <h2 class="section-title">Official Reports <i class="fas fa-file-invoice"></i></h2>
-          <p class="section-description">Access public reports and findings from oversight bodies.</p>
-
-          <div class="data-grid">
-            <div class="data-card">
-              <div class="card-content">
-                <h3>Grand Jury Findings <i class="fas fa-newspaper"></i></h3>
-                <p><i class="fas fa-hand-point-right icon-leading"></i>2024-2025 Grand Jury reports show agencies agreeing with findings but failing to implement key recommendations, indicating systemic resistance to oversight.</p>
-                <div class="card-meta-line">
-                    <span><i class="fas fa-calendar-alt icon-leading-small"></i> Mar 2025</span>
-                    <span><i class="fas fa-link icon-leading-small"></i> KEYT, edhat</span>
-                </div>
-                <a href="#" class="button secondary-button">View Report <i class="fas fa-external-link-alt icon-after"></i></a>
-              </div>
-            </div>
-            <div class="data-card">
-              <div class="card-content">
-                <h3>Homelessness Audit <i class="fas fa-clipboard-list"></i></h3>
-                <p><i class="fas fa-hand-point-right icon-leading"></i>Federal task force probes potential fraud in $24B statewide homelessness spending, with $2B unaccounted for. Implications for SBC reviewed.</p>
-                <div class="card-meta-line">
-                    <span><i class="fas fa-tasks icon-leading-small"></i> Federal Task Force</span>
-                    <span><i class="fas fa-map-marker-alt icon-leading-small"></i> Statewide Implication</span>
-                </div>
-                <a href="#" class="button secondary-button">Audit Details <i class="fas fa-external-link-alt icon-after"></i></a>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- AI Analysis Console Section -->
-        <section class="section" id="ai-console">
-          <h2 class="section-title">AI Analysis Console <i class="fas fa-brain"></i></h2>
-          <p class="section-description">Utilize our AI-powered console to explore specific aspects of county governance, legal implications, and historical context of reported issues. The AI model provides concise, factual responses based on public information.</p>
-
-          <div class="ai-console-wrapper">
-            <div class="ai-input-group">
-              <input type="text" id="ai-query-input" placeholder="e.g., Explain the ambulance contract issue..." aria-label="AI Query Input">
-              <button id="ai-query-button" class="button primary-button">Analyze <i class="fas fa-cogs icon-after"></i></button>
-            </div>
-            <div class="ai-response-area" id="ai-response-area">
-              <p>Your AI analysis will appear here.</p>
-            </div>
-            <div class="ai-loading-indicator hidden" id="ai-loading-indicator">
-              <div class="spinner"></div>
-              <p>Analyzing query...</p>
-            </div>
-            <p class="ai-disclaimer"><em>Note: AI responses are generated based on available data and should be verified with official sources.</em></p>
-          </div>
-        </section>
-
-        <section class="section" id="services">
-          <h2 class="section-title">Essential County Services <i class="fas fa-hands-helping"></i></h2>
-          <p class="section-description">Ensuring these services are delivered efficiently and ethically is paramount for community well-being.</p>
-          <div class="data-grid">
-            <!-- Public Works - YOUR IMAGE (5_14AM-3.jpeg) -->
-            <div class="data-card has-image">
-              <div class="card-image-container">
-                <img class="card-image" src="https://tinypic.host/images/2025/06/18/Generated-Image-June-18-2025---5_14AM-3.jpeg" alt="Conceptual image of modern public infrastructure." loading="lazy">
-                <div class="card-text-overlay">
-                  <h3>Public Works</h3>
-                  <div class="card-meta">Maintaining Infrastructure</div>
-                </div>
-              </div>
-            </div>
-            <!-- Parks & Recreation - YOUR IMAGE (5_14AM-6.jpeg) -->
-            <div class="data-card has-image">
-              <div class="card-image-container">
-                <img class="card-image" src="https://tinypic.host/images/2025/06/18/Generated-Image-June-18-2025---5_14AM-6.jpeg" alt="Modern urban park space for recreation." loading="lazy">
-                <div class="card-text-overlay">
-                  <h3>Parks & Recreation</h3>
-                  <div class="card-meta">Public Spaces, Public Trust</div>
-                </div>
-              </div>
-            </div>
-            <!-- Health Services - YOUR IMAGE (5_14AM-5.jpeg) -->
-            <div class="data-card has-image">
-              <div class="card-image-container">
-                <img class="card-image" src="https://tinypic.host/images/2025/06/18/Generated-Image-June-18-2025---5_14AM-5.jpeg" alt="Modern interior of a health facility, symbolizing care." loading="lazy">
-                <div class="card-text-overlay">
-                  <h3>Health Services</h3>
-                  <div class="card-meta">Community Well-being</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section class="section" id="contact">
-          <h2 class="section-title">Contact & Tips <i class="fas fa-comment-dots"></i></h2>
-          <p class="section-description">Your voice is crucial. If you have information or inquiries related to county operations and public accountability, please reach out.</p>
-          <div class="contact-info">
-            <p><i class="fas fa-envelope icon-leading"></i> Email us at: <a href="mailto:info@sbc-oversight.org">info@sbc-oversight.org</a></p>
-            <p><i class="fas fa-file-alt icon-leading"></i> Anonymous tips can be submitted via our secure form (coming soon).</p>
-            <p><i class="fas fa-share-alt icon-leading"></i> Follow us on social media for updates.</p>
-          </div>
-        </section>
-      </main>
-
-      <footer class="site-footer">
-        <p>© <span id="current-year">2025</span> Santa Barbara County Transparency & Oversight Initiative. All rights reserved.</p>
-        <p>Disclaimer: This portal compiles publicly available information and investigative reports. Content is for informational purposes and does not constitute legal advice.</p>
-      </footer>
+      <img src="assets/logo.png" alt="Wikipidea Logo" class="logo">
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#detector">Toxicity Detector</a></li>
+        <li><a href="#resources">Resources</a></li>
+        <li><a href="#community">Community</a></li>
+      </ul>
     </div>
-  </div> <!-- Close container-wrapper -->
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="home" class="hero">
+    <div class="container">
+      <h1>Unmask Toxic People with AI</h1>
+      <p>Crowdsourced intelligence to protect your mental health.</p>
+      <a href="#detector" class="btn btn-primary">Analyze Now</a>
+    </div>
+  </section>
+
+  <!-- Toxicity Detector Section -->
+  <section id="detector" class="section">
+    <div class="container">
+      <h2>AI Toxicity Detector</h2>
+      <div class="detector-box">
+        <textarea id="textInput" placeholder="Paste text or describe behavior..."></textarea>
+        <button onclick="analyzeToxicity()" class="btn btn-primary"><i class="fas fa-search"></i> Analyze</button>
+        <div id="results" class="results"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Resources Section -->
+  <section id="resources" class="section">
+    <div class="container">
+      <h2>Educational Resources</h2>
+      <div class="cards">
+        <div class="card">
+          <img src="assets/icons/resources.svg" alt="Resources Icon">
+          <h3>Toxicity Encyclopedia</h3>
+          <p>Learn about toxic behaviors and how to spot them.</p>
+        </div>
+        <div class="card">
+          <img src="assets/icons/community.svg" alt="Community Icon">
+          <h3>Community Stories</h3>
+          <p>Read and share experiences with toxic individuals.</p>
+        </div>
+        <div class="card">
+          <img src="assets/icons/search.svg" alt="Search Icon">
+          <h3>Toxic Profile Database</h3>
+          <p>Search for known toxic individuals and behaviors.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Community Section -->
+  <section id="community" class="section">
+    <div class="container">
+      <h2>Join Our Community</h2>
+      <p>Connect with others who understand your struggles.</p>
+      <a href="#" class="btn btn-primary">Join Now</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2023 Wikipidea. All rights reserved.</p>
+    </div>
+  </footer>
 
   <script src="script.js"></script>
 </body>
